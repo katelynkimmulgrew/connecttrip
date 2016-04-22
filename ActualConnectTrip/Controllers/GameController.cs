@@ -72,6 +72,7 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult GameStats()
         {
+           // sync error check
             var currentUserId = User.Identity.GetUserId();
             //The below line throws an error
             // ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);   
