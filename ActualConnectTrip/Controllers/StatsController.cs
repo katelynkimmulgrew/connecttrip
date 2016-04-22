@@ -23,7 +23,7 @@ namespace ActualConnectTrip.Controllers
            //assign the values to the view model object
           /* var model=new StatsViewModel()
            {
-            overAllPercentageView= 
+            overAllPercentageView= ...
            }*/
            
             return View();
