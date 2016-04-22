@@ -99,11 +99,56 @@ namespace BizLogic
                         chosenUser = Context.Users.Skip(toSkip2).Take(1).FirstOrDefault();
                     }
                 }
+                return chosenUser;  
+        }
 
+        public static string GameCompliment(this User user)
+        {
+            double wins = overallPercentage(user);
+            string compliment = null;
+            if(wins >=75.00)
+            {
+                compliment = "You are doing great! Kepp it up!";
+            }
+            else if(wins >=50.00 && wins <75.00)
+            {
+                compliment = "You are doing good!";
+            }
+            else if(wins >=24.00 && wins <50.00)
+            {
+                compliment = "You can do better!";
+            }
+            else
+            {
+                compliment = "You need to put more effort!";
+            }
+            return compliment;
 
-                return chosenUser;
-            
+        }
 
+        public static string MathCompliment(this User user)
+        {
+            double lost = didNotAnwserPercentage(user);
+            string compliment = null;
+            if (lost >= 75.00)
+            {
+                compliment = "You need to put more effort!";
+               
+            }
+            else if (lost >= 50.00 && lost < 75.00)
+            {
+                compliment = "You can do better!";
+                
+            }
+            else if (lost >= 24.00 && lost < 50.00)
+            {
+                compliment = "You are doing good!";
+            }
+            else
+            {
+                compliment = "You are doing great! Kepp it up!";
+            }
+            return compliment;
         }
     }
 }
