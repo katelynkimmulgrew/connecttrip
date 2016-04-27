@@ -15,6 +15,9 @@ namespace BizLogic
             {
                 Game game = new Game();
 
+            game.maxCols = 6;
+            game.maxRows = 7;
+
                 for (int i = 1; i <= game.maxRows; i++)
                 {
                     Column column = new Column();
