@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BizLogic
 {
-    public class statsAndRecommendationLogic
+    public static class statsAndRecommendationLogic
     {
         public static double overallPercentage(this User user)
         {
@@ -53,14 +54,16 @@ namespace BizLogic
             return (one / (one + two)) * 100;
         }
 
-        public static User findMatch(this User user)
+        public static User findMatch(this User user, Entities Context)
         {
 
             double level1Percentage = levelOnePercentage(user);
             double level2Percentage = levelTwoPercentage(user);
             double level3Percentage = levelThreePercentage(user);
-            using (var Context = new Entities())
-            {
+            
+            
+
+            
                 var possUsers = (from u in Context.Users select u);
                 if (level1Percentage >= level2Percentage && level1Percentage >= level3Percentage)
                 {
@@ -99,9 +102,9 @@ namespace BizLogic
 
 
                 return chosenUser;
-            }
+            
 
         }
     }
 }
-}
+

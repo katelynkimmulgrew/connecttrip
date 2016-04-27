@@ -45,6 +45,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="statsAndRecommendationLogic.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj">
+      <Project>{8bc8697b-bde9-44e3-9dc3-e56ba5d9ed69}</Project>
+      <Name>DataLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
