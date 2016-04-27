@@ -132,6 +132,7 @@ namespace BizLogic
 
             public static bool checkDiag(this Game game, Entities Context, Row row, Column col, string direction)
             {
+            
                 int colNo = col.ColumnNumber;
                 int rowNo = row.RowNumber;
                 int count = 0;

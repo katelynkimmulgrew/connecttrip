@@ -68,15 +68,15 @@ namespace BizLogic
                 if (level1Percentage >= level2Percentage && level1Percentage >= level3Percentage)
                 {
 
-                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelOneWins, user.LevelOneLose) - percentage(u.levelOneWins, u.levelOneLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelOneWins, user.LevelOneLose) - percentage(u.LevelOneWins, u.LevelOneLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
                 }
                 else if (level2Percentage >= level1Percentage && level2Percentage >= level3Percentage)
                 {
-                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelTwoWins, user.LevelTwoLose) - percentage(u.levelTwoeWins, u.levelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelTwoWins, user.LevelTwoLose) - percentage(u.LevelTwoWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
                 }
                 else
                 {
-                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(u.levelThreeWins, u.levelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(u.LevelThreeWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
                 }
 
                 Random rand = new Random();
