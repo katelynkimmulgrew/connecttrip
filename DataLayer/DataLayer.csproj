@@ -66,6 +66,7 @@
     <Compile Include="Ques.cs" />
     <Compile Include="Row.cs" />
     <Compile Include="showViewModel.cs" />
+    <Compile Include="startGamePlayer.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
