@@ -30,6 +30,7 @@ namespace BizLogic
                     }
                     game.Grid.Add(column);
                 Context.Games.Add(game);
+                var p = 0;
                 }
 
                 return game;
