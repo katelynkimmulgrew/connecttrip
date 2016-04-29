@@ -11,7 +11,7 @@ namespace BizLogic
         {
 
 
-            public static Game setBoard()
+            public static Game setBoard(Entities Context)
             {
                 Game game = new Game();
 
@@ -29,6 +29,7 @@ namespace BizLogic
 
                     }
                     game.Grid.Add(column);
+                Context.Games.Add(game);
                 }
 
                 return game;
