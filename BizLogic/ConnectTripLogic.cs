@@ -20,6 +20,7 @@ namespace BizLogic
 
                 for (int i = 1; i <= game.maxRows; i++)
                 {
+                int p = 0;
                     Column column = new Column();
                     column.ColumnNumber = i;
                     for (int j = 1; j <= game.maxCols; j++)
