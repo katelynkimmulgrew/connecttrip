@@ -14,5 +14,6 @@ namespace DataLayer
         public int Id { get; set; }
         [Required]
         public string content { get; set; }
+        
     }
 }
