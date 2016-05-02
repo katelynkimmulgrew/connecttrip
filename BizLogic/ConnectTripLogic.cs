@@ -10,7 +10,10 @@ namespace BizLogic
         public static class ConnectTripLogic
         {
 
-
+        public static void dummy()
+        {
+            Console.WriteLine("Dummy");
+        }
             public static Game setBoard(Entities Context)
             {
                 Game game = new Game();
