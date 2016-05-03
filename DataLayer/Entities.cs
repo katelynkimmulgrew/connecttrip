@@ -45,7 +45,7 @@ namespace DataLayer
 
         public Column getCol(int colNo, Game game)
         {
-            
+            int p = 0;
             return (from c in game.Grid
                     where c.ColumnNumber == colNo
                     select c).FirstOrDefault();
