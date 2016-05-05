@@ -5,12 +5,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BizLogic;
+using Microsoft.AspNet.Identity;
 
 namespace ActualConnectTrip.Controllers
 {
     public class GameController : Controller
     {
-
+        private Entities db = new Entities();
         static private Object lockObject = new object();
             
 
@@ -68,6 +69,22 @@ namespace ActualConnectTrip.Controllers
             return View();
         }
 
+
+        public ActionResult GameStats()
+        {
+            var currentUserId = User.Identity.GetUserId();
+            //The below line throws an error
+            // ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);   
+            //get the dbContext???!!!!-> should a new one be created or DataLayer.Entities.cs is the dbContext to be used
+
+            //get the user
+            //assign the values to the view model object
+            /* var model=new StatsViewModel()
+             {
+              overAllPercentageView= ...
+             }*/
+            return View();
+        }
         
     }
 }
