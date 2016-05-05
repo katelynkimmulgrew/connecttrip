@@ -1,12 +1,46 @@
-﻿@model DataLayer.Game
+﻿@using BizLogic;
+@model DataLayer.Game
 @{
     ViewBag.Title = "Board";
 }
 
 <h2>Board</h2>
 <p>@ViewBag.Message</p>
-@{ 
+@{
     var db = new DataLayer.Entities();
     bool?[,] array = Model.switchToBools(db);
 }
+    @helper ViewHelper(bool? i)
+    {
+if (i == null)
+{ <td></td> }
 
+else if (i == true)
+{ <td><img src="/Content/red.png" /></td> }
+
+else if (i == false)
+{ <td><img src="/Content/black.png" /></td> }
+}
+
+<table>
+    @{ 
+        
+        for(int i= 0; i< Model.maxRows; i++)
+        {
+            for(int j = 0; j<Model.maxRows; j++)
+            {
+                @Html.Raw((ViewHelper(array[i, j])));
+                        }
+                    }
+                }
+</table>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    for (int j = 0; j < Model.maxRows; j++)
+    {
+        @Html.RadioButton("col", j);
+
+    }
+}
