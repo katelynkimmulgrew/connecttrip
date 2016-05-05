@@ -9,43 +9,43 @@ namespace BizLogic
 {
     public static class statsAndRecommendationLogic
     {
-        public static double overallPercentage(this User user)
+        public static double overallPercentage(this Person user)
         {
             return percentage(user.LevelOneWins + user.LevelTwoWins + user.LevelThreeWins, user.LevelOneLose + user.LevelTwoLose + user.LevelThreeLose);
         }
 
-        public static double levelOnePercentage(this User user)
+        public static double levelOnePercentage(this Person user)
         {
             return percentage(user.LevelOneWins, user.LevelOneLose);
         }
 
-        public static double levelTwoPercentage(this User user)
+        public static double levelTwoPercentage(this Person user)
         {
             return percentage(user.LevelTwoWins, user.LevelTwoLose);
 
         }
 
-        public static double levelThreePercentage(this User user)
+        public static double levelThreePercentage(this Person user)
         {
             return percentage(user.LevelThreeWins, user.LevelThreeLose);
         }
 
-        public static double didNotAnwserPercentage(this User user)
+        public static double didNotAnwserPercentage(this Person user)
         {
             return percentage(user.DidNotAnswer, user.Answered);
         }
 
-        public static double numGames(this User user)
+        public static double numGames(this Person user)
         {
             return user.Answered + user.DidNotAnswer;
         }
 
-        public static double numWins(this User user)
+        public static double numWins(this Person user)
         {
             return user.LevelOneWins + user.LevelTwoWins + user.LevelThreeWins;
         }
 
-        public static double numLose(this User user)
+        public static double numLose(this Person user)
         {
             return user.LevelOneLose + user.LevelTwoLose + user.LevelThreeLose;
         }
@@ -54,7 +54,7 @@ namespace BizLogic
             return (one / (one + two)) * 100;
         }
 
-        public static User findMatch(this User user, Entities Context)
+        public static Person findMatch(this Person user, Entities Context)
         {
 
             double level1Percentage = levelOnePercentage(user);
@@ -102,7 +102,7 @@ namespace BizLogic
                 return chosenUser;  
         }
 
-        public static string GameCompliment(this User user)
+        public static string GameCompliment(this Person user)
         {
             double wins = overallPercentage(user);
             string compliment = null;
@@ -126,7 +126,7 @@ namespace BizLogic
 
         }
 
-        public static string MathCompliment(this User user)
+        public static string MathCompliment(this Person user)
         {
             double lost = didNotAnwserPercentage(user);
             string compliment = null;
