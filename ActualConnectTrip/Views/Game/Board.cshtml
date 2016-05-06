@@ -6,6 +6,7 @@
 
 <h2>Board</h2>
 <p>@ViewBag.Message</p>
+<p>@ViewBag.Turn</p>
 @{
     var db = new DataLayer.Entities();
     bool?[,] array = Model.switchToBools(db);

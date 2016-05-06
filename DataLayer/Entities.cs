@@ -50,5 +50,10 @@ namespace DataLayer
         {
             return (from g in Games where g.Id == id select g).FirstOrDefault();
         }
+
+        public Person getPersonById(int id)
+        {
+            return (from p in Persons where p.Id == id select p).FirstOrDefault();
+        }
     }
 }

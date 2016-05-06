@@ -27,6 +27,16 @@ namespace ActualConnectTrip.Controllers
             using(var db = new Entities())
             {
                 Game board = db.getGameById(id);
+                bool? currentBool = board.currentUser;
+                var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
+                if (currentBool == currentPerson.assignedBool)
+                {
+                    ViewBag.Turn = "It is your turn";
+                }
+                else
+                {
+                    ViewBag.Turn = "It is not your turn";
+                }
                 return View(board);
             }
             
@@ -41,22 +51,34 @@ namespace ActualConnectTrip.Controllers
                 using (var db = new Entities())
                 {
                     Game board = db.getGameById(id);
-                    Column currentCol = db.getCol(col, board);
-                    Row currentRow = board.determinePlace(board.currentUser, col, db);
-                    if(currentRow==null)
+                    bool? currentBool = board.currentUser;
+                    var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
+                    
+                    if (currentBool==currentPerson.assignedBool)
                     {
-                        ViewBag.Message = "Cannot execute Move";
+                        Column currentCol = db.getCol(col, board);
+                        Row currentRow = board.determinePlace(board.currentUser, col, db);
+                        if (currentRow == null)
+                        {
+                            ViewBag.Message = "Cannot execute Move";
+                            return RedirectToAction("Board", new { id = id });
+                        }
+                        if (board.determineWin(db, currentRow, currentCol))
+                        {
+                            return RedirectToAction("GameOver");
+                        }
+                        else
+                        {
+                            board.SwitchPlayers();
+                        }
                         return RedirectToAction("Board", new { id = id });
-                    }
-                    if (board.determineWin(db, currentRow, currentCol))
-                    {
-                        return RedirectToAction("GameOver");
                     }
                     else
                     {
-                        board.SwitchPlayers();
-                    }                    
-                    return RedirectToAction("Board", new { id = id });
+                        ViewBag.Message = "It is not your turn";
+                        return RedirectToAction("Board", new { id = id });
+                    }
+                    
              }
             }                      
         }
