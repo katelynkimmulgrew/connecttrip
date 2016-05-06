@@ -10,6 +10,31 @@ namespace BizLogic
         public static class ConnectTripLogic
         {
 
+        public static bool?[,] switchToBools(this Game board, Entities db)
+        {
+            
+            bool?[,] array = new bool?[board.maxRows, board.maxCols];
+
+            int i, j;
+            for(i=0;i<board.maxCols;i++)
+            {
+                for(j=0;j<board.maxRows;j++)
+                {
+                    Column currentCol = db.getCol(i, board);
+                    Row currentRow = db.getRow(currentCol, j);
+                    array[j, i] = currentRow.Value;
+                }
+            }
+            return array;
+            
+        }
+           
+            public static void SwitchPlayers(this Game board)
+        {
+            if (board != null)
+                board.currentUser = (board.currentUser == true) ? false : true;
+        }
+    
         
             public static Game setBoard(Entities Context)
             {
@@ -45,6 +70,7 @@ namespace BizLogic
                     if (row.Value == null)
                     {
                         row.Value = player;
+                    Context.SaveChanges();
                         return row;
                     }
 
