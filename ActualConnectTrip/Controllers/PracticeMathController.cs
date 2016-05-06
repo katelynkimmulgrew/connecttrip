@@ -14,18 +14,16 @@ namespace ActualConnectTrip.Controllers
         
         private Entities db = new Entities();
         // GET: PracticeMath
-        public ActionResult Index()
+        public ActionResult PracticeMath()
         {
             using (var context = new Entities())
             {
-                var currentPerson = (from p in context.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
-                BizLogic.mathProblems mObj = new BizLogic.mathProblems();
+      
                 var model = new PracticeMathViewModel
-                {
-                     mathQuestion = mObj.mathQuestion(currentPerson.level),
-                     mathAnswer = mObj.mathAnswer(mObj.mathQuestion(currentPerson.level))
+                {  
+                    //mathQuestion = mObj.mathQuestion(game.level),
+                   // mathAnswer = mObj.mathAnswer(mObj.mathQuestion(game.level))
                 };
-
                 return View();
             }
         }

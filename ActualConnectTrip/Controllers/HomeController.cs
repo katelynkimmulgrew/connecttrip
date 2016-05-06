@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActualConnectTrip.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,6 +26,17 @@ namespace ActualConnectTrip.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        public ActionResult PracticeMath()
+        {
+           
+                var model = new PracticeMathViewModel
+                {
+                    //mathQuestion = mObj.mathQuestion(game.level),
+                    // mathAnswer = mObj.mathAnswer(mObj.mathQuestion(game.level))
+                };
+                return View();
+  
         }
     }
 }
