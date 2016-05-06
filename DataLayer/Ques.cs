@@ -12,11 +12,15 @@ namespace DataLayer
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         [Required]
         public string title { get; set; }
+
         [Required]
         public string description { get; set; }
+
         public virtual ICollection<Answer> answers { get; set; }
+
         public Ques()
         {
             answers = new List<Answer>();
