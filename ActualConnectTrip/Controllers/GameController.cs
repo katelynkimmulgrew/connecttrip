@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using BizLogic;
 using Microsoft.AspNet.Identity;
+using ActualConnectTrip.Models;
 
 namespace ActualConnectTrip.Controllers
 {
@@ -54,14 +55,10 @@ namespace ActualConnectTrip.Controllers
                     else
                     {
                         board.SwitchPlayers();
-                    }
-                    
+                    }                    
                     return RedirectToAction("Board", new { id = id });
              }
-            }
-            
-            
-
+            }                      
         }
 
         public ActionResult GameOver()
@@ -72,20 +69,24 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult GameStats()
         {
-           // sync error check
-            var currentUserId = User.Identity.GetUserId();
-            //The below line throws an error
-            // ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);   
-            //get the dbContext???!!!!-> should a new one be created or DataLayer.Entities.cs is the dbContext to be used
-
-            //get the user
-            //assign the values to the view model object
-            /* var model=new StatsViewModel()
-             {
-              overAllPercentageView= ...
-             }*/
-            return View();
-        }
-        
+            using (var context = new Entities())
+            {
+                var currentPerson = (from p in context.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
+                var model = new StatsViewModel
+                {
+                    overAllPercentageView = statsAndRecommendationLogic.overallPercentage(currentPerson),
+                    levelOnePercentageView = statsAndRecommendationLogic.levelOnePercentage(currentPerson),
+                    levelTwoPercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
+                    levelThreePercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
+                    didNotAnswerView = statsAndRecommendationLogic.didNotAnwserPercentage(currentPerson),
+                    totalNumberOfGames = statsAndRecommendationLogic.numGames(currentPerson),
+                    totalNumberOfWins = statsAndRecommendationLogic.numWins(currentPerson),
+                    totalNumberOfLose = statsAndRecommendationLogic.numLose(currentPerson),
+                    GameComplimentView = statsAndRecommendationLogic.GameCompliment(currentPerson),
+                    MathComplimentView = statsAndRecommendationLogic.MathCompliment(currentPerson)
+                };
+                return View(model);
+            }             
+        }        
     }
 }

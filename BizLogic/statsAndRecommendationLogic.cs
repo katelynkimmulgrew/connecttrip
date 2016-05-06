@@ -64,19 +64,19 @@ namespace BizLogic
             
 
             
-                var possUsers = (from u in Context.Users select u);
+                var possUsers = (from u in Context.Persons select u);
                 if (level1Percentage >= level2Percentage && level1Percentage >= level3Percentage)
                 {
 
-                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelOneWins, user.LevelOneLose) - percentage(u.LevelOneWins, u.LevelOneLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in Context.Persons where Math.Abs(percentage(user.LevelOneWins, user.LevelOneLose) - percentage(u.LevelOneWins, u.LevelOneLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
                 }
                 else if (level2Percentage >= level1Percentage && level2Percentage >= level3Percentage)
                 {
-                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelTwoWins, user.LevelTwoLose) - percentage(u.LevelTwoWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in Context.Persons where Math.Abs(percentage(user.LevelTwoWins, user.LevelTwoLose) - percentage(u.LevelTwoWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
                 }
                 else
                 {
-                    possUsers = (from u in Context.Users where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(u.LevelThreeWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in Context.Persons where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(u.LevelThreeWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
                 }
 
                 Random rand = new Random();
@@ -85,9 +85,9 @@ namespace BizLogic
                 var chosenUser = possUsers.Skip(toSkip).Take(1).FirstOrDefault();
                 while (chosenUser == user)
                 {
-                    toSkip = rand.Next(0, Context.Users.Count());
+                    toSkip = rand.Next(0, Context.Persons.Count());
 
-                    chosenUser = Context.Users.Skip(toSkip).Take(1).FirstOrDefault();
+                    chosenUser = Context.Persons.Skip(toSkip).Take(1).FirstOrDefault();
                 }
 
                 if (chosenUser == null)
@@ -95,8 +95,8 @@ namespace BizLogic
                     chosenUser = user;
                     while (chosenUser == user)
                     {
-                        int toSkip2 = rand.Next(0, Context.Users.Count());
-                        chosenUser = Context.Users.Skip(toSkip2).Take(1).FirstOrDefault();
+                        int toSkip2 = rand.Next(0, Context.Persons.Count());
+                        chosenUser = Context.Persons.Skip(toSkip2).Take(1).FirstOrDefault();
                     }
                 }
                 return chosenUser;  
