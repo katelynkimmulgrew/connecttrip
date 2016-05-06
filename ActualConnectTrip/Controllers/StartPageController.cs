@@ -17,7 +17,7 @@ namespace ActualConnectTrip.Controllers
             //var userId = User.Identity.GetUserId();
             var UserName = User.Identity.Name;
             StartpageViewModel startInput = new StartpageViewModel();
-            //startInput.myid = ;
+            
             using (Entities enti = new Entities())
             {
                 var infoUB = (from c in enti.Users
