@@ -1,5 +1,5 @@
 ﻿
-using EntityFramework.Triggers;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class Game : ITriggerable
+    public class Game 
     {
         public int maxRows { get; set; }
         public int maxCols { get; set; }
@@ -28,6 +28,6 @@ namespace DataLayer
             get; set;
         } = new List<Column>();
 
-        public int currentUserId { get; set; }
+        public bool currentUser = true;
     }
 }

@@ -1,5 +1,4 @@
 ﻿
-using EntityFramework.Triggers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,13 +10,10 @@ namespace DataLayer
 {
     public class Entities : DbContext
     {
-        public override Int32 SaveChanges()
-        {
-            return this.SaveChangesWithTriggers();
-        }
+        
         
         public virtual DbSet<startGamePlayer> startGamePlayers { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
 
         public virtual DbSet<Game> Games { get; set; }
 
@@ -45,10 +41,19 @@ namespace DataLayer
 
         public Column getCol(int colNo, Game game)
         {
-            int p = 0;
             return (from c in game.Grid
                     where c.ColumnNumber == colNo
                     select c).FirstOrDefault();
+        }
+
+        public Game getGameById(int id)
+        {
+            return (from g in Games where g.Id == id select g).FirstOrDefault();
+        }
+
+        public Person getPersonById(int id)
+        {
+            return (from p in Persons where p.Id == id select p).FirstOrDefault();
         }
     }
 }

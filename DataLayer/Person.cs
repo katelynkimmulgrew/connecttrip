@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class User
+    public class Person
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -24,5 +24,7 @@ namespace DataLayer
 
         public double Answered { get; set; }
         public double DidNotAnswer { get; set; }
+
+        public bool? assignedBool { get; set; }
     }
 }
