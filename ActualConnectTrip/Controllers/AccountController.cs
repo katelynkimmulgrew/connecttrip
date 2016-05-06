@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ActualConnectTrip.Models;
+using DataLayer;
 
 namespace ActualConnectTrip.Controllers
 {
@@ -147,11 +148,20 @@ namespace ActualConnectTrip.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                using (var context = new Entities())
+                {
+                    var newPerson = new Person();
+                    newPerson.UserName = model.Email;
+                    context.Persons.Add(newPerson);
+                    context.SaveChanges();
+                }
+        
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

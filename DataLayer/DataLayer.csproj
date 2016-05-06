@@ -62,7 +62,7 @@
     <Compile Include="Ques.cs" />
     <Compile Include="Row.cs" />
     <Compile Include="startGamePlayer.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Person.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -13,7 +13,7 @@ namespace DataLayer
         
         
         public virtual DbSet<startGamePlayer> startGamePlayers { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
 
         public virtual DbSet<Game> Games { get; set; }
 
