@@ -83,6 +83,8 @@ namespace ActualConnectTrip.Controllers
             }                      
         }
 
+        
+
         public ActionResult GameOver()
         {
             return View();
@@ -93,6 +95,7 @@ namespace ActualConnectTrip.Controllers
         {
             using (var context = new Entities())
             {
+                
                 var currentPerson = (from p in context.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                 var model = new StatsViewModel
                 {
