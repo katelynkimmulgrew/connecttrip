@@ -16,18 +16,18 @@ namespace ActualConnectTrip.Controllers
         // GET: PracticeMath
         public ActionResult Index()
         {
-           
-            var currentUserId = User.Identity.GetUserId();
-            //how to get current user though userID?
-
-            BizLogic.mathProblems mObj = new BizLogic.mathProblems();
-        /*    var model = new PracticeMathViewModel
+            using (var context = new Entities())
             {
-                //mathQuestion = mObj.mathQuestion(User.level),
-                //mathAnswer = mObj.mathAnswer(mObj.mathQuestion(User.level))
-            };*/
+                var currentPerson = (from p in context.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
+                BizLogic.mathProblems mObj = new BizLogic.mathProblems();
+                var model = new PracticeMathViewModel
+                {
+                     mathQuestion = mObj.mathQuestion(currentPerson.level),
+                     mathAnswer = mObj.mathAnswer(mObj.mathQuestion(currentPerson.level))
+                };
 
-            return View();
+                return View();
+            }
         }
     }
 }
