@@ -44,8 +44,9 @@ namespace ActualConnectTrip.Controllers
 
         [HttpPost]
 
-        public ActionResult Board(int col)
+        public ActionResult Board(int col, string button)
         {
+            
             lock (lockObject)
             {
                 using (var db = new Entities())
@@ -58,10 +59,22 @@ namespace ActualConnectTrip.Controllers
                     {
                         return RedirectToAction("NoGame");
                     }
+
+
                     
                     bool? currentBool = board.currentUser;
                     var person1 = db.getPersonById(board.Player1Id);
                     var person2 = db.getPersonById(board.Player2Id);
+
+                    if (button == "Cancel")
+                    {
+                        board.finished = true;
+                        person1.isPlaying = false;
+                        person2.isPlaying = false;
+                        ViewBag.IsCancelled = "This game was cancelled";
+                        db.SaveChanges();
+                        return RedirectToAction("GameOver");
+                    }
                     if (board.finished == true &&currentPerson.isPlaying==true)
                     {
                         currentPerson.isPlaying = false;
