@@ -54,7 +54,7 @@ namespace BizLogic
             return (one / (one + two)) * 100;
         }
 
-        public static Person findMatch(this Person user, Entities Context)
+        public static IEnumerable<startGamePlayer> findMatch(this Person user, IEnumerable<startGamePlayer> pool, Entities Context)
         {
 
             double level1Percentage = levelOnePercentage(user);
@@ -64,42 +64,51 @@ namespace BizLogic
             
 
             
-                var possUsers = (from u in Context.Persons select u);
+                var possUsers = (from u in pool select u);
                 if (level1Percentage >= level2Percentage && level1Percentage >= level3Percentage)
                 {
 
-                    possUsers = (from u in Context.Persons where Math.Abs(percentage(user.LevelOneWins, user.LevelOneLose) - percentage(u.LevelOneWins, u.LevelOneLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                possUsers = (from u in pool where Math.Abs(percentage(user.LevelOneWins, user.LevelOneLose) - percentage(Context.getPersonById(u.player1Id).LevelOneWins, Context.getPersonById(u.player1Id).LevelOneLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(Context.getPersonById(u.player1Id))) <= 50 select u);
                 }
                 else if (level2Percentage >= level1Percentage && level2Percentage >= level3Percentage)
                 {
-                    possUsers = (from u in Context.Persons where Math.Abs(percentage(user.LevelTwoWins, user.LevelTwoLose) - percentage(u.LevelTwoWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in pool where Math.Abs(percentage(user.LevelTwoWins, user.LevelTwoLose) - percentage(Context.getPersonById(u.player1Id).LevelTwoWins, Context.getPersonById(u.player1Id).LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(Context.getPersonById(u.player1Id))) <= 50 select u);
                 }
                 else
                 {
-                    possUsers = (from u in Context.Persons where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(u.LevelThreeWins, u.LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in pool where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(Context.getPersonById(u.player1Id).LevelThreeWins, Context.getPersonById(u.player1Id).LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
                 }
 
-                Random rand = new Random();
-                int toSkip = rand.Next(0, possUsers.Count());
+            /*Random rand = new Random();
+            int toSkip = rand.Next(0, possUsers.Count());
 
-                var chosenUser = possUsers.Skip(toSkip).Take(1).FirstOrDefault();
+            var chosenUser = possUsers.Skip(toSkip).Take(1).FirstOrDefault();
+            while (chosenUser == user)
+            {
+                toSkip = rand.Next(0, Context.Persons.Count());
+
+                chosenUser = Context.Persons.Skip(toSkip).Take(1).FirstOrDefault();
+            }
+
+            if (chosenUser == null)
+            {
+                chosenUser = user;
                 while (chosenUser == user)
                 {
-                    toSkip = rand.Next(0, Context.Persons.Count());
-
-                    chosenUser = Context.Persons.Skip(toSkip).Take(1).FirstOrDefault();
+                    int toSkip2 = rand.Next(0, Context.Persons.Count());
+                    chosenUser = Context.Persons.Skip(toSkip2).Take(1).FirstOrDefault();
                 }
+            }
+            return chosenUser;*/
 
-                if (chosenUser == null)
-                {
-                    chosenUser = user;
-                    while (chosenUser == user)
-                    {
-                        int toSkip2 = rand.Next(0, Context.Persons.Count());
-                        chosenUser = Context.Persons.Skip(toSkip2).Take(1).FirstOrDefault();
-                    }
-                }
-                return chosenUser;  
+            if (possUsers.FirstOrDefault() == null)
+            {
+                return null;
+            }
+            else
+            {
+                return possUsers;
+            }
         }
 
         public static string GameCompliment(this Person user)

@@ -21,7 +21,6 @@ namespace ActualConnectTrip.Controllers
         {
             return View();
         }
-
         public ActionResult Board(int id)
         {
             using(var db = new Entities())
@@ -53,7 +52,12 @@ namespace ActualConnectTrip.Controllers
                     Game board = db.getGameById(id);
                     bool? currentBool = board.currentUser;
                     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
-                    
+                    var person1 = db.getPersonById(board.Player1Id);
+                    var person2 = db.getPersonById(board.Player2Id);
+                    if(currentPerson!=person1&&currentPerson!=person2)
+                    {
+                        return RedirectToAction("stindex");
+                    }
                     if (currentBool==currentPerson.assignedBool)
                     {
                         Column currentCol = db.getCol(col, board);
@@ -114,7 +118,7 @@ namespace ActualConnectTrip.Controllers
                 return View(model);
             }             
         }
-
+        
 
         public ActionResult stindex()
         {
@@ -127,6 +131,20 @@ namespace ActualConnectTrip.Controllers
                               where c.UserName.Equals(UserName)
                               select c).FirstOrDefault();
                 startInput.myid = infoUB.Id;
+
+                var allWaiting = (from c in enti.startGamePlayers where c.isStarted.Equals(false) select c);
+
+                var recommended = infoUB.findMatch(allWaiting, enti);
+
+                if(recommended==null)
+                {
+                    startInput.Recommended = null;
+                }
+                else
+                {
+                    startInput.Recommended = recommended.ToList();
+                }
+                
 
                 var watingGamer = (from c in enti.startGamePlayers
                                    where c.isStarted.Equals(false)

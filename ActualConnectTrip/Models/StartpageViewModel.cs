@@ -13,6 +13,8 @@ namespace ActualConnectTrip.Models
         public virtual List<startGamePlayer> L1rivals { get; set; }
         public virtual List<startGamePlayer> L2rivals { get; set; }
         public virtual List<startGamePlayer> L3rivals { get; set; }
+
+        public virtual List<startGamePlayer> Recommended { get; set; }
         public int? oppoid { get; set;}
         public Boolean? request { get; set; }
         public int gamelevel { get; set; }
