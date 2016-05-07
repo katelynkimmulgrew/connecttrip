@@ -158,6 +158,7 @@ namespace ActualConnectTrip.Controllers
                 {
                     var newPerson = new Person();
                     newPerson.UserName = model.Email;
+                    newPerson.isPlaying = false;
                     context.Persons.Add(newPerson);
                     context.SaveChanges();
                 }

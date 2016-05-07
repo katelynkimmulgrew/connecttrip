@@ -64,6 +64,7 @@ namespace ActualConnectTrip.Controllers
                     var person2 = db.getPersonById(board.Player2Id);
                     if (board.finished == true)
                     {
+                        currentPerson.isPlaying = false;
                         ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
                             return RedirectToAction("GameOver");
                     }
@@ -84,6 +85,7 @@ namespace ActualConnectTrip.Controllers
                         {
                             board.finished = true;
                             board.winnerID = currentPerson.Id;
+                            currentPerson.isPlaying = false;
                             ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
                             return RedirectToAction("GameOver");
                         }
@@ -147,6 +149,12 @@ namespace ActualConnectTrip.Controllers
                               where c.UserName.Equals(UserName)
                               select c).FirstOrDefault();
                 startInput.myid = infoUB.Id;
+
+                if(infoUB.isPlaying == true)
+                {
+                    ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
+                        return RedirectToAction("Board");
+                }
 
                 var allWaiting = (from c in enti.startGamePlayers where c.isStarted.Equals(false) select c);
 
@@ -237,7 +245,9 @@ namespace ActualConnectTrip.Controllers
                     person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
                                                                         // and set to false
                     person1.CurrentGameId = newgame.Id;
-                    person2.CurrentGameId = newgame.Id; 
+                    person2.CurrentGameId = newgame.Id;
+                    person1.isPlaying = true;
+                    person2.isPlaying = true; 
                     enti.SaveChanges();
                     return RedirectToAction("Board");
                 }
