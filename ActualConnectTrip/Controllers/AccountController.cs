@@ -159,6 +159,13 @@ namespace ActualConnectTrip.Controllers
                     var newPerson = new Person();
                     newPerson.UserName = model.Email;
                     newPerson.isPlaying = false;
+                    newPerson.LevelOneWins = 0;
+                    newPerson.LevelOneLose = 0;
+                    newPerson.LevelTwoWins = 0;
+                    newPerson.LevelTwoLose = 0;
+                    newPerson.LevelThreeWins = 0;
+                    newPerson.LevelThreeLose = 0;
+                   
                     context.Persons.Add(newPerson);
                     context.SaveChanges();
                 }
