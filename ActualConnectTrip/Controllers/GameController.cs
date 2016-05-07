@@ -146,13 +146,28 @@ namespace ActualConnectTrip.Controllers
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
                               select c).FirstOrDefault();
+                var oldgame=(from c in enti.startGamePlayers
+                                       where c.player1Id.Equals(infoUB.Id) 
+                                       && c.isStarted.Equals(false)
+                                       select c).FirstOrDefault();
+                if(oldgame!=null)
+                {
+                    return RedirectToAction("waitingPage");
+                }
+            }
+
+                using (Entities enti = new Entities())
+            {
+                var infoUB = (from c in enti.Persons
+                              where c.UserName.Equals(UserName)
+                              select c).FirstOrDefault();
                 startInput.myid = infoUB.Id;
 
                 var allWaiting = (from c in enti.startGamePlayers where c.isStarted.Equals(false) select c);
 
                 var recommended = infoUB.findMatch(allWaiting, enti);
 
-                if(recommended==null)
+                if (recommended == null)
                 {
                     startInput.Recommended = null;
                 }
@@ -160,7 +175,7 @@ namespace ActualConnectTrip.Controllers
                 {
                     startInput.Recommended = recommended.ToList();
                 }
-                
+
 
                 var watingGamer = (from c in enti.startGamePlayers
                                    where c.isStarted.Equals(false)
@@ -249,9 +264,44 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult waitingPage()
         {
-            return View();
+            var UserName = User.Identity.Name;
+            using (Entities enti = new Entities())
+            {
+                var infoUB = (from c in enti.Persons
+                              where c.UserName.Equals(UserName)
+                              select c).FirstOrDefault();
+                var oldgame = (from c in enti.startGamePlayers
+                               where c.player1Id.Equals(infoUB.Id)
+                               && c.isStarted.Equals(false)
+                               select c).FirstOrDefault();
+                if (oldgame != null)
+                {
+                    return View();
+                }
+                else { return RedirectToAction("stindex"); }
+            }
+            //return View();
+        }
+
+        [HttpPost]
+        public ActionResult waitingPage(int cancel)
+        {
+            var UserName = User.Identity.Name;
+            using (Entities enti = new Entities())
+            {
+                var infoUB = (from c in enti.Persons
+                              where c.UserName.Equals(UserName)
+                              select c).FirstOrDefault();
+                var oldgame = (from c in enti.startGamePlayers
+                               where c.player1Id.Equals(infoUB.Id)
+                               && c.isStarted.Equals(false)
+                               select c).FirstOrDefault();
+                oldgame.isStarted = true;
+                enti.SaveChanges();
+            }
+            return RedirectToAction("stindex");
         }
 
 
-        }
+    }
 }
