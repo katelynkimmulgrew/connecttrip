@@ -9,12 +9,39 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <input type="text" name="keyword" />
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="search" class="btn btn-default" />
+            @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
+            @Html.HiddenFor(model => model.request, new { Value = true })
+            <input type="submit" value="Request" class="btn btn-default" />
         </div>
     </div>
 }
 
+
+<h3>Or play with these players?</h3>
+
+<table class="table">
+
+    @foreach (var item in Model.rivals)
+    {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.player1Id)
+                </td>
+        </tr>
+        <tr>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <td>
+                    @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
+                    @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
+                    @Html.HiddenFor(model => model.request, new { Value = false })
+                    <input type="submit" value="Accept" class="btn btn-default" />
+                </td>
+            }
+        </tr>
+    }
+</table>

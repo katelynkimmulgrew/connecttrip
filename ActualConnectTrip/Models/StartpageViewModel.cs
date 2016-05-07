@@ -11,7 +11,7 @@ namespace ActualConnectTrip.Models
     {
         public int myid { get; set; }
         public virtual List<startGamePlayer> rivals { get; set; }
-
-        public int oppoid { get; set;}
+        public int? oppoid { get; set;}
+        public Boolean? request { get; set; }
     }
 }
