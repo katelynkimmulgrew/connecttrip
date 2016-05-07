@@ -113,6 +113,108 @@ namespace ActualConnectTrip.Controllers
                 };
                 return View(model);
             }             
-        }        
-    }
+        }
+
+
+        public ActionResult stindex()
+        {
+            var UserName = User.Identity.Name;
+            StartpageViewModel startInput = new StartpageViewModel();
+
+            using (Entities enti = new Entities())
+            {
+                var infoUB = (from c in enti.Persons
+                              where c.UserName.Equals(UserName)
+                              select c).FirstOrDefault();
+                startInput.myid = infoUB.Id;
+
+                var watingGamer = (from c in enti.startGamePlayers
+                                   where c.isStarted.Equals(false)
+                                   && c.level.Equals(1)
+                                   select c).Take(3).ToList();
+
+                startInput.L1rivals = watingGamer;
+
+                var watingGamer2 = (from c in enti.startGamePlayers
+                                    where c.isStarted.Equals(false)
+                                    && c.level.Equals(2)
+                                    select c).Take(3).ToList();
+
+                startInput.L2rivals = watingGamer2;
+
+                var watingGamer3 = (from c in enti.startGamePlayers
+                                    where c.isStarted.Equals(false)
+                                    && c.level.Equals(3)
+                                    select c).Take(3).ToList();
+
+                startInput.L3rivals = watingGamer3;
+            }
+            return View(startInput);
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult stindex(StartpageViewModel startdata)
+        {
+            if (startdata.request == true)
+            {
+                startGamePlayer newstart = new startGamePlayer();
+                newstart.player1Id = startdata.myid;
+                newstart.level = startdata.gamelevel;
+                newstart.isStarted = false;
+                using (Entities enti = new Entities())
+                {
+                    enti.startGamePlayers.Add(newstart);
+                    enti.SaveChanges();
+
+                }
+                return RedirectToAction("waitingPage");
+                //return View();
+            }
+            else
+            {
+                using (Entities enti = new Entities())
+                {
+                    Game newgame = ConnectTripLogic.setBoard(enti);
+                    newgame.Player1Id = startdata.oppoid ?? default(int);
+                    newgame.Player2Id = startdata.myid;
+                    newgame.level = startdata.gamelevel;
+                   
+                    int ID = newgame.Id;
+                    var removeStart = (from c in enti.startGamePlayers
+                                       where c.player1Id.Equals(newgame.Player1Id)
+                                       && c.isStarted.Equals(false)
+                                       select c).FirstOrDefault();
+                    removeStart.isStarted = true;
+                    newgame.currentUser =true;
+
+                    var person1= (from c in enti.Persons
+                                  where c.Id.Equals(newgame.Player1Id)
+                                  select c).FirstOrDefault();
+                    person1.assignedBool = true;
+
+                    var person2 = (from c in enti.Persons
+                                   where c.Id.Equals(newgame.Player2Id)
+                                   select c).FirstOrDefault();
+                    person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
+                                                                        // and set to false
+                    enti.SaveChanges();
+                    return RedirectToAction("Board",new { id=ID});
+                }
+                //return View('game','GamePage');
+            }
+
+        }
+
+
+        public ActionResult waitingPage()
+        {
+            return View();
+        }
+
+
+        }
 }
