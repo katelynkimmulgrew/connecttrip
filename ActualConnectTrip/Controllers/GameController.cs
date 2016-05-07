@@ -21,13 +21,14 @@ namespace ActualConnectTrip.Controllers
         {
             return View();
         }
-        public ActionResult Board(int id)
+        public ActionResult Board()
         {
             using(var db = new Entities())
             {
-                Game board = db.getGameById(id);
-                bool? currentBool = board.currentUser;
+                
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
+                Game board = db.getGameById(currentPerson.CurrentGameId);
+                bool? currentBool = board.currentUser;
                 if (currentBool == currentPerson.assignedBool)
                 {
                     ViewBag.Turn = "It is your turn";
@@ -43,18 +44,30 @@ namespace ActualConnectTrip.Controllers
 
         [HttpPost]
 
-        public ActionResult Board(int id, int col)
+        public ActionResult Board(int col)
         {
             lock (lockObject)
             {
                 using (var db = new Entities())
                 {
-                    Game board = db.getGameById(id);
-                    bool? currentBool = board.currentUser;
+                    
                     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
+                    
+                    Game board = db.getGameById(currentPerson.CurrentGameId);
+                    if(board==null)
+                    {
+                        return RedirectToAction("NoGame");
+                    }
+                    
+                    bool? currentBool = board.currentUser;
                     var person1 = db.getPersonById(board.Player1Id);
                     var person2 = db.getPersonById(board.Player2Id);
-                    if(currentPerson!=person1&&currentPerson!=person2)
+                    if (board.finished == true)
+                    {
+                        ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                            return RedirectToAction("GameOver");
+                    }
+                    if (currentPerson!=person1&&currentPerson!=person2)
                     {
                         return RedirectToAction("stindex");
                     }
@@ -65,22 +78,25 @@ namespace ActualConnectTrip.Controllers
                         if (currentRow == null)
                         {
                             ViewBag.Message = "Cannot execute Move";
-                            return RedirectToAction("Board", new { id = id });
+                            return RedirectToAction("Board");
                         }
                         if (board.determineWin(db, currentRow, currentCol))
                         {
+                            board.finished = true;
+                            board.winnerID = currentPerson.Id;
+                            ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
                             return RedirectToAction("GameOver");
                         }
                         else
                         {
                             board.SwitchPlayers();
                         }
-                        return RedirectToAction("Board", new { id = id });
+                        return RedirectToAction("Board");
                     }
                     else
                     {
                         ViewBag.Message = "It is not your turn";
-                        return RedirectToAction("Board", new { id = id });
+                        return RedirectToAction("Board");
                     }
                     
              }
@@ -200,6 +216,7 @@ namespace ActualConnectTrip.Controllers
                     newgame.Player1Id = startdata.oppoid ?? default(int);
                     newgame.Player2Id = startdata.myid;
                     newgame.level = startdata.gamelevel;
+                    newgame.finished = false;
                    
                     int ID = newgame.Id;
                     var removeStart = (from c in enti.startGamePlayers
@@ -219,8 +236,10 @@ namespace ActualConnectTrip.Controllers
                                    select c).FirstOrDefault();
                     person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
                                                                         // and set to false
+                    person1.CurrentGameId = newgame.Id;
+                    person2.CurrentGameId = newgame.Id; 
                     enti.SaveChanges();
-                    return RedirectToAction("Board",new { id=ID});
+                    return RedirectToAction("Board");
                 }
                 //return View('game','GamePage');
             }

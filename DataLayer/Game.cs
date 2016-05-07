@@ -30,6 +30,9 @@ namespace DataLayer
 
         public bool currentUser { get; set; }
 
+        public bool finished { get; set; }
+
+        public int winnerID { get; set; }
         public int level { get; set; }
     }
 }
