@@ -70,7 +70,8 @@ namespace ActualConnectTrip.Controllers
                     }
                     if (currentPerson!=person1&&currentPerson!=person2)
                     {
-                        return RedirectToAction("stindex");
+                        ViewBag.Error = "You do not have permission to view that game";
+                        return RedirectToAction("Error");
                     }
                     if (currentBool==currentPerson.assignedBool)
                     {
@@ -97,7 +98,7 @@ namespace ActualConnectTrip.Controllers
                     }
                     else
                     {
-                        ViewBag.Message = "It is not your turn";
+                        ViewBag.Message = "Invalid Cannot Execute when it is not your turn";
                         return RedirectToAction("Board");
                     }
                     
@@ -262,7 +263,9 @@ namespace ActualConnectTrip.Controllers
                     person1.CurrentGameId = newgame.Id;
                     person2.CurrentGameId = newgame.Id;
                     person1.isPlaying = true;
-                    person2.isPlaying = true; 
+                    person2.isPlaying = true;
+                    newgame.Player1Id = person1.Id;
+                    newgame.Player2Id = person2.Id;
                     enti.SaveChanges();
                     return RedirectToAction("Board");
                 }

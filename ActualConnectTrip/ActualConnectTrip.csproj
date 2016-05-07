@@ -281,6 +281,7 @@
     <Content Include="Views\Game\stindex.cshtml" />
     <Content Include="Views\Game\waitingPage.cshtml" />
     <Content Include="Views\Game\NoGame.cshtml" />
+    <Content Include="Views\Game\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
