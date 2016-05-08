@@ -374,6 +374,20 @@ namespace ActualConnectTrip.Controllers
             return RedirectToAction("stindex");
         }
 
+        [HttpPost]
+        public ActionResult PracticeMath(int level)
+        {
+            using (var context = new Entities())
+            {
+                var mobj = new BizLogic.mathProblems();
+                var model1 = new PracticeMathViewModel()
+                {
+                    mathQuestion = mobj.mathQuestion(level)
+                };
+                return View();
+            }
+        }
+
 
     }
 }
