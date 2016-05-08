@@ -337,6 +337,11 @@ namespace ActualConnectTrip.Controllers
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
                               select c).FirstOrDefault();
+                if (infoUB.isPlaying == true)
+                {
+                    ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
+                    return RedirectToAction("Board");
+                }
                 var oldgame = (from c in enti.startGamePlayers
                                where c.player1Id.Equals(infoUB.Id)
                                && c.isStarted.Equals(false)
