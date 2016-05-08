@@ -28,7 +28,25 @@ namespace ActualConnectTrip.Controllers
                 
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                 Game board = db.getGameById(currentPerson.CurrentGameId);
+                if (board == null)
+                {
+                    return RedirectToAction("NoGame");
+                }
+                if (board.finished == true)
+                {
+
+                    ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+
+                    return RedirectToAction("GameOver");
+                }
+                var person1 = db.getPersonById(board.Player1Id);
+                var person2 = db.getPersonById(board.Player2Id);
                 bool? currentBool = board.currentUser;
+                if (currentPerson != person1 && currentPerson != person2)
+                {
+                    ViewBag.Error = "You do not have permission to view that game";
+                    return RedirectToAction("Error");
+                }
                 if (currentBool == currentPerson.assignedBool)
                 {
                     ViewBag.Turn = "It is your turn";
@@ -55,10 +73,7 @@ namespace ActualConnectTrip.Controllers
                     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                     
                     Game board = db.getGameById(currentPerson.CurrentGameId);
-                    if(board==null)
-                    {
-                        return RedirectToAction("NoGame");
-                    }
+                   
 
 
                     
@@ -75,31 +90,8 @@ namespace ActualConnectTrip.Controllers
                         db.SaveChanges();
                         return RedirectToAction("GameOver");
                     }
-                    if (board.finished == true &&currentPerson.isPlaying==true)
-                    {
-                        currentPerson.isPlaying = false;
-                        if (board.level == 1)
-                        {
-                            currentPerson.LevelOneLose++;
-
-                        }
-                        else if (board.level == 2)
-                        {
-                            currentPerson.LevelTwoLose++;
-                        }
-                        else
-                        {
-                            currentPerson.LevelThreeLose++;
-                        }
-                        ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
-                        db.SaveChanges();
-                            return RedirectToAction("GameOver");
-                    }
-                    if (currentPerson!=person1&&currentPerson!=person2)
-                    {
-                        ViewBag.Error = "You do not have permission to view that game";
-                        return RedirectToAction("Error");
-                    }
+                    
+                    
                     if (currentBool==currentPerson.assignedBool)
                     {
                         Column currentCol = db.getCol(col, board);
@@ -114,19 +106,32 @@ namespace ActualConnectTrip.Controllers
                             board.finished = true;
                             board.winnerID = currentPerson.Id;
                             currentPerson.isPlaying = false;
+                            Person otherPerson;
+                            if(currentPerson==person1)
+                            {
+                                otherPerson = person2;
+                            }
+                            else
+                            {
+                                otherPerson = person1;
+                            }
+                            otherPerson.isPlaying = false;
                             ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
                             if (board.level == 1)
                             {
                                 currentPerson.LevelOneWins++;
+                                otherPerson.LevelOneLose++;
 
                             }
                             else if (board.level == 2)
                             {
                                 currentPerson.LevelTwoWins++;
+                                otherPerson.LevelTwoLose++;
                             }
                             else
                             {
                                 currentPerson.LevelThreeWins++;
+                                otherPerson.LevelThreeLose++;
                             }
                             db.SaveChanges();
                             return RedirectToAction("GameOver");
