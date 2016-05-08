@@ -200,6 +200,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PracticeMathController.cs" />
+    <Compile Include="Controllers\forumController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -207,7 +208,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PracticeMathViewModel.cs" />
-    <Compile Include="Models\showViewModel.cs" />
+    <Compile Include="Models\forumViewModel.cs" />
     <Compile Include="Models\StartpageViewModel.cs" />
     <Compile Include="Models\StatsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -281,6 +282,7 @@
     <Content Include="Views\Game\stindex.cshtml" />
     <Content Include="Views\Game\waitingPage.cshtml" />
     <Content Include="Views\Game\NoGame.cshtml" />
+    <Content Include="Views\forum\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
