@@ -377,6 +377,8 @@ namespace ActualConnectTrip.Controllers
         [HttpPost]
         public ActionResult PracticeMath(int level)
         {
+           
+            
             using (var context = new Entities())
             {
                 var mobj = new BizLogic.mathProblems();
