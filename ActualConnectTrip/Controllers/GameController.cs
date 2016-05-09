@@ -39,6 +39,15 @@ namespace ActualConnectTrip.Controllers
 
                     return RedirectToAction("GameOver");
                 }
+                if (board.isFull(db))
+                {
+                    person1.isPlaying = false;
+                    person2.isPlaying = false;
+                    board.finished = true;
+                    ViewBag.Winner = "No one won.  The board is full!";
+                    db.SaveChanges();
+                    return RedirectToAction("GameOver");
+                }
                 var person1 = db.getPersonById(board.Player1Id);
                 var person2 = db.getPersonById(board.Player2Id);
                 bool? currentBool = board.currentUser;
@@ -139,15 +148,7 @@ namespace ActualConnectTrip.Controllers
                         else
                         {
                             board.SwitchPlayers();
-                            if(board.isFull(db))
-                            {
-                                person1.isPlaying = false;
-                                person2.isPlaying = false;
-                                board.finished = true;
-                                ViewBag.Winner = "No one won.  The board is full!";
-                                db.SaveChanges();
-                                return RedirectToAction("GameOver");
-                            }
+                            
                         }
                         return RedirectToAction("Board");
                     }
