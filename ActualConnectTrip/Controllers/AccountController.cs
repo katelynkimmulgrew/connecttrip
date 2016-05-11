@@ -165,7 +165,14 @@ namespace ActualConnectTrip.Controllers
                     newPerson.LevelTwoLose = 0;
                     newPerson.LevelThreeWins = 0;
                     newPerson.LevelThreeLose = 0;
-                   
+                    newPerson.levelOneAnsweredCorrectly = 0;
+                    newPerson.levelOneAnsweredIncorrectly = 0;
+                    newPerson.levelTwoAnsweredCorrectly = 0;
+                    newPerson.levelTwoAnsweredIncorrectly = 0;
+                    newPerson.levelThreeAnsweredCorrectly = 0;
+                    newPerson.levelThreeAnsweredIncorrectly = 0;
+                    newPerson.overallAnsweredCorrectly = 0;
+                    newPerson.overllAnsweredIncorrectly = 0;
                     context.Persons.Add(newPerson);
                     context.SaveChanges();
                 }
