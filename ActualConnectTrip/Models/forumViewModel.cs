@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ActualConnectTrip.Models
 {
-    public class showViewModel
+    public class forumViewModel
     {
         public IEnumerable<DataLayer.Ques> model1 { get; set; }
         public DataLayer.Ques model2 { get; set; }

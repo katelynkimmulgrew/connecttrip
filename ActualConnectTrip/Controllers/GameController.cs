@@ -472,10 +472,10 @@ namespace ActualConnectTrip.Controllers
         }
 
         [HttpPost]
-        public ActionResult PracticeMath(int level)
+        public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
-           
-            
+
+            var level = inputdata.levelchosen;
             using (var context = new Entities())
             {
                 var mobj = new BizLogic.mathProblems();
@@ -485,6 +485,10 @@ namespace ActualConnectTrip.Controllers
                 };
                 return View();
             }
+        }
+        public ActionResult PracticeMath()
+        {
+            return View();
         }
 
         public PartialViewResult EachTurnMathQuestion(int level)
