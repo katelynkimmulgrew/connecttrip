@@ -196,19 +196,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\forumController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PracticeMathController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605070104560_migration1.cs" />
+    <Compile Include="Migrations\201605070104560_migration1.Designer.cs">
+      <DependentUpon>201605070104560_migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\forumViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PracticeMathViewModel.cs" />
+    <Compile Include="Models\showViewModel.cs" />
     <Compile Include="Models\StartpageViewModel.cs" />
     <Compile Include="Models\StatsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -283,7 +286,7 @@
     <Content Include="Views\Game\waitingPage.cshtml" />
     <Content Include="Views\Game\NoGame.cshtml" />
     <Content Include="Views\Game\Error.cshtml" />
-    <Content Include="Views\forum\Show.cshtml" />
+    <Content Include="Views\Game\EachTurnMathQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -307,6 +310,11 @@
       <Project>{8bc8697b-bde9-44e3-9dc3-e56ba5d9ed69}</Project>
       <Name>DataLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605070104560_migration1.resx">
+      <DependentUpon>201605070104560_migration1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
