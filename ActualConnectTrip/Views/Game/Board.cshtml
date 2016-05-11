@@ -25,7 +25,12 @@ else if (i == false)
 }
 @if(!currentPerson.answeredMathQuestion)
 {
-    //the code to ask a math questio
+   @* @Html.TextBox("mathAnswer", )*@
+    @Html.Raw("<input type='text' name='answer'>")
+    using (Html.BeginForm())
+    {
+        <input type="submit" value="submit Answer"/>
+    }
 }
 
 <table>
