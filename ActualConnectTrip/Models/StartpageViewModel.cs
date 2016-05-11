@@ -17,6 +17,12 @@ namespace ActualConnectTrip.Models
         public virtual List<startGamePlayer> Recommended { get; set; }
 
         public bool isThereRecommended { get; set; }
+
+        public bool isThereOtherGamesLevel1 { get; set; }
+
+        public bool isThereOtherGamesLevel2 { get; set; }
+
+        public bool isThereOtherGamesLevel3 { get; set; }
         public int? oppoid { get; set;}
         public Boolean? request { get; set; }
         public int gamelevel { get; set; }
