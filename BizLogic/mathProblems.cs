@@ -62,7 +62,7 @@ namespace BizLogic
             dt.Columns.Add("question", typeof(string), question);
             DataRow row = dt.NewRow();
             dt.Rows.Add(row);
-            return (string)row["question"]));//int.Parse((string)row["question"]);
+            return (string)row["question"];//int.Parse((string)row["question"]);
         }
     }
 }
