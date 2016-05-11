@@ -47,7 +47,7 @@
         {
             <tr>
                 <td>
-                    Html.DisplayFor(modelItem => item.player1Id)
+                    @Html.DisplayFor(modelItem => item.player1Id)
                 </td>
             </tr>
             <tr>
@@ -55,10 +55,10 @@
                 {
                     Html.AntiForgeryToken();
                     <td>
-                        Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
-                        Html.HiddenFor(model => model.myid, new { Value = Model.myid });
-                        Html.HiddenFor(model => model.gamelevel, new { Value = 1 });
-                        Html.HiddenFor(model => model.request, new { Value = false });
+                        @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
+                        @Html.HiddenFor(model => model.myid, new { Value = Model.myid });
+                        @Html.HiddenFor(model => model.gamelevel, new { Value = 1 });
+                        @Html.HiddenFor(model => model.request, new { Value = false });
                         <input type="submit" value="Accept" class="btn btn-default" />
                     </td>
                 }
@@ -76,20 +76,23 @@
         <tr>
             level 1:
         </tr>
+        foreach (var item in Model.L1rivals)
+        {
+
         <tr>
                 <td>
-                    Html.DisplayFor(modelItem => item.player1Id)
+                    @Html.DisplayFor(modelItem => item.player1Id)
                 </td>
             </tr>
             <tr>
-                using (Html.BeginForm())
+                @using (Html.BeginForm())
                 {
-                Html.AntiForgeryToken();
+                @Html.AntiForgeryToken();
                 <td>
-                    Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
-                    Html.HiddenFor(model => model.myid, new { Value = Model.myid });
-                    Html.HiddenFor(model => model.gamelevel, new { Value = 1 });
-                    Html.HiddenFor(model => model.request, new { Value = false });
+                    @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
+                    @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
+                    @Html.HiddenFor(model => model.gamelevel, new { Value = 1 })
+                   @Html.HiddenFor(model => model.request, new { Value = false })
                     <input type="submit" value="Accept" class="btn btn-default" />
                 </td>
                 }
@@ -110,18 +113,19 @@
 
             <tr>
                 <td>
-                    Html.DisplayFor(modelItem => item.player1Id)
+                  @Html.DisplayFor(modelItem => item.player1Id)
+                   
                 </td>
             </tr>
             <tr>
-                using (Html.BeginForm())
+                @using (Html.BeginForm())
                 {
-                Html.AntiForgeryToken();
+                @Html.AntiForgeryToken();
                 <td>
-                    Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
-                    Html.HiddenFor(model => model.myid, new { Value = Model.myid });
-                    Html.HiddenFor(model => model.gamelevel, new { Value = 2 });
-                    Html.HiddenFor(model => model.request, new { Value = false });
+                   @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
+                   @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
+                   @Html.HiddenFor(model => model.gamelevel, new { Value = 2 })
+                   @Html.HiddenFor(model => model.request, new { Value = false })
                     <input type="submit" value="Accept" class="btn btn-default" />
                 </td>
                 }
@@ -140,18 +144,18 @@
     {
         <tr>
             <td>
-                Html.DisplayFor(modelItem => item.player1Id)
+                @Html.DisplayFor(modelItem => item.player1Id)
             </td>
         </tr>
         <tr>
-            using (Html.BeginForm())
+            @using (Html.BeginForm())
             {
-                Html.AntiForgeryToken();
+                @Html.AntiForgeryToken();
                 <td>
-                    Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
-                    Html.HiddenFor(model => model.myid, new { Value = Model.myid });
-                    Html.HiddenFor(model => model.gamelevel, new { Value = 3 });
-                    Html.HiddenFor(model => model.request, new { Value = false });
+                   @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
+                   @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
+                   @Html.HiddenFor(model => model.gamelevel, new { Value = 3 })
+                   @Html.HiddenFor(model => model.request, new { Value = false })
                     <input type="submit" value="Accept" class="btn btn-default" />
                 </td>
             }
