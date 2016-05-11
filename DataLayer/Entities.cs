@@ -20,7 +20,7 @@ namespace DataLayer
         public virtual DbSet<Row> Rows { get; set; }
 
         public virtual DbSet<Column> Columns { get; set; }
-        public virtual DbSet<mathProblemResult> Result { get; set; }
+        
 
         public virtual DbSet<Ques> Questions { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }

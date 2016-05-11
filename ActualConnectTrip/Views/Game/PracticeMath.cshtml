@@ -4,7 +4,7 @@
     ViewBag.Title = "PracticeMath";
 }
 
-<h2>PracticeMath</h2>
+<h2>Practice Math Question</h2>
 
 
 @using (Html.BeginForm())
@@ -37,3 +37,7 @@
         <input type="submit" value="choose" class="btn btn-default" />
     </div>
 }
+
+<p> Your Leve  Game Question is: @Model.mathQuestion</p>
+
+<p> please write your answer here: </p><input id="Submit1" type="submit" value="submit" />
