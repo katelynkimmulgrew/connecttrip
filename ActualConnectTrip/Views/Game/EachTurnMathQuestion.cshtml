@@ -1,0 +1,8 @@
+﻿@model ActualConnectTrip.Models.PracticeMathViewModel
+@{
+    ViewBag.Title = "EachTurnMathQuestion";
+}
+
+<h2>Please answer the question correctly to play your turn</h2>
+<p>Question: @Model.mathQuestion</p>
+<p>Please enter your answer: @Html.TextBoxFor(model => model.mathAnswer)</p>

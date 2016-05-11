@@ -27,7 +27,19 @@ namespace DataLayer
 
         public bool answeredMathQuestion { get; set; }
 
-        
+        public int levelOneAnsweredCorrectly { get; set; }
+        public int levelOneAnsweredIncorrectly { get; set; }
+
+        public int levelTwoAnsweredCorrectly { get; set; }
+        public int levelTwoAnsweredIncorrectly { get; set; }
+
+        public int levelThreeAnsweredCorrectly { get; set; }
+        public int levelThreeAnsweredIncorrectly { get; set; }
+
+        public int overallAnsweredCorrectly { get; set;}
+
+        publt int overllAndsweredIncorrectly { get; set; }
+
         public bool isPlaying { get; set; }
         public bool? assignedBool { get; set; }
     }

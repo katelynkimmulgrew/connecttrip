@@ -52,17 +52,17 @@ namespace BizLogic
             builder.Append(operand);
             builder.Append(op2);
             string output = builder.ToString();
-            Console.WriteLine("question:" + output);
+            //Console.WriteLine("question:" + output);
             return output;
         }
 
-        public int mathAnswer(string question)
+        public string mathAnswer(string question)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("question", typeof(string), question);
             DataRow row = dt.NewRow();
             dt.Rows.Add(row);
-            return int.Parse((string)row["question"]);
+            return (string)row["question"]));//int.Parse((string)row["question"]);
         }
     }
 }

@@ -28,32 +28,29 @@ namespace ActualConnectTrip.Controllers
                 
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                 Game board = db.getGameById(currentPerson.CurrentGameId);
-                var person1 = db.getPersonById(board.Player1Id);
-                var person2 = db.getPersonById(board.Player2Id);
                 if (board == null)
                 {
                     return RedirectToAction("NoGame");
                 }
-                
-                    if (board.finished == true)
-                    {
+                if (board.finished == true)
+                {
 
-                        ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                    ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
 
-                        return RedirectToAction("GameOver");
-                    }
-                    if (board.isFull(db))
-                    {
-                        person1.isPlaying = false;
-                        person2.isPlaying = false;
-                        board.finished = true;
-                        ViewBag.Winner = "No one won.  The board is full!";
-                        db.SaveChanges();
-                        return RedirectToAction("GameOver");
-                    }
-                
-                
-                
+                    return RedirectToAction("GameOver");
+                }
+                var person1 = db.getPersonById(board.Player1Id);
+                var person2 = db.getPersonById(board.Player2Id);
+                if (board.isFull(db))
+                {
+                    person1.isPlaying = false;
+                    person2.isPlaying = false;
+                    board.finished = true;
+                    ViewBag.Winner = "No one won.  The board is full!";
+                    db.SaveChanges();
+                    return RedirectToAction("GameOver");
+                }
+              
                 bool? currentBool = board.currentUser;
                 if (currentPerson != person1 && currentPerson != person2)
                 {
@@ -404,6 +401,17 @@ namespace ActualConnectTrip.Controllers
             }
         }
 
-
+        public PartialViewResult EachTurnMathQuestion(int level)
+        {
+            using (var context = new Entities())
+            {
+                var mathObj = new mathProblems();
+                var mathViewModel = new PracticeMathViewModel()
+                {
+                    mathQuestion = mathObj.mathQuestion(level)
+                };
+                return PartialView("EachTurnMathQuestion");
+            }
+        }
     }
 }
