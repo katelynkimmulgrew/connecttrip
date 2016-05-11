@@ -626,22 +626,25 @@ namespace ActualConnectTrip.Controllers
 
         [HttpPost]
         //  public ActionResult PracticeMath(PracticeMathViewModel inputdata)
+
+        /* var level = inputdata.levelchosen;
+         using (var context = new Entities())
+         {
+
+             var mobj = new BizLogic.mathProblems();
+             var model = new PracticeMathViewModel()
+             {
+                 mathQuestion = mobj.mathQuestion(level),
+                 isVisable = false
+             };
+             context.SaveChanges();
+
+             return View(model);
+         }*/
+
+        
         public ActionResult PracticeMath(string level)
         {
-            /* var level = inputdata.levelchosen;
-             using (var context = new Entities())
-             {
-
-                 var mobj = new BizLogic.mathProblems();
-                 var model = new PracticeMathViewModel()
-                 {
-                     mathQuestion = mobj.mathQuestion(level),
-                     isVisable = false
-                 };
-                 context.SaveChanges();
-
-                 return View(model);
-             }*/
             var mobj = new BizLogic.mathProblems();
             if(level=="1")
             {
@@ -669,8 +672,7 @@ namespace ActualConnectTrip.Controllers
                     mathQuestion = mobj.mathQuestion(3)
                 };
                 return View(model);
-            }
-         
+            }     
         }
 
 
@@ -682,11 +684,19 @@ namespace ActualConnectTrip.Controllers
                 {
                     isVisable = true
                 };
-                context.SaveChanges();
                 return View(model);
             }
-
-                
+        }
+        public ActionResult PracticeMath(int answer)
+        {
+            using (var context = new Entities())
+            {
+                var model = new PracticeMathViewModel()
+                {
+                    isVisable = true
+                };
+                return View(model);
+            }
         }
 
         public PartialViewResult EachTurnMathQuestion(int level)

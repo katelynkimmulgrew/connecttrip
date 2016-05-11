@@ -6,47 +6,38 @@
 
 <h2>Practice Math Question</h2>
 
-@if (Model.isVisable) {
+@if (Model.isVisable)
+{
     using (Html.BeginForm())
     {
 
-    <div class="col-md-offset-2 col-md-10">
-        <div>Level 1 Game</div>
-
-      
-
-        <!--<input type="submit" value="Select" class="btn btn-default" />-->
-        <input type="submit" class="btn btn-default" value="1" name="SelectLevel" />
-    </div>
+        <div class="col-md-offset-2 col-md-10">
+            <div>Level 1 Game</div>
+            <!--<input type="submit" value="Select" class="btn btn-default" />-->
+            <input type="submit" class="btn btn-default" value="1" name="SelectLevel" />
+        </div>
 
 
 
-    <div class="col-md-offset-2 col-md-10">
-        <div>Level 2 Game</div>
-
-       
-
-        <!--<input type="submit" value="Select" class="btn btn-default" />-->
-        <input type="submit" class="btn btn-default" value="2" name="SelectLevel" />
-    </div>
+        <div class="col-md-offset-2 col-md-10">
+            <div>Level 2 Game</div>
+            <!--<input type="submit" value="Select" class="btn btn-default" />-->
+            <input type="submit" class="btn btn-default" value="2" name="SelectLevel" />
+        </div>
 
 
-    <div class="col-md-offset-2 col-md-10">
-        <div>Level 3 Game</div>
-
-     
-
-       <!-- <input type="submit" value="Select" class="btn btn-default" />-->
-        <input type="submit" class="btn btn-default" value="3" name="SelectLevel" />
-    </div>
-}
+        <div class="col-md-offset-2 col-md-10">
+            <div>Level 3 Game</div>
+            <!-- <input type="submit" value="Select" class="btn btn-default" />-->
+            <input type="submit" class="btn btn-default" value="3" name="SelectLevel" />
+        </div>
+    }
 }
 
 @if (!Model.isVisable)
-    {<p> Your Leve  Game Question is: @Model.mathQuestion</p>
+{<p> Your Leve  Game Question is: @Model.mathQuestion</p>
+    <!--<p> please write your answer here: </p><input id="Text1" type="text" />-->
+    <p>please write your answer here: @Html.TextBoxFor(model => model.mathAnswer)</p>
+    <input id="Submit1" type="submit" value="submit" />
 
-    <p> please write your answer here: </p><input id="Text1" type="text" /><input id="Submit1" type="submit" value="submit" />
-
-    <p>The right answer is: @Model.mathAnswer</p> 
-}
-
+    }
