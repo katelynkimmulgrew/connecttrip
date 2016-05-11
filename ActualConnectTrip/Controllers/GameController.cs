@@ -572,7 +572,7 @@ namespace ActualConnectTrip.Controllers
         }
 
         [HttpPost]
-        public ActionResult waitingPage(int cancel)
+        public ActionResult waitingPage(StartpageViewModel startdata)
         {
             var UserName = User.Identity.Name;
             using (Entities enti = new Entities())
