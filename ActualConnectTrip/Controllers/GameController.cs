@@ -439,7 +439,8 @@ namespace ActualConnectTrip.Controllers
                 {
                     using (Entities enti = new Entities())
                     {
-                        Game newgame = ConnectTripLogic.setBoard(enti);
+                        Game newgame = ConnectTripLogic.setBoard();
+                        enti.Games.Add(newgame);
                         newgame.Player1Id = startdata.oppoid ?? default(int);
                         newgame.Player2Id = startdata.myid;
                         newgame.level = startdata.gamelevel;
