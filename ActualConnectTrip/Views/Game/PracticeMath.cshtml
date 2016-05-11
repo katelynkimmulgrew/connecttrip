@@ -1,0 +1,41 @@
+﻿@model ActualConnectTrip.Models.PracticeMathViewModel
+
+@{
+    ViewBag.Title = "PracticeMath";
+}
+
+<h2>PracticeMath</h2>
+
+
+@using (Html.BeginForm())
+{
+
+
+
+    <div class="col-md-offset-2 col-md-10">
+        <div>Level 1 game</div>
+        
+        @Html.HiddenFor(model => model.levelchosen, new { Value = 1 })
+        
+        <input type="submit" value="Request" class="btn btn-default" />
+    </div>
+
+
+
+    <div class="col-md-offset-2 col-md-10">
+        <div>Level 2 game</div>
+
+        @Html.HiddenFor(model => model.levelchosen, new { Value = 2 })
+
+        <input type="submit" value="Request" class="btn btn-default" />
+    </div>
+
+
+    <div class="col-md-offset-2 col-md-10">
+        <div>Level 3 game</div>
+
+        @Html.HiddenFor(model => model.levelchosen, new { Value = 3 })
+
+        <input type="submit" value="Request" class="btn btn-default" />
+    </div>
+}
