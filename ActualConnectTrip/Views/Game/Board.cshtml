@@ -45,7 +45,7 @@ else if (i == false)
 </table>
 @if (currentPerson.answeredMathQuestion)
 {
-    @using (Html.BeginForm(FormMethod.Post))
+    using (Html.BeginForm(FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         for (int j = 0; j < Model.maxCols; j++)

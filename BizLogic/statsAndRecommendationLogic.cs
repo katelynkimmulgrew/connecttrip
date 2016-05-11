@@ -76,7 +76,7 @@ namespace BizLogic
                 }
                 else
                 {
-                    possUsers = (from u in pool where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(Context.getPersonById(u.player1Id).LevelThreeWins, Context.getPersonById(u.player1Id).LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(u)) <= 50 select u);
+                    possUsers = (from u in pool where Math.Abs(percentage(user.LevelThreeWins, user.LevelThreeLose) - percentage(Context.getPersonById(u.player1Id).LevelThreeWins, Context.getPersonById(u.player1Id).LevelTwoLose)) <= 30 && Math.Abs(overallPercentage(user) - overallPercentage(user)) <= 50 select u);
                 }
 
             /*Random rand = new Random();
