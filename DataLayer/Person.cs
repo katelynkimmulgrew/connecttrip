@@ -25,6 +25,7 @@ namespace DataLayer
         public double Answered { get; set; }
         public double DidNotAnswer { get; set; }
 
+        public bool isPlaying { get; set; }
         public bool? assignedBool { get; set; }
     }
 }
