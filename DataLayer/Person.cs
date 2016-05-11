@@ -38,9 +38,11 @@ namespace DataLayer
 
         public int overallAnsweredCorrectly { get; set;}
 
-        public int overllAndsweredIncorrectly { get; set; }
+        public int overllAnsweredIncorrectly { get; set; }
 
         public bool isPlaying { get; set; }
         public bool? assignedBool { get; set; }
+
+        public int? currentMathProblemID { get; set; }
     }
 }

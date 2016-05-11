@@ -45,6 +45,15 @@ else if (i == false)
 </table>
 @if (currentPerson.answeredMathQuestion)
 {
+    <p>Answer was @ViewBag.Answer</p>
+    if(ViewBag.isRight=="true")
+    {
+        <p>Your answer was right.</p>
+    }
+    else
+    {
+        <p>Your answer was wrong.</p>
+    }
     using (Html.BeginForm(FormMethod.Post))
     {
         @Html.AntiForgeryToken()

@@ -35,6 +35,25 @@ namespace BizLogic
             return percentage(user.DidNotAnswer, user.Answered);
         }
 
+        public static double levelOneMathCorrectPerecentage(this Person user)
+        {
+            return percentage(user.levelOneAnsweredCorrectly, user.levelOneAnsweredIncorrectly);
+        }
+
+        public static double levelTwoMathCorrectPerecentage(this Person user)
+        {
+            return percentage(user.levelTwoAnsweredCorrectly, user.levelTwoAnsweredIncorrectly);
+        }
+
+        public static double levelThreeMathCorrectPerecentage(this Person user)
+        {
+            return percentage(user.levelThreeAnsweredCorrectly, user.levelThreeAnsweredIncorrectly);
+        }
+        public static double overallMathPercentage(this Person user)
+        {
+            return percentage(user.levelOneAnsweredCorrectly + user.levelTwoAnsweredCorrectly + user.levelThreeAnsweredCorrectly, user.levelOneAnsweredIncorrectly + user.levelTwoAnsweredIncorrectly + user.levelThreeAnsweredIncorrectly);
+        }
+
         public static double numGames(this Person user)
         {
             return user.Answered + user.DidNotAnswer;
@@ -137,27 +156,50 @@ namespace BizLogic
 
         public static string MathCompliment(this Person user)
         {
-            double lost = didNotAnwserPercentage(user);
+            /* double lost = didNotAnwserPercentage(user);
+            
+             string compliment = null;
+             if (lost >= 75.00)
+             {
+                 compliment = "You need to put more effort!";
+
+             }
+             else if (lost >= 50.00 && lost < 75.00)
+             {
+                 compliment = "You can do better!";
+
+             }
+             else if (lost >= 24.00 && lost < 50.00)
+             {
+                 compliment = "You are doing good!";
+             }
+             else
+             {
+                 compliment = "You are doing great! Kepp it up!";
+             }
+             return compliment;*/
+
+            double correctAnswers = overallMathPercentage(user);
             string compliment = null;
-            if (lost >= 75.00)
-            {
-                compliment = "You need to put more effort!";
-               
-            }
-            else if (lost >= 50.00 && lost < 75.00)
-            {
-                compliment = "You can do better!";
-                
-            }
-            else if (lost >= 24.00 && lost < 50.00)
-            {
-                compliment = "You are doing good!";
-            }
-            else
+            if (correctAnswers >= 75.00)
             {
                 compliment = "You are doing great! Kepp it up!";
             }
+            else if (correctAnswers >= 50.00 && correctAnswers < 75.00)
+            {
+                compliment = "You are doing good!";
+            }
+            else if (correctAnswers >= 24.00 && correctAnswers < 50.00)
+            {
+                compliment = "You can do better!";
+            }
+            else
+            {
+                compliment = "You need to put more effort!";
+            }
             return compliment;
+
+
         }
     }
 }

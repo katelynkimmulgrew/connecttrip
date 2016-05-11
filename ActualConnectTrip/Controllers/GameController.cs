@@ -23,9 +23,9 @@ namespace ActualConnectTrip.Controllers
         }
         public ActionResult Board()
         {
-            using(var db = new Entities())
+            using (var db = new Entities())
             {
-                
+
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                 Game board = db.getGameById(currentPerson.CurrentGameId);
                 if (board == null)
@@ -39,6 +39,30 @@ namespace ActualConnectTrip.Controllers
 
                     return RedirectToAction("GameOver");
                 }
+                if (currentPerson.answeredMathQuestion == false)
+                {
+                    if(currentPerson.currentMathProblemID == null) {
+                        mathProblemResult problemData = new mathProblemResult();
+                        currentPerson.currentMathProblemID = problemData.Id;
+                        mathProblems problem = new mathProblems();
+                        string question = problem.mathQuestion(board.level);
+                        problemData.question = question;
+                        string answer = problem.mathAnswer(question);
+                        problemData.answer = answer;
+                        db.mathProblemResults.Add(problemData);
+                        db.SaveChanges();
+                        ViewBag.Question = question;
+                    }
+
+                }
+                else {
+                    ViewBag.Question = db.getmathProblemResultById((int)currentPerson.currentMathProblemID).question;
+
+                }
+
+
+
+
                 var person1 = db.getPersonById(board.Player1Id);
                 var person2 = db.getPersonById(board.Player2Id);
                 if (board.isFull(db))
@@ -50,7 +74,7 @@ namespace ActualConnectTrip.Controllers
                     db.SaveChanges();
                     return RedirectToAction("GameOver");
                 }
-              
+
                 bool? currentBool = board.currentUser;
                 if (currentPerson != person1 && currentPerson != person2)
                 {
@@ -67,12 +91,12 @@ namespace ActualConnectTrip.Controllers
                 }
                 return View(board);
             }
-            
         }
+        
 
         [HttpPost]
 
-        public ActionResult Board(int col, string button)
+        public ActionResult Board(int col, string button, string answer)
         {
             
             lock (lockObject)
@@ -84,7 +108,53 @@ namespace ActualConnectTrip.Controllers
                     
                     Game board = db.getGameById(currentPerson.CurrentGameId);
                    
+                    if(currentPerson.answeredMathQuestion==false && answer!=null)
+                    {
+                        currentPerson.answeredMathQuestion = true;
+                        mathProblemResult problem = db.getmathProblemResultById((int)currentPerson.currentMathProblemID);
+                        ViewBag.Answer = problem.answer;
+                        ViewBag.isRight = problem.answer == answer;
+                        bool isRight = problem.answer == answer;
+                        if (isRight == false)
+                        {
+                            ViewBag.YourTurn = "You lost your turn";
+                            if (board.level == 1)
+                            {
+                                currentPerson.levelOneAnsweredIncorrectly++;
 
+                            }
+                            else if (board.level == 2)
+                            {
+                                currentPerson.levelTwoAnsweredIncorrectly++;
+                            }
+                            else
+                            {
+                                currentPerson.levelThreeAnsweredIncorrectly++;
+                            }
+                            currentPerson.overllAnsweredIncorrectly++;
+                            db.SaveChanges();
+
+                        }
+                        else
+                        {
+                            if (board.level == 1)
+                            {
+                                currentPerson.levelOneAnsweredCorrectly++;
+
+                            }
+                            else if (board.level == 2)
+                            {
+                                currentPerson.levelTwoAnsweredCorrectly++;
+                            }
+                            else
+                            {
+                                currentPerson.levelThreeAnsweredCorrectly++;
+                            }
+                            currentPerson.overallAnsweredCorrectly++;
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("Board");
+                    }
 
                     
                     bool? currentBool = board.currentUser;
@@ -184,11 +254,15 @@ namespace ActualConnectTrip.Controllers
                     levelOnePercentageView = statsAndRecommendationLogic.levelOnePercentage(currentPerson),
                     levelTwoPercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
                     levelThreePercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
-                    didNotAnswerView = statsAndRecommendationLogic.didNotAnwserPercentage(currentPerson),
+                    //didNotAnswerView = statsAndRecommendationLogic.didNotAnwserPercentage(currentPerson),
                     totalNumberOfGames = statsAndRecommendationLogic.numGames(currentPerson),
                     totalNumberOfWins = statsAndRecommendationLogic.numWins(currentPerson),
                     totalNumberOfLose = statsAndRecommendationLogic.numLose(currentPerson),
                     GameComplimentView = statsAndRecommendationLogic.GameCompliment(currentPerson),
+                    levelOneMathPercentage=statsAndRecommendationLogic.levelOneMathCorrectPerecentage(currentPerson),
+                    levelTwoMathPercentage=statsAndRecommendationLogic.levelTwoMathCorrectPerecentage(currentPerson),
+                    levelThreeMathPercentage=statsAndRecommendationLogic.levelThreeMathCorrectPerecentage(currentPerson),
+                    overAllCorrectAnswersPercentage=statsAndRecommendationLogic.overallMathPercentage(currentPerson),
                     MathComplimentView = statsAndRecommendationLogic.MathCompliment(currentPerson)
                 };
                 return View(model);
