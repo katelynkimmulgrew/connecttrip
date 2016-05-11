@@ -54,31 +54,10 @@ namespace BizLogic
         }
     
         
-            public static Game setBoard()
-            {
-                Game game = new Game();
+            
+               
 
-            game.maxCols = 6;
-            game.maxRows = 7;
-
-                for (int i = 1; i <= game.maxRows; i++)
-                {
-                    Column column = new Column();
-                    column.ColumnNumber = i;
-                    for (int j = 1; j <= game.maxCols; j++)
-                    {
-                        Row row = new Row { RowNumber = j, Value = null };
-                        column.Rows.Add(row);
-
-                    }
-                    game.Grid.Add(column);
-                
-                
-                }
-
-                return game;
-
-            }
+            
 
             public static Row determinePlace(this Game game, bool player, int columnNumber, Entities Context)
             {

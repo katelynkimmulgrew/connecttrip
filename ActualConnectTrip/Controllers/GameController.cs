@@ -312,6 +312,7 @@ namespace ActualConnectTrip.Controllers
                                        select c).FirstOrDefault();
                 if(oldgame!=null)
                 {
+                    
                     return RedirectToAction("waitingPage");
                 }
             }
@@ -400,12 +401,43 @@ namespace ActualConnectTrip.Controllers
                 {
                     startInput.isThereOtherGamesLevel3 = true;
                 }
+                
             }
+            
             return View(startInput);
         }
 
 
+        public Game setBoard()
+        {
+            using (var Context = new Entities())
+            {
+                Game game = new Game();
 
+                game.maxCols = 6;
+                game.maxRows = 7;
+
+                for (int i = 1; i <= game.maxRows; i++)
+                {
+                    Column column = new Column();
+                    column.ColumnNumber = i;
+                    Context.Columns.Add(column);
+                    for (int j = 1; j <= game.maxCols; j++)
+                    {
+                        Row row = new Row { RowNumber = j, Value = null };
+                        Context.Rows.Add(row);
+                        column.Rows.Add(row);
+
+                    }
+                    game.Grid.Add(column);
+                    Context.Games.Add(game);
+                    Context.SaveChanges();
+
+                }
+
+                return game;
+            }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -436,8 +468,8 @@ namespace ActualConnectTrip.Controllers
                 {
                     using (Entities enti = new Entities())
                     {
-                        Game newgame = ConnectTripLogic.setBoard();
-                        enti.Games.Add(newgame);
+                        Game newgame = setBoard();
+                        
                         newgame.Player1Id = startdata.oppoid ?? default(int);
                         newgame.Player2Id = startdata.myid;
                         newgame.level = startdata.gamelevel;
@@ -468,6 +500,7 @@ namespace ActualConnectTrip.Controllers
                         newgame.Player1Id = person1.Id;
                         newgame.Player2Id = person2.Id;
                         enti.SaveChanges();
+                        ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
                         return RedirectToAction("Board");
                     }
                 }
