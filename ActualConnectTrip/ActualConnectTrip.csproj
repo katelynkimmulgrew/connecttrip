@@ -286,6 +286,7 @@
     <Content Include="Views\Game\waitingPage.cshtml" />
     <Content Include="Views\Game\NoGame.cshtml" />
     <Content Include="Views\Game\Error.cshtml" />
+    <Content Include="Views\Game\EachTurnMathQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -401,6 +401,17 @@ namespace ActualConnectTrip.Controllers
             }
         }
 
-
+        public PartialViewResult EachTurnMathQuestion(int level)
+        {
+            using (var context = new Entities())
+            {
+                var mathObj = new mathProblems();
+                var mathViewModel = new PracticeMathViewModel()
+                {
+                    mathQuestion = mathObj.mathQuestion(level)
+                };
+                return PartialView("EachTurnMathQuestion");
+            }
+        }
     }
 }
