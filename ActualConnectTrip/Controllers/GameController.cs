@@ -591,23 +591,68 @@ namespace ActualConnectTrip.Controllers
         }
 
         [HttpPost]
-        public ActionResult PracticeMath(PracticeMathViewModel inputdata)
+        //  public ActionResult PracticeMath(PracticeMathViewModel inputdata)
+        public ActionResult PracticeMath(string level)
         {
+            /* var level = inputdata.levelchosen;
+             using (var context = new Entities())
+             {
 
-            var level = inputdata.levelchosen;
-            using (var context = new Entities())
+                 var mobj = new BizLogic.mathProblems();
+                 var model = new PracticeMathViewModel()
+                 {
+                     mathQuestion = mobj.mathQuestion(level),
+                     isVisable = false
+                 };
+                 context.SaveChanges();
+
+                 return View(model);
+             }*/
+            var mobj = new BizLogic.mathProblems();
+            if(level=="1")
             {
-                var mobj = new BizLogic.mathProblems();
-                var model1 = new PracticeMathViewModel()
+                var model = new PracticeMathViewModel()
                 {
-                    mathQuestion = mobj.mathQuestion(level)
+                    levelchosen = 1,
+                    mathQuestion = mobj.mathQuestion(1)
                 };
-                return View();
+                return View(model);
             }
+            else if(level=="2")
+            {
+                var model = new PracticeMathViewModel()
+                {
+                    levelchosen = 2,
+                    mathQuestion = mobj.mathQuestion(2)
+                };
+                return View(model);
+            }
+            else
+            {
+                var model = new PracticeMathViewModel()
+                {
+                    levelchosen = 3,
+                    mathQuestion = mobj.mathQuestion(3)
+                };
+                return View(model);
+            }
+         
         }
+
+
         public ActionResult PracticeMath()
         {
-            return View();
+            using (var context = new Entities())
+            {
+                var model = new PracticeMathViewModel()
+                {
+                    isVisable = true
+                };
+                context.SaveChanges();
+                return View(model);
+            }
+
+                
         }
 
         public PartialViewResult EachTurnMathQuestion(int level)

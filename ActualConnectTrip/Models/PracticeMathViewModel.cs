@@ -12,5 +12,7 @@ namespace ActualConnectTrip.Models
         public string mathAnswer { get; set; }
 
         public int levelchosen { get; set; }
+
+        public bool isVisable { get; set; }
     }
 }
