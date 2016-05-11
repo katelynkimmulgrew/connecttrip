@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
 namespace ActualConnectTrip.Controllers
 {
     public class ReadController : Controller
