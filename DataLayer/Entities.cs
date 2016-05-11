@@ -25,6 +25,18 @@ namespace DataLayer
         public virtual DbSet<Ques> Questions { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
 
+        public virtual DbSet<mathProblemResult> mathProblemResults { get; set; }
+
+        public mathProblemResult getmathProblemResultById(int id)
+        {
+            
+            return (from p in mathProblemResults
+                    where p.Id == id
+                    select p).FirstOrDefault();
+        
+    }
+        
+
         public Ques Getquesforid(int id)
         {
             return (from b in Questions
