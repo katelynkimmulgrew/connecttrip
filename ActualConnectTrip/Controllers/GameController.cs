@@ -17,6 +17,17 @@ namespace ActualConnectTrip.Controllers
             
 
     // GET: Game
+    public ActionResult Error()
+        {
+            return View();
+        }
+
+        public ActionResult NoGame()
+        {
+            return View();
+        }
+
+
     public ActionResult Index()
         {
             return View();
@@ -247,10 +258,7 @@ namespace ActualConnectTrip.Controllers
 
         
 
-        public ActionResult GameOver()
-        {
-            return View();
-        }
+       
 
         
 
@@ -304,6 +312,7 @@ namespace ActualConnectTrip.Controllers
                                        select c).FirstOrDefault();
                 if(oldgame!=null)
                 {
+                    
                     return RedirectToAction("waitingPage");
                 }
             }
@@ -392,7 +401,9 @@ namespace ActualConnectTrip.Controllers
                 {
                     startInput.isThereOtherGamesLevel3 = true;
                 }
+                
             }
+            
             return View(startInput);
         }
 
@@ -405,7 +416,7 @@ namespace ActualConnectTrip.Controllers
         {
             if (startdata.request == true)
             {
-                lock(lockObject)
+                lock (lockObject)
                 {
                     startGamePlayer newstart = new startGamePlayer();
                     newstart.player1Id = startdata.myid;
@@ -419,7 +430,7 @@ namespace ActualConnectTrip.Controllers
                     }
                     return RedirectToAction("waitingPage");
                 }
-                
+
                 //return View();
             }
             else
@@ -428,45 +439,68 @@ namespace ActualConnectTrip.Controllers
                 {
                     using (Entities enti = new Entities())
                     {
-                        Game newgame = ConnectTripLogic.setBoard(enti);
-                        newgame.Player1Id = startdata.oppoid ?? default(int);
-                        newgame.Player2Id = startdata.myid;
-                        newgame.level = startdata.gamelevel;
-                        newgame.finished = false;
+                        Game newgame = new Game();
 
-                        int ID = newgame.Id;
-                        var removeStart = (from c in enti.startGamePlayers
-                                           where c.player1Id.Equals(newgame.Player1Id)
-                                           && c.isStarted.Equals(false)
+                        newgame.maxCols = 6;
+                        newgame.maxRows = 7;
+
+                        for (int i = 1; i <= newgame.maxRows; i++)
+                        {
+                            Column column = new Column();
+                            column.ColumnNumber = i;
+                            enti.Columns.Add(column);
+                            for (int j = 1; j <= newgame.maxCols; j++)
+                            {
+                                Row row = new Row { RowNumber = j, Value = null };
+                                enti.Rows.Add(row);
+                                column.Rows.Add(row);
+
+                            }
+                            newgame.Grid.Add(column);
+                        }
+                            enti.Games.Add(newgame);
+                            enti.SaveChanges();
+
+                            newgame.Player1Id = startdata.oppoid ?? default(int);
+                            newgame.Player2Id = startdata.myid;
+                            newgame.level = startdata.gamelevel;
+                            newgame.finished = false;
+
+                            int ID = newgame.Id;
+                            var removeStart = (from c in enti.startGamePlayers
+                                               where c.player1Id.Equals(newgame.Player1Id)
+                                               && c.isStarted.Equals(false)
+                                               select c).FirstOrDefault();
+                            removeStart.isStarted = true;
+                            newgame.currentUser = true;
+
+                            var person1 = (from c in enti.Persons
+                                           where c.Id.Equals(newgame.Player1Id)
                                            select c).FirstOrDefault();
-                        removeStart.isStarted = true;
-                        newgame.currentUser = true;
+                            person1.assignedBool = true;
 
-                        var person1 = (from c in enti.Persons
-                                       where c.Id.Equals(newgame.Player1Id)
-                                       select c).FirstOrDefault();
-                        person1.assignedBool = true;
-
-                        var person2 = (from c in enti.Persons
-                                       where c.Id.Equals(newgame.Player2Id)
-                                       select c).FirstOrDefault();
-                        person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
-                                                                            // and set to false
-                        person1.CurrentGameId = newgame.Id;
-                        person2.CurrentGameId = newgame.Id;
-                        person1.isPlaying = true;
-                        person2.isPlaying = true;
-                        newgame.Player1Id = person1.Id;
-                        newgame.Player2Id = person2.Id;
-                        enti.SaveChanges();
-                        return RedirectToAction("Board");
+                            var person2 = (from c in enti.Persons
+                                           where c.Id.Equals(newgame.Player2Id)
+                                           select c).FirstOrDefault();
+                            person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
+                                                                                // and set to false
+                            person1.CurrentGameId = newgame.Id;
+                            person2.CurrentGameId = newgame.Id;
+                            person1.isPlaying = true;
+                            person2.isPlaying = true;
+                            newgame.Player1Id = person1.Id;
+                            newgame.Player2Id = person2.Id;
+                            enti.SaveChanges();
+                            ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
+                            return RedirectToAction("Board");
+                        }
                     }
-                }
-                
-                //return View('game','GamePage');
-            }
 
-        }
+                    //return View('game','GamePage');
+                }
+
+            }
+        
 
 
         public ActionResult Forum()
@@ -572,7 +606,7 @@ namespace ActualConnectTrip.Controllers
         }
 
         [HttpPost]
-        public ActionResult waitingPage(int cancel)
+        public ActionResult waitingPage(StartpageViewModel startdata)
         {
             var UserName = User.Identity.Name;
             using (Entities enti = new Entities())

@@ -1,4 +1,5 @@
-﻿
+﻿@model ActualConnectTrip.Models.StartpageViewModel 
+
 @{
     ViewBag.Title = "waitingPage";
 }
@@ -6,4 +7,14 @@
 <h2>Please wait for a game match!</h2>
 
 <h3>Cancel the request?</h3>
-<input type="button" value="Cancel" onclick="location.href='@Url.Action("waitingPage", "Game")'" />
+@*<input type="button" value="Cancel" onclick="location.href='@Url.Action("waitingPage", "Game")'" />*@
+@using (Html.BeginForm())
+{
+    <div class="col-md-offset-2 col-md-10">
+        
+        
+       
+        
+        <input type="submit" value="Cancel" class="btn btn-default" />
+    </div>
+}
