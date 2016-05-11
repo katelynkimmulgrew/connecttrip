@@ -131,7 +131,7 @@ namespace ActualConnectTrip.Controllers
                             {
                                 currentPerson.levelThreeAnsweredIncorrectly++;
                             }
-                            currentPerson.overllAnsweredIncorrectly++;
+                            currentPerson.overllAndsweredIncorrectly++;
                             board.SwitchPlayers();
                             db.SaveChanges();
 
