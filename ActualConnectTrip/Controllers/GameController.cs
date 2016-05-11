@@ -27,10 +27,7 @@ namespace ActualConnectTrip.Controllers
             return View();
         }
 
-        public ActionResult GameOver()
-        {
-            return View();
-        }
+
     public ActionResult Index()
         {
             return View();
