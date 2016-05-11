@@ -342,19 +342,56 @@ namespace ActualConnectTrip.Controllers
 
                 startInput.L1rivals = watingGamer;
 
+                var level1 = (from c in enti.startGamePlayers
+                              where c.isStarted.Equals(false)
+                              && c.level.Equals(1)
+                              select c).FirstOrDefault();
+                if(level1==null)
+                {
+                    startInput.isThereOtherGamesLevel1 = false;
+                }
+                else
+                {
+                    startInput.isThereOtherGamesLevel1 = true;
+                }
+
                 var watingGamer2 = (from c in enti.startGamePlayers
                                     where c.isStarted.Equals(false)
                                     && c.level.Equals(2)
                                     select c).Take(3).ToList();
 
                 startInput.L2rivals = watingGamer2;
-
+                var level2 = (from c in enti.startGamePlayers
+                              where c.isStarted.Equals(false)
+                              && c.level.Equals(2)
+                              select c).FirstOrDefault();
+                if (level2 == null)
+                {
+                    startInput.isThereOtherGamesLevel2 = false;
+                }
+                else
+                {
+                    startInput.isThereOtherGamesLevel2 = true;
+                }
                 var watingGamer3 = (from c in enti.startGamePlayers
                                     where c.isStarted.Equals(false)
                                     && c.level.Equals(3)
                                     select c).Take(3).ToList();
 
                 startInput.L3rivals = watingGamer3;
+
+                var level3 = (from c in enti.startGamePlayers
+                              where c.isStarted.Equals(false)
+                              && c.level.Equals(3)
+                              select c).FirstOrDefault();
+                if (level3 == null)
+                {
+                    startInput.isThereOtherGamesLevel3 = false;
+                }
+                else
+                {
+                    startInput.isThereOtherGamesLevel3 = true;
+                }
             }
             return View(startInput);
         }

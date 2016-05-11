@@ -41,24 +41,24 @@
 <table class="table">
     @if (Model.isThereRecommended)
     {
-        <tr>Recommended @ViewBag.Recommended</tr>
+        <tr>Recommended</tr>
 
-        @foreach (var item in Model.Recommended)
+        foreach (var item in Model.Recommended)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.player1Id)
+                    Html.DisplayFor(modelItem => item.player1Id)
                 </td>
             </tr>
             <tr>
-                @using (Html.BeginForm())
+                using (Html.BeginForm())
                 {
-                    @Html.AntiForgeryToken()
+                    Html.AntiForgeryToken();
                     <td>
-                        @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
-                        @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
-                        @Html.HiddenFor(model => model.gamelevel, new { Value = 1 })
-                        @Html.HiddenFor(model => model.request, new { Value = false })
+                        Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
+                        Html.HiddenFor(model => model.myid, new { Value = Model.myid });
+                        Html.HiddenFor(model => model.gamelevel, new { Value = 1 });
+                        Html.HiddenFor(model => model.request, new { Value = false });
                         <input type="submit" value="Accept" class="btn btn-default" />
                     </td>
                 }
@@ -70,75 +70,97 @@
         <caption>@ViewBag.Recommended</caption>
     }
 
-    <tr>level 1:</tr>
-    @foreach (var item in Model.L1rivals)
+    
+    @if (Model.isThereOtherGamesLevel1)
     {
         <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.player1Id)
-                </td>
+            level 1:
         </tr>
         <tr>
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
                 <td>
-                    @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
-                    @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
-                    @Html.HiddenFor(model => model.gamelevel, new { Value = 1 })
-                    @Html.HiddenFor(model => model.request, new { Value = false })
+                    Html.DisplayFor(modelItem => item.player1Id)
+                </td>
+            </tr>
+            <tr>
+                using (Html.BeginForm())
+                {
+                Html.AntiForgeryToken();
+                <td>
+                    Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
+                    Html.HiddenFor(model => model.myid, new { Value = Model.myid });
+                    Html.HiddenFor(model => model.gamelevel, new { Value = 1 });
+                    Html.HiddenFor(model => model.request, new { Value = false });
                     <input type="submit" value="Accept" class="btn btn-default" />
                 </td>
-            }
-        </tr>
+                }
+            </tr>
+        }
+    }
+    else
+    {
+        <caption>No Games for Level 1</caption>
     }
 
 
-    <tr>level 2:</tr>
-    @foreach (var item in Model.L2rivals)
+    @if (Model.isThereOtherGamesLevel2)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.player1Id)
-            </td>
-        </tr>
-        <tr>
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+        <tr>level 2:</tr>
+        foreach (var item in Model.L2rivals)
+        {
+
+            <tr>
                 <td>
-                    @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
-                    @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
-                    @Html.HiddenFor(model => model.gamelevel, new { Value = 2 })
-                    @Html.HiddenFor(model => model.request, new { Value = false })
+                    Html.DisplayFor(modelItem => item.player1Id)
+                </td>
+            </tr>
+            <tr>
+                using (Html.BeginForm())
+                {
+                Html.AntiForgeryToken();
+                <td>
+                    Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
+                    Html.HiddenFor(model => model.myid, new { Value = Model.myid });
+                    Html.HiddenFor(model => model.gamelevel, new { Value = 2 });
+                    Html.HiddenFor(model => model.request, new { Value = false });
                     <input type="submit" value="Accept" class="btn btn-default" />
                 </td>
-            }
-        </tr>
+                }
+            </tr>
+        }
     }
-
+    else
+    {
+        <caption>No Games for Level 2</caption>
+    }
+    
+    @if (Model.isThereOtherGamesLevel3)
+    {
     <tr>level 3:</tr>
-    @foreach (var item in Model.L3rivals)
+    foreach (var item in Model.L3rivals)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.player1Id)
+                Html.DisplayFor(modelItem => item.player1Id)
             </td>
         </tr>
         <tr>
-            @using (Html.BeginForm())
+            using (Html.BeginForm())
             {
-                @Html.AntiForgeryToken()
+                Html.AntiForgeryToken();
                 <td>
-                    @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id })
-                    @Html.HiddenFor(model => model.myid, new { Value = Model.myid })
-                    @Html.HiddenFor(model => model.gamelevel, new { Value = 3 })
-                    @Html.HiddenFor(model => model.request, new { Value = false })
+                    Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
+                    Html.HiddenFor(model => model.myid, new { Value = Model.myid });
+                    Html.HiddenFor(model => model.gamelevel, new { Value = 3 });
+                    Html.HiddenFor(model => model.request, new { Value = false });
                     <input type="submit" value="Accept" class="btn btn-default" />
                 </td>
             }
         </tr>
+        }
     }
-
+    else
+    {
+        <caption>No Games for Level 3</caption>
+    }
 
 </table>
