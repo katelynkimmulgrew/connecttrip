@@ -132,6 +132,7 @@ namespace ActualConnectTrip.Controllers
                                 currentPerson.levelThreeAnsweredIncorrectly++;
                             }
                             currentPerson.overllAnsweredIncorrectly++;
+                            board.SwitchPlayers();
                             db.SaveChanges();
 
                         }
@@ -153,6 +154,16 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.overallAnsweredCorrectly++;
                             db.SaveChanges();
                         }
+                        mathProblemResult problemData = new mathProblemResult();
+                        currentPerson.currentMathProblemID = problemData.Id;
+                        mathProblems problem2 = new mathProblems();
+                        string question = problem2.mathQuestion(board.level);
+                        problemData.question = question;
+                        string answer2 = problem2.mathAnswer(question);
+                        problemData.answer = answer;
+                        db.mathProblemResults.Add(problemData);
+                        
+                        db.SaveChanges();
                         return RedirectToAction("Board");
                     }
 
@@ -219,7 +230,8 @@ namespace ActualConnectTrip.Controllers
                         else
                         {
                             board.SwitchPlayers();
-                            
+                            currentPerson.answeredMathQuestion = false;
+                            db.SaveChanges();
                         }
                         return RedirectToAction("Board");
                     }

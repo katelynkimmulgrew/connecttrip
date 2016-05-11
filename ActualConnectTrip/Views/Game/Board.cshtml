@@ -7,6 +7,7 @@
 <h2>Board</h2>
 <p>@ViewBag.Message</p>
 <p>@ViewBag.Turn</p>
+<p>@ViewBag.YourTurn</p>
 @{
     var db = new DataLayer.Entities();
     bool?[,] array = Model.switchToBools(db);
@@ -46,7 +47,7 @@ else if (i == false)
 @if (currentPerson.answeredMathQuestion)
 {
     <p>Answer was @ViewBag.Answer</p>
-    if(ViewBag.isRight=="true")
+    if (ViewBag.isRight == "true")
     {
         <p>Your answer was right.</p>
     }
@@ -54,6 +55,10 @@ else if (i == false)
     {
         <p>Your answer was wrong.</p>
     }
+}
+@if (currentPerson.answeredMathQuestion && currentPerson.assignedBool==Model.currentUser)
+{
+    
     using (Html.BeginForm(FormMethod.Post))
     {
         @Html.AntiForgeryToken()
