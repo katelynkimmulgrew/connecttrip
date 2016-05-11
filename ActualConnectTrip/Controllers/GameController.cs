@@ -322,10 +322,16 @@ namespace ActualConnectTrip.Controllers
 
                 if (recommended == null)
                 {
-                    ViewBag.Recommended = ": There are no recommendations";
+                    ViewBag.Recommended ="There are no recommendations";
+                    startInput.isThereRecommended = false;
+                }
+                else
+                {
+                    startInput.Recommended = recommended.ToList();
+                    startInput.isThereRecommended = true;
                 }
                
-                    startInput.Recommended = recommended.ToList();
+                    
                 
 
 
