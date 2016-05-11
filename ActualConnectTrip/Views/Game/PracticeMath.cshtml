@@ -10,14 +10,12 @@
 @using (Html.BeginForm())
 {
 
-
-
     <div class="col-md-offset-2 col-md-10">
         <div>Level 1 game</div>
         
         @Html.HiddenFor(model => model.levelchosen, new { Value = 1 })
         
-        <input type="submit" value="Request" class="btn btn-default" />
+        <input type="submit" value="choose" class="btn btn-default" />
     </div>
 
 
@@ -27,7 +25,7 @@
 
         @Html.HiddenFor(model => model.levelchosen, new { Value = 2 })
 
-        <input type="submit" value="Request" class="btn btn-default" />
+        <input type="submit" value="choose" class="btn btn-default" />
     </div>
 
 
@@ -36,6 +34,6 @@
 
         @Html.HiddenFor(model => model.levelchosen, new { Value = 3 })
 
-        <input type="submit" value="Request" class="btn btn-default" />
+        <input type="submit" value="choose" class="btn btn-default" />
     </div>
 }

@@ -172,7 +172,7 @@ namespace ActualConnectTrip.Controllers
                     newPerson.levelThreeAnsweredCorrectly = 0;
                     newPerson.levelThreeAnsweredIncorrectly = 0;
                     newPerson.overallAnsweredCorrectly = 0;
-                    newPerson.overllAnsweredIncorrectly = 0;
+                    newPerson.overllAndsweredIncorrectly = 0;
                     context.Persons.Add(newPerson);
                     context.SaveChanges();
                 }
