@@ -12,6 +12,10 @@ namespace DataLayer
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+       // public int columnNumber { get; set; }
+
+        //public int gameID { get; set; }
         public int RowNumber { get; set; }
         public bool? Value { get; set; }
     }

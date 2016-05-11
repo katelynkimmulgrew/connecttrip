@@ -45,7 +45,7 @@ namespace DataLayer
         }
         public Row getRow(Column col, int rowNo)
         {
-
+            //return (from r in Rows where r.columnNumber == colNo && r.gameID == board.Id && r.RowNumber == rowNo select r).FirstOrDefault();
             return (from r in col.RowList
                     where r.RowNumber == rowNo
                     select r).FirstOrDefault();

@@ -442,7 +442,8 @@ namespace ActualConnectTrip.Controllers
                     using (Entities enti = new Entities())
                     {
                         Game newgame = new Game();
-
+                        enti.Games.Add(newgame);
+                        enti.SaveChanges();
                         newgame.maxCols = 6;
                         newgame.maxRows = 7;
 
@@ -454,7 +455,7 @@ namespace ActualConnectTrip.Controllers
                             column.ColumnNumber = i;
                             for (int j = 1; j <= newgame.maxCols; j++)
                             {
-                                Row row = new Row { RowNumber = j, Value = null };
+                                Row row = new Row {  RowNumber = j, Value = null };
                                 enti.Rows.Add(row);
                                 enti.SaveChanges();
                                 column.RowList.Add(row);
@@ -462,7 +463,7 @@ namespace ActualConnectTrip.Controllers
                             }
                             newgame.Grid.Add(column);
                         }
-                            enti.Games.Add(newgame);
+                            
                             enti.SaveChanges();
 
                             newgame.Player1Id = startdata.oppoid ?? default(int);
