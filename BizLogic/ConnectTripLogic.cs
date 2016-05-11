@@ -17,13 +17,13 @@ namespace BizLogic
             bool?[,] array = new bool?[board.maxRows, board.maxCols];
 
             int i, j;
-            for(i=0;i<board.maxCols;i++)
+            for(i=1;i<board.maxCols+1;i++)
             {
-                for(j=0;j<board.maxRows;j++)
+                for(j=1;j<board.maxRows+1;j++)
                 {
                     Column currentCol = db.getCol(i, board);
                     Row currentRow = db.getRow(currentCol, j);
-                    array[j, i] = currentRow.Value;
+                    array[j-1, i-1] = currentRow.Value;
                 }
             }
             return array;
@@ -62,7 +62,7 @@ namespace BizLogic
             public static Row determinePlace(this Game game, bool player, int columnNumber, Entities Context)
             {
                 Column determineColumn = Context.getCol(columnNumber, game);
-                foreach (var row in determineColumn.Rows)
+                foreach (var row in determineColumn.RowList)
                 {
                     if (row.Value == null)
                     {

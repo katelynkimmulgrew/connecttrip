@@ -46,7 +46,7 @@ namespace DataLayer
         public Row getRow(Column col, int rowNo)
         {
 
-            return (from r in col.Rows
+            return (from r in col.RowList
                     where r.RowNumber == rowNo
                     select r).FirstOrDefault();
         }

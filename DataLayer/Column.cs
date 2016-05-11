@@ -12,9 +12,9 @@ namespace DataLayer
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int ColumnNumber { get; set; }
-        public List<Row> Rows
+        public List<Row> RowList
         {
             get; set;
-        } = new List<Row>();
+        } 
     }
 }

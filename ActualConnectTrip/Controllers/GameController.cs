@@ -297,9 +297,11 @@ namespace ActualConnectTrip.Controllers
 
             using (Entities enti = new Entities())
             {
+
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
                               select c).FirstOrDefault();
+
                 if (infoUB.isPlaying == true)
                 {
                     ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
@@ -347,7 +349,7 @@ namespace ActualConnectTrip.Controllers
                 var watingGamer = (from c in enti.startGamePlayers
                                    where c.isStarted.Equals(false)
                                    && c.level.Equals(1)
-                                   select c).Take(3).ToList();
+                                   select c).ToList();
 
                 startInput.L1rivals = watingGamer;
 
@@ -367,7 +369,7 @@ namespace ActualConnectTrip.Controllers
                 var watingGamer2 = (from c in enti.startGamePlayers
                                     where c.isStarted.Equals(false)
                                     && c.level.Equals(2)
-                                    select c).Take(3).ToList();
+                                    select c).ToList();
 
                 startInput.L2rivals = watingGamer2;
                 var level2 = (from c in enti.startGamePlayers
@@ -385,7 +387,7 @@ namespace ActualConnectTrip.Controllers
                 var watingGamer3 = (from c in enti.startGamePlayers
                                     where c.isStarted.Equals(false)
                                     && c.level.Equals(3)
-                                    select c).Take(3).ToList();
+                                    select c).ToList();
 
                 startInput.L3rivals = watingGamer3;
 
@@ -447,13 +449,15 @@ namespace ActualConnectTrip.Controllers
                         for (int i = 1; i <= newgame.maxRows; i++)
                         {
                             Column column = new Column();
-                            column.ColumnNumber = i;
+                            enti.SaveChanges();
                             enti.Columns.Add(column);
+                            column.ColumnNumber = i;
                             for (int j = 1; j <= newgame.maxCols; j++)
                             {
                                 Row row = new Row { RowNumber = j, Value = null };
                                 enti.Rows.Add(row);
-                                column.Rows.Add(row);
+                                enti.SaveChanges();
+                                column.RowList.Add(row);
 
                             }
                             newgame.Grid.Add(column);
