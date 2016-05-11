@@ -39,6 +39,8 @@ namespace ActualConnectTrip.Controllers
 
                     return RedirectToAction("GameOver");
                 }
+                var person1 = db.getPersonById(board.Player1Id);
+                var person2 = db.getPersonById(board.Player2Id);
                 if (board.isFull(db))
                 {
                     person1.isPlaying = false;
@@ -48,8 +50,7 @@ namespace ActualConnectTrip.Controllers
                     db.SaveChanges();
                     return RedirectToAction("GameOver");
                 }
-                var person1 = db.getPersonById(board.Player1Id);
-                var person2 = db.getPersonById(board.Player2Id);
+              
                 bool? currentBool = board.currentUser;
                 if (currentPerson != person1 && currentPerson != person2)
                 {
