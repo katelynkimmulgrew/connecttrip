@@ -17,18 +17,7 @@ namespace ActualConnectTrip.Controllers
         {
             using (ForumContext db = new ForumContext())
             {
-                //int an = 1;
-                //foreach (Ques questt in db.Questions)
-                //{
-                //    if (questt.answers != null)
-                //        questt.answers.Add(new Answer() { content = an.ToString()});
-                //    an = an + 1;
-                //}
-                //Ques questt = db.Getquesforid(1);
-                //questt.answers.Add(new Answer() { content = "another more answer" });
-
-
-
+                
                 db.SaveChanges();
                 forumViewModel tempone = new forumViewModel();
 
