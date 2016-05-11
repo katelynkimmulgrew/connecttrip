@@ -211,7 +211,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PracticeMathViewModel.cs" />
-    <Compile Include="Models\showViewModel.cs" />
     <Compile Include="Models\StartpageViewModel.cs" />
     <Compile Include="Models\StatsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
