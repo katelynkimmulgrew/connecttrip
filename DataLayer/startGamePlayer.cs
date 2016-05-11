@@ -13,6 +13,9 @@ namespace DataLayer
         public int Id { get; set; }
         public int player1Id { get; set; }
         public int player2Id { get; set; }
+
+        public int level { get; set; }
         public bool isStarted { get; set; }
     }
 }
+

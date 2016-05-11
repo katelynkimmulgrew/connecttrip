@@ -6,9 +6,11 @@
 
 <h2>Board</h2>
 <p>@ViewBag.Message</p>
+<p>@ViewBag.Turn</p>
 @{
     var db = new DataLayer.Entities();
     bool?[,] array = Model.switchToBools(db);
+    var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
 }
     @helper ViewHelper(bool? i)
     {
@@ -20,6 +22,10 @@ else if (i == true)
 
 else if (i == false)
 { <td><img width="15" src="/Content/black.png" /></td> }
+}
+@if(!currentPerson.answeredMathQuestion)
+{
+    //the code to ask a math question
 }
 
 <table>
@@ -37,13 +43,22 @@ else if (i == false)
             }
         }
 </table>
+@if (currentPerson.answeredMathQuestion)
+{
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        for (int j = 0; j < Model.maxCols; j++)
+        {
+            @Html.RadioButton("col", j);
+
+        }
+        
+    }
+}
+
 
 @using (Html.BeginForm(FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    for (int j = 0; j < Model.maxRows; j++)
-    {
-        @Html.RadioButton("col", j);
-
-    }
+    @Html.Raw("<input type='button' name = 'button' value='cancel' />");
 }

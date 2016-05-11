@@ -10,6 +10,7 @@ namespace BizLogic
         public static class ConnectTripLogic
         {
 
+        
         public static bool?[,] switchToBools(this Game board, Entities db)
         {
             
@@ -28,8 +29,25 @@ namespace BizLogic
             return array;
             
         }
-           
-            public static void SwitchPlayers(this Game board)
+
+        public static bool isFull(this Game board, Entities db)
+        {
+            bool?[,] array = switchToBools(board, db);
+            
+            for(int i = 0; i<board.maxRows;i++)
+            {
+                for(int j=0;j<board.maxCols;j++)
+                {
+                    if(array[i,j]==null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public static void SwitchPlayers(this Game board)
         {
             if (board != null)
                 board.currentUser = (board.currentUser == true) ? false : true;
