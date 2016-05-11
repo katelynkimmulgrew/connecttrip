@@ -17,6 +17,20 @@ namespace ActualConnectTrip.Controllers
             
 
     // GET: Game
+    public ActionResult Error()
+        {
+            return View();
+        }
+
+        public ActionResult NoGame()
+        {
+            return View();
+        }
+
+        public ActionResult GameOver()
+        {
+            return View();
+        }
     public ActionResult Index()
         {
             return View();
