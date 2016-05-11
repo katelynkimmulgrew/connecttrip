@@ -426,6 +426,82 @@ namespace ActualConnectTrip.Controllers
         }
 
 
+        public ActionResult Forum()
+        {
+            using (ForumContext db = new ForumContext())
+            {
+
+                db.SaveChanges();
+                forumViewModel tempone = new forumViewModel();
+
+                tempone.model1 = db.Questions.Include("answers").ToList();
+                tempone.model2 = null;
+                tempone.model3 = db.Answers.ToList();
+                return View(tempone);
+            }
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Forum(forumViewModel ques, string keyword) /*[Bind(Include = "Id,title,description")] Ques ques*/
+        {
+            using (ForumContext db = new ForumContext())
+            {
+                if (ques.model2 != null)
+                {
+
+
+                    db.Questions.Add(ques.model2);
+                    db.SaveChanges();
+
+
+                    forumViewModel tempone = new forumViewModel();
+                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model2 = null;
+                    return View(tempone);
+
+                }
+                else if (ques.model4 != null)
+                {
+                    db.Getquesforid(ques.model5).answers.Add(ques.model4);
+                    db.SaveChanges();
+                    forumViewModel tempone = new forumViewModel();
+                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    //tempone.model2 = null;
+                    ModelState.Clear();
+                    return View(tempone);
+                }
+                else if (keyword != null)
+                {
+
+
+                    //var infoUB = (from c in db.Questions
+                    //              where c.title.ToString().Contains(keyword)
+                    //              select c);
+                    var infoUB = (from c in db.Questions.Include("answers")
+                                  where c.title.ToString().Contains(keyword)
+                                  select c);
+                    forumViewModel tempone = new forumViewModel();
+                    tempone.model1 = infoUB.ToList();
+                    tempone.model2 = null;
+                    return View(tempone);
+
+                }
+
+                else
+                {
+                    forumViewModel tempone = new forumViewModel();
+                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model2 = null;
+                    return View(tempone);
+                }
+            }
+        }
+
+
+
         public ActionResult waitingPage()
         {
             var UserName = User.Identity.Name;

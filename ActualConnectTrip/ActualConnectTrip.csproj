@@ -289,7 +289,7 @@
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\Game\EachTurnMathQuestion.cshtml" />
     <Content Include="Views\Game\PracticeMath.cshtml" />
-    <Content Include="Views\forum\Show.cshtml" />
+    <Content Include="Views\Game\Forum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
