@@ -9,10 +9,12 @@ namespace ActualConnectTrip.Models
     {
         public string mathQuestion { get; set; }
 
-        public string mathAnswer { get; set; }
+        public int mathAnswer { get; set; }
+
+        public int userAnswer { get; set; }
 
         public int levelchosen { get; set; }
 
-        public bool isVisable { get; set; }
+        public bool isSelectLevelVisable { get; set; }
     }
 }
