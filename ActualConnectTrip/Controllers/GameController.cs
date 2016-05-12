@@ -372,19 +372,20 @@ namespace ActualConnectTrip.Controllers
                 if(level1==null)
                 {
                     startInput.isThereOtherGamesLevel1 = false;
-                    List<string> Gamer1names = new List<string>();
-                    for (int i = 1; i <= watingGamer.Count; i++)
-                    {
-                        var Names = (from c in enti.Persons
-                                     where c.Id.Equals(watingGamer[i].player1Id)
-                                     select c.UserName).FirstOrDefault();
-                        Gamer1names.Add(Names);
-                    }
-                    startInput.L2names = Gamer1names;
+                    
                 }
                 else
                 {
                     startInput.isThereOtherGamesLevel1 = true;
+                    List<string> Gamer1names = new List<string>();
+                    foreach (var plga in watingGamer)
+                    {
+                        var Names = (from c in enti.Persons
+                                     where c.Id.Equals(plga.player1Id)
+                                     select c.UserName).FirstOrDefault();
+                        Gamer1names.Add(Names);
+                    }
+                    startInput.L1names = Gamer1names;
                 }
 
                 var watingGamer2 = (from c in enti.startGamePlayers
@@ -402,19 +403,21 @@ namespace ActualConnectTrip.Controllers
                 if (level2 == null)
                 {
                     startInput.isThereOtherGamesLevel2 = false;
-                    List<string> Gamer2names = new List<string>(); 
-                    for(int i = 1; i <= watingGamer2.Count; i++)
-                    {
-                        var Names= (from c in enti.Persons
-                                where c.Id.Equals(watingGamer2[i].player1Id)
-                                select c.UserName).FirstOrDefault();
-                        Gamer2names.Add(Names);
-                    }
-                    startInput.L2names = Gamer2names;
+                    
                 }
                 else
                 {
                     startInput.isThereOtherGamesLevel2 = true;
+                    List<string> Gamer2names = new List<string>();
+                    
+                        foreach (var plga in watingGamer2)
+                        {
+                        var Names = (from c in enti.Persons
+                                     where c.Id.Equals(plga.player1Id)
+                                     select c.UserName).FirstOrDefault();
+                        Gamer2names.Add(Names);
+                    }
+                    startInput.L2names = Gamer2names;
                 }
                 var watingGamer3 = (from c in enti.startGamePlayers
                                     where c.isStarted.Equals(false)
@@ -430,22 +433,23 @@ namespace ActualConnectTrip.Controllers
                 if (level3 == null)
                 {
                     startInput.isThereOtherGamesLevel3 = false;
+                    
+                }
+                else
+                {
+                    startInput.isThereOtherGamesLevel3 = true;
                     List<string> Gamer3names = new List<string>();
-                    for (int i = 1; i <= watingGamer3.Count; i++)
+                    foreach (var plga in watingGamer3)
                     {
                         var Names = (from c in enti.Persons
-                                     where c.Id.Equals(watingGamer3[i].player1Id)
+                                     where c.Id.Equals(plga.player1Id)
                                      select c.UserName).FirstOrDefault();
                         Gamer3names.Add(Names);
                     }
                     startInput.L3names = Gamer3names;
 
                 }
-                else
-                {
-                    startInput.isThereOtherGamesLevel3 = true;
-                }
-                
+
             }
             
             return View(startInput);
