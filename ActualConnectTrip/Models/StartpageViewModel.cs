@@ -11,9 +11,11 @@ namespace ActualConnectTrip.Models
     {
         public int myid { get; set; }
         public virtual List<startGamePlayer> L1rivals { get; set; }
+        public virtual List<string> L1names { get; set; }
         public virtual List<startGamePlayer> L2rivals { get; set; }
+        public virtual List<string> L2names { get; set; }
         public virtual List<startGamePlayer> L3rivals { get; set; }
-
+        public virtual List<string> L3names { get; set; }
         public virtual List<startGamePlayer> Recommended { get; set; }
 
         public bool isThereRecommended { get; set; }

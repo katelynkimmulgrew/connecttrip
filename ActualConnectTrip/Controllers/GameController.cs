@@ -366,6 +366,15 @@ namespace ActualConnectTrip.Controllers
                 if(level1==null)
                 {
                     startInput.isThereOtherGamesLevel1 = false;
+                    List<string> Gamer1names = new List<string>();
+                    for (int i = 1; i <= watingGamer.Count; i++)
+                    {
+                        var Names = (from c in enti.Persons
+                                     where c.Id.Equals(watingGamer[i].player1Id)
+                                     select c.UserName).FirstOrDefault();
+                        Gamer1names.Add(Names);
+                    }
+                    startInput.L2names = Gamer1names;
                 }
                 else
                 {
@@ -377,6 +386,8 @@ namespace ActualConnectTrip.Controllers
                                     && c.level.Equals(2)
                                     select c).ToList();
 
+               
+
                 startInput.L2rivals = watingGamer2;
                 var level2 = (from c in enti.startGamePlayers
                               where c.isStarted.Equals(false)
@@ -385,6 +396,15 @@ namespace ActualConnectTrip.Controllers
                 if (level2 == null)
                 {
                     startInput.isThereOtherGamesLevel2 = false;
+                    List<string> Gamer2names = new List<string>(); 
+                    for(int i = 1; i <= watingGamer2.Count; i++)
+                    {
+                        var Names= (from c in enti.Persons
+                                where c.Id.Equals(watingGamer2[i].player1Id)
+                                select c.UserName).FirstOrDefault();
+                        Gamer2names.Add(Names);
+                    }
+                    startInput.L2names = Gamer2names;
                 }
                 else
                 {
@@ -404,6 +424,16 @@ namespace ActualConnectTrip.Controllers
                 if (level3 == null)
                 {
                     startInput.isThereOtherGamesLevel3 = false;
+                    List<string> Gamer3names = new List<string>();
+                    for (int i = 1; i <= watingGamer3.Count; i++)
+                    {
+                        var Names = (from c in enti.Persons
+                                     where c.Id.Equals(watingGamer3[i].player1Id)
+                                     select c.UserName).FirstOrDefault();
+                        Gamer3names.Add(Names);
+                    }
+                    startInput.L3names = Gamer3names;
+
                 }
                 else
                 {
