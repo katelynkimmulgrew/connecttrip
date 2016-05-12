@@ -10,6 +10,7 @@ using ActualConnectTrip.Models;
 
 namespace ActualConnectTrip.Controllers
 {
+    //check
     public class GameController : Controller
     {
         private Entities db = new Entities();
@@ -33,6 +34,7 @@ namespace ActualConnectTrip.Controllers
             return View();
         }
         public ActionResult Board()
+
         {
             using (var db = new Entities())
             {
@@ -54,6 +56,8 @@ namespace ActualConnectTrip.Controllers
                 {
                     if(currentPerson.currentMathProblemID == null) {
                         mathProblemResult problemData = new mathProblemResult();
+                        db.mathProblemResults.Add(problemData);
+                        db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
                         mathProblems problem = new mathProblems();
                         string question = problem.mathQuestion(board.level);
@@ -107,7 +111,7 @@ namespace ActualConnectTrip.Controllers
 
         [HttpPost]
 
-        public ActionResult Board(int col, string button, string answer)
+        public ActionResult Board(int? col, string button, string answer)
         {
             
             lock (lockObject)
@@ -149,6 +153,7 @@ namespace ActualConnectTrip.Controllers
                         }
                         else
                         {
+                            
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredCorrectly++;
@@ -177,7 +182,7 @@ namespace ActualConnectTrip.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Board");
                     }
-
+                    
                     
                     bool? currentBool = board.currentUser;
                     var person1 = db.getPersonById(board.Player1Id);
@@ -196,14 +201,14 @@ namespace ActualConnectTrip.Controllers
                     
                     if (currentBool==currentPerson.assignedBool)
                     {
-                        Column currentCol = db.getCol(col, board);
-                        Row currentRow = board.determinePlace(board.currentUser, col, db);
+                        //Column currentCol = db.getCol(col, board);
+                        Row currentRow = board.determinePlace(board.currentUser, (int)col, db);
                         if (currentRow == null)
                         {
                             ViewBag.Message = "Cannot execute Move";
                             return RedirectToAction("Board");
                         }
-                        if (board.determineWin(db, currentRow, currentCol))
+                        if (board.determineWin(db, currentRow))
                         {
                             board.finished = true;
                             board.winnerID = currentPerson.Id;
@@ -297,9 +302,12 @@ namespace ActualConnectTrip.Controllers
 
             using (Entities enti = new Entities())
             {
+
+
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
                               select c).FirstOrDefault();
+
                 if (infoUB.isPlaying == true)
                 {
                     ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
@@ -347,7 +355,7 @@ namespace ActualConnectTrip.Controllers
                 var watingGamer = (from c in enti.startGamePlayers
                                    where c.isStarted.Equals(false)
                                    && c.level.Equals(1)
-                                   select c).Take(3).ToList();
+                                   select c).ToList();
 
                 startInput.L1rivals = watingGamer;
 
@@ -367,7 +375,7 @@ namespace ActualConnectTrip.Controllers
                 var watingGamer2 = (from c in enti.startGamePlayers
                                     where c.isStarted.Equals(false)
                                     && c.level.Equals(2)
-                                    select c).Take(3).ToList();
+                                    select c).ToList();
 
                 startInput.L2rivals = watingGamer2;
                 var level2 = (from c in enti.startGamePlayers
@@ -385,7 +393,7 @@ namespace ActualConnectTrip.Controllers
                 var watingGamer3 = (from c in enti.startGamePlayers
                                     where c.isStarted.Equals(false)
                                     && c.level.Equals(3)
-                                    select c).Take(3).ToList();
+                                    select c).ToList();
 
                 startInput.L3rivals = watingGamer3;
 
@@ -440,25 +448,30 @@ namespace ActualConnectTrip.Controllers
                     using (Entities enti = new Entities())
                     {
                         Game newgame = new Game();
-
+                        enti.Games.Add(newgame);
+                        enti.SaveChanges();
                         newgame.maxCols = 6;
                         newgame.maxRows = 7;
 
-                        for (int i = 1; i <= newgame.maxRows; i++)
+                        for (int i = 1; i <= newgame.maxCols; i++)
                         {
-                            Column column = new Column();
-                            column.ColumnNumber = i;
-                            enti.Columns.Add(column);
-                            for (int j = 1; j <= newgame.maxCols; j++)
+                            //Column column = new Column();
+                           // enti.SaveChanges();
+                            //enti.Columns.Add(column);
+                           // newgame.theColumns.Add(column);
+                            //column.ColumnNumber = i;
+                            for (int j = 1; j <= newgame.maxRows; j++)
                             {
-                                Row row = new Row { RowNumber = j, Value = null };
+                                Row row = new Row { RowNumber = j, columnNumber = i, gameID = newgame.Id, Value = null };
                                 enti.Rows.Add(row);
-                                column.Rows.Add(row);
+                                //column.theRows.Add(row);
+                                enti.SaveChanges();
+                                
 
                             }
-                            newgame.Grid.Add(column);
+                            
                         }
-                            enti.Games.Add(newgame);
+                            
                             enti.SaveChanges();
 
                             newgame.Player1Id = startdata.oppoid ?? default(int);

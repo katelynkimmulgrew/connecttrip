@@ -59,6 +59,15 @@
     <Compile Include="ForumContext.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="mathProblemResult.cs" />
+    <Compile Include="Migrations\201605111547371_InitialCreate.cs" />
+    <Compile Include="Migrations\201605111547371_InitialCreate.Designer.cs">
+      <DependentUpon>201605111547371_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605121552514_onlyRows.cs" />
+    <Compile Include="Migrations\201605121552514_onlyRows.Designer.cs">
+      <DependentUpon>201605121552514_onlyRows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ques.cs" />
     <Compile Include="Row.cs" />
@@ -68,6 +77,14 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605111547371_InitialCreate.resx">
+      <DependentUpon>201605111547371_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605121552514_onlyRows.resx">
+      <DependentUpon>201605121552514_onlyRows.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

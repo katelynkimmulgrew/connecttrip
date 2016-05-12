@@ -23,10 +23,12 @@ namespace DataLayer
         {
             get; set;
         }
-        public List<Column> Grid
+       public List<Column> theColumns
         {
             get; set;
         } = new List<Column>();
+
+        //public virtual ICollection<Column> theColumns { get; set; }
 
         public bool currentUser { get; set; }
 

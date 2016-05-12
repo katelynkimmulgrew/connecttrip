@@ -43,17 +43,17 @@ namespace DataLayer
                     where b.Id == id
                     select b).FirstOrDefault();
         }
-        public Row getRow(Column col, int rowNo)
+        public Row getRow(int colNo, int rowNo, Game board)//(Column col, int rowNo)
         {
-
-            return (from r in col.Rows
-                    where r.RowNumber == rowNo
-                    select r).FirstOrDefault();
+            return (from r in Rows where r.columnNumber == colNo && r.gameID == board.Id && r.RowNumber == rowNo select r).FirstOrDefault();
+            /*return (from r in col.theRows
+                    where r.RowNumber == rowNo 
+                    select r).FirstOrDefault();*/
         }
 
         public Column getCol(int colNo, Game game)
         {
-            return (from c in game.Grid
+            return (from c in game.theColumns
                     where c.ColumnNumber == colNo
                     select c).FirstOrDefault();
         }
