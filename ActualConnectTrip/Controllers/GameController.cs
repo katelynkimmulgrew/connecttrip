@@ -35,6 +35,7 @@ namespace ActualConnectTrip.Controllers
         }
         public ActionResult Board()
 
+
         {
             using (var db = new Entities())
             {
@@ -64,16 +65,18 @@ namespace ActualConnectTrip.Controllers
                         problemData.question = question;
                         string answer = problem.mathAnswer(question);
                         problemData.answer = answer;
-                        db.mathProblemResults.Add(problemData);
+                        
                         db.SaveChanges();
                         ViewBag.Question = question;
                     }
+                    else {
+                        int problemDataID = (int)currentPerson.currentMathProblemID;
+                        mathProblemResult problemData = db.getmathProblemResultById(problemDataID);
+                        ViewBag.Question = problemData.question;
 
+                    }
                 }
-                else {
-                    ViewBag.Question = db.getmathProblemResultById((int)currentPerson.currentMathProblemID).question;
-
-                }
+                
 
 
 
@@ -127,12 +130,12 @@ namespace ActualConnectTrip.Controllers
                     {
                         currentPerson.answeredMathQuestion = true;
                         mathProblemResult problem = db.getmathProblemResultById((int)currentPerson.currentMathProblemID);
-                        ViewBag.Answer = problem.answer;
-                        ViewBag.isRight = problem.answer == answer;
+                        TempData["Answer"] = problem.answer;
+                        TempData["isRight"] = problem.answer == answer;
                         bool isRight = problem.answer == answer;
                         if (isRight == false)
                         {
-                            ViewBag.YourTurn = "You lost your turn";
+                            TempData["YourTurn"] = "You lost your turn";
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredIncorrectly++;
@@ -148,6 +151,7 @@ namespace ActualConnectTrip.Controllers
                             }
                             currentPerson.overllAndsweredIncorrectly++;
                             board.SwitchPlayers();
+                            currentPerson.answeredMathQuestion = false;
                             db.SaveChanges();
 
                         }
@@ -171,13 +175,15 @@ namespace ActualConnectTrip.Controllers
                             db.SaveChanges();
                         }
                         mathProblemResult problemData = new mathProblemResult();
+                        db.mathProblemResults.Add(problemData);
+                        db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
                         mathProblems problem2 = new mathProblems();
                         string question = problem2.mathQuestion(board.level);
                         problemData.question = question;
                         string answer2 = problem2.mathAnswer(question);
                         problemData.answer = answer;
-                        db.mathProblemResults.Add(problemData);
+                        
                         
                         db.SaveChanges();
                         return RedirectToAction("Board");

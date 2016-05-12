@@ -64,7 +64,7 @@ namespace BizLogic
             {
                 //Column determineColumn = Context.getCol(columnNumber, game);
             //foreach (var row in determineColumn.theRows)
-            for(int j = 0; j< game.maxRows; j++)
+            for(int j = 1; j< game.maxRows+1; j++)
             {
                 Row currentRow = Context.getRow(columnNumber, j, game);
                 if (currentRow.Value == null)
@@ -99,6 +99,10 @@ namespace BizLogic
                 bool? typePlayer = row.Value;
                 while (currentCol >= 0)
                 {
+                if(currentCol-1<1)
+                {
+                    break;
+                }
                 Row tempRow = Context.getRow(currentCol - 1, rowNo, game);
                     if (tempRow.Value == typePlayer)
                     {
@@ -113,6 +117,10 @@ namespace BizLogic
                 currentCol = colNo;
                 while (currentCol < game.maxCols)
                 {
+                if(currentCol+1>game.maxCols)
+                {
+                    break;
+                }
                 Row tempRow = Context.getRow(currentCol + 1, rowNo, game);
                     if (tempRow.Value == typePlayer)
                     {
@@ -134,9 +142,13 @@ namespace BizLogic
                 int count = 0;
                 int currentRow = rowNo;
                 bool? typePlayer = row.Value;
-                while (currentRow >= 0)
+                while (currentRow >= 1)
                 {
-                Row tempRow = Context.getRow(colNo, rowNo - 1, game); 
+                if(currentRow-1<1)
+                {
+                    break;
+                }
+                Row tempRow = Context.getRow(colNo, currentRow - 1, game); 
                     if (tempRow.Value == typePlayer)
                     {
                         count++;
@@ -148,9 +160,13 @@ namespace BizLogic
                     currentRow -= 1;
                 }
                 currentRow = rowNo;
-                while (currentRow < game.maxRows)
+                while (currentRow <= game.maxRows)
                 {
-                Row tempRow = Context.getRow(colNo, rowNo + 1, game); 
+                if(currentRow+1 > game.maxRows)
+                {
+                    break;
+                }
+                Row tempRow = Context.getRow(colNo, currentRow+ 1, game); 
                     if (tempRow.Value == typePlayer)
                     {
                         count++;
@@ -175,8 +191,12 @@ namespace BizLogic
                 bool? typePlayer = row.Value;
                 if (direction == "left")
                 {
-                    while (currentCol < game.maxCols && currentRow >= 0)
+                    while (currentCol <= game.maxCols && currentRow >= 1)
                     {
+                    if(currentCol-1<1 || currentRow+1 > game.maxRows)
+                    {
+                        break;
+                    }
                     Row tempRow = Context.getRow(currentCol - 1, currentRow + 1, game);
                         if (tempRow.Value == typePlayer)
                         {
@@ -191,8 +211,12 @@ namespace BizLogic
                     }
                     currentCol = colNo;
                     currentRow = rowNo;
-                    while (currentCol < game.maxCols && currentRow >= 0)
+                    while (currentCol <= game.maxCols && currentRow >= 1)
                     {
+                    if(currentCol+1 > game.maxCols || currentRow-1<1)
+                    {
+                        break;
+                    }
                     Row tempRow = Context.getRow(currentCol + 1, currentRow - 1, game); 
                         if (tempRow.Value == typePlayer)
                         {
@@ -209,8 +233,12 @@ namespace BizLogic
                 }
                 else
                 {
-                    while (currentCol >= 0 && currentRow >= 0)
+                    while (currentCol >= 1 && currentRow >= 1)
                     {
+                    if(currentCol-1<1 || currentRow-1<1)
+                    {
+                        break;
+                    }
                     Row tempRow = Context.getRow(currentCol - 1, currentRow - 1, game); 
                         if (tempRow.Value == typePlayer)
                         {
@@ -225,8 +253,12 @@ namespace BizLogic
                     }
                     currentCol = colNo;
                     currentRow = rowNo;
-                    while (currentCol < game.maxCols && currentRow < game.maxRows)
+                    while (currentCol <= game.maxCols && currentRow <= game.maxRows)
                     {
+                    if(currentCol + 1> game.maxCols || currentRow-1 <1)
+                    {
+                        break;
+                    }
                     Row tempRow = Context.getRow(currentCol + 1, currentRow - 1, game); 
                         if (tempRow.Value == typePlayer)
                         {
