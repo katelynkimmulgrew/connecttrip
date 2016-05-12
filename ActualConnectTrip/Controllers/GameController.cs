@@ -637,24 +637,7 @@ namespace ActualConnectTrip.Controllers
             return RedirectToAction("stindex");
         }
 
-        //  public ActionResult PracticeMath(PracticeMathViewModel inputdata)
-
-        /* var level = inputdata.levelchosen;
-         using (var context = new Entities())
-         {
-
-             var mobj = new BizLogic.mathProblems();
-             var model = new PracticeMathViewModel()
-             {
-                 mathQuestion = mobj.mathQuestion(level),
-                 isVisable = false
-             };
-             context.SaveChanges();
-
-             return View(model);
-         }*/
-
-        
+        [HttpPost]
         public ActionResult PracticeMath(string level)
         {
             var mobj = new BizLogic.mathProblems();
@@ -684,9 +667,9 @@ namespace ActualConnectTrip.Controllers
                     mathQuestion = mobj.mathQuestion(3)
                 };
                 return View(model);
-            }     
+            }
         }
-
+        
 
         public ActionResult PracticeMath()
         {
@@ -699,6 +682,7 @@ namespace ActualConnectTrip.Controllers
                 return View(model);
             }
         }
+        /*
         public ActionResult PracticeMath(int answer)
         {
             using (var context = new Entities())
@@ -710,7 +694,7 @@ namespace ActualConnectTrip.Controllers
                 return View(model);
             }
         }
-
+        */
         public PartialViewResult EachTurnMathQuestion(int level)
         {
             using (var context = new Entities())
