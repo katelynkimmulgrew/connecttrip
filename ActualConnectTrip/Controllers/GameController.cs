@@ -55,7 +55,8 @@ namespace ActualConnectTrip.Controllers
                 }
                 if (currentPerson.answeredMathQuestion == false)
                 {
-                    if(currentPerson.currentMathProblemID == null) {
+                    if (currentPerson.currentMathProblemID == null)
+                    {
                         mathProblemResult problemData = new mathProblemResult();
                         db.mathProblemResults.Add(problemData);
                         db.SaveChanges();
@@ -65,16 +66,18 @@ namespace ActualConnectTrip.Controllers
                         problemData.question = question;
                         string answer = problem.mathAnswer(question);
                         problemData.answer = answer;
-                        
                         db.SaveChanges();
-                        ViewBag.Question = question;
+                        ViewBag.Question = problemData.question;
                     }
-                    else {
+                    else
+                    {
                         int problemDataID = (int)currentPerson.currentMathProblemID;
                         mathProblemResult problemData = db.getmathProblemResultById(problemDataID);
                         ViewBag.Question = problemData.question;
-
                     }
+                    
+
+                    
                 }
                 
 
