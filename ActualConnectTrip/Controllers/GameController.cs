@@ -624,7 +624,6 @@ namespace ActualConnectTrip.Controllers
             return RedirectToAction("stindex");
         }
 
-        [HttpPost]
         //  public ActionResult PracticeMath(PracticeMathViewModel inputdata)
 
         /* var level = inputdata.levelchosen;
