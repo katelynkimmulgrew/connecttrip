@@ -21,7 +21,8 @@ namespace BizLogic
             {
                 for(j=1;j<board.maxRows+1;j++)
                 {
-                    Column currentCol = db.getCol(i, board);
+                    //Column currentCol = db.getCol(i, board);
+                    int gameid = board.Id;
                     Row currentRow = db.getRow(i, j, board);//(currentCol, j);
                     array[j-1, i-1] = currentRow.Value;
                 }

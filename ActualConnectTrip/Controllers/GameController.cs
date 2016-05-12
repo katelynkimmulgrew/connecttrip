@@ -34,6 +34,7 @@ namespace ActualConnectTrip.Controllers
             return View();
         }
         public ActionResult Board()
+
         {
             using (var db = new Entities())
             {
@@ -55,6 +56,8 @@ namespace ActualConnectTrip.Controllers
                 {
                     if(currentPerson.currentMathProblemID == null) {
                         mathProblemResult problemData = new mathProblemResult();
+                        db.mathProblemResults.Add(problemData);
+                        db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
                         mathProblems problem = new mathProblems();
                         string question = problem.mathQuestion(board.level);
@@ -108,7 +111,7 @@ namespace ActualConnectTrip.Controllers
 
         [HttpPost]
 
-        public ActionResult Board(int col, string button, string answer)
+        public ActionResult Board(int? col, string button, string answer)
         {
             
             lock (lockObject)
@@ -150,6 +153,7 @@ namespace ActualConnectTrip.Controllers
                         }
                         else
                         {
+                            
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredCorrectly++;
@@ -178,7 +182,7 @@ namespace ActualConnectTrip.Controllers
                         db.SaveChanges();
                         return RedirectToAction("Board");
                     }
-
+                    
                     
                     bool? currentBool = board.currentUser;
                     var person1 = db.getPersonById(board.Player1Id);
@@ -198,7 +202,7 @@ namespace ActualConnectTrip.Controllers
                     if (currentBool==currentPerson.assignedBool)
                     {
                         //Column currentCol = db.getCol(col, board);
-                        Row currentRow = board.determinePlace(board.currentUser, col, db);
+                        Row currentRow = board.determinePlace(board.currentUser, (int)col, db);
                         if (currentRow == null)
                         {
                             ViewBag.Message = "Cannot execute Move";
@@ -449,18 +453,18 @@ namespace ActualConnectTrip.Controllers
                         newgame.maxCols = 6;
                         newgame.maxRows = 7;
 
-                        for (int i = 1; i <= newgame.maxRows; i++)
+                        for (int i = 1; i <= newgame.maxCols; i++)
                         {
-                            Column column = new Column();
-                            enti.SaveChanges();
-                            enti.Columns.Add(column);
-                            newgame.theColumns.Add(column);
-                            column.ColumnNumber = i;
-                            for (int j = 1; j <= newgame.maxCols; j++)
+                            //Column column = new Column();
+                           // enti.SaveChanges();
+                            //enti.Columns.Add(column);
+                           // newgame.theColumns.Add(column);
+                            //column.ColumnNumber = i;
+                            for (int j = 1; j <= newgame.maxRows; j++)
                             {
                                 Row row = new Row { RowNumber = j, columnNumber = i, gameID = newgame.Id, Value = null };
                                 enti.Rows.Add(row);
-                                column.theRows.Add(row);
+                                //column.theRows.Add(row);
                                 enti.SaveChanges();
                                 
 
