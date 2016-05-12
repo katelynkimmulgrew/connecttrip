@@ -53,7 +53,7 @@ else if (i == false)
         for (int i = Model.maxRows-1; i >= 0; i--)
         {
             @Html.Raw("<tr>");
-            for (int j = Model.maxCols-1; j >=0; j--)
+            for (int j = 0; j <Model.maxCols; j++)
             {
                 @Html.Raw((ViewHelper(array[i, j])));
 
@@ -65,7 +65,7 @@ else if (i == false)
 @if (currentPerson.answeredMathQuestion && TempData["isRight"]!=null && TempData["Answer"]!=null)
 {
     <p>Answer was @TempData["Answer"]</p>
-    if (@TempData["isRight"].ToString() == "true")
+    if ((string)@TempData["isRight"] == "true")
     {
         <p>Your answer was right.</p>
     }
@@ -92,5 +92,6 @@ else if (i == false)
 
 @using (Html.BeginForm(FormMethod.Post))
 {
-    Html.Raw("<input type='button' name = 'button' value='cancel' />");
+    @Html.AntiForgeryToken()
+    @Html.Raw("<input type='button' name = 'button' value='cancel' />");
 }

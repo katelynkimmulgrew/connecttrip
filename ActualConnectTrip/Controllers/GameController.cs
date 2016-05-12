@@ -131,10 +131,12 @@ namespace ActualConnectTrip.Controllers
                         currentPerson.answeredMathQuestion = true;
                         mathProblemResult problem = db.getmathProblemResultById((int)currentPerson.currentMathProblemID);
                         TempData["Answer"] = problem.answer;
-                        TempData["isRight"] = problem.answer == answer;
+                        
                         bool isRight = problem.answer == answer;
+
                         if (isRight == false)
                         {
+                            TempData["isRight"] = "true";
                             TempData["YourTurn"] = "You lost your turn";
                             if (board.level == 1)
                             {
@@ -157,7 +159,7 @@ namespace ActualConnectTrip.Controllers
                         }
                         else
                         {
-                            
+                            TempData["isRight"] = "false";
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredCorrectly++;
