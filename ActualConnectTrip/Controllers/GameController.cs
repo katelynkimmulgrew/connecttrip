@@ -683,6 +683,7 @@ namespace ActualConnectTrip.Controllers
             }
         }
         /*
+        [HttpPost]
         public ActionResult PracticeMath(int answer)
         {
             using (var context = new Entities())
@@ -695,6 +696,7 @@ namespace ActualConnectTrip.Controllers
             }
         }
         */
+        
         public PartialViewResult EachTurnMathQuestion(int level)
         {
             using (var context = new Entities())
