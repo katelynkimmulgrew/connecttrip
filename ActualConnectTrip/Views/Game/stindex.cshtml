@@ -86,8 +86,9 @@
                     @Html.DisplayFor(modelItem => item.player1Id)
                     @Html.DisplayFor(modelItem => Model.L1names[currentIndex])
                 </td>
-            @currentIndex=@currentIndex+1
+            
             </tr>
+                currentIndex = currentIndex + 1;
             <tr>
                 @using (Html.BeginForm())
                 {
