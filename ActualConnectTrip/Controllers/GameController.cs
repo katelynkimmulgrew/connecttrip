@@ -136,11 +136,12 @@ namespace ActualConnectTrip.Controllers
                         TempData["Answer"] = problem.answer;
                         
                         bool isRight = problem.answer == answer;
-
+                        problem.isRight = isRight;
+                        TempData["isRight"] = isRight;
                         if (isRight == false)
                         {
-                            TempData["isRight"] = "true";
-                            TempData["YourTurn"] = "You lost your turn";
+                            
+                             TempData["YourTurn"] = "You lost your turn";
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredIncorrectly++;
@@ -162,7 +163,7 @@ namespace ActualConnectTrip.Controllers
                         }
                         else
                         {
-                            TempData["isRight"] = "false";
+                            
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredCorrectly++;
