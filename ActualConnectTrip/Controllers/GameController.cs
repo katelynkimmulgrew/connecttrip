@@ -196,14 +196,14 @@ namespace ActualConnectTrip.Controllers
                     
                     if (currentBool==currentPerson.assignedBool)
                     {
-                        Column currentCol = db.getCol(col, board);
+                        //Column currentCol = db.getCol(col, board);
                         Row currentRow = board.determinePlace(board.currentUser, col, db);
                         if (currentRow == null)
                         {
                             ViewBag.Message = "Cannot execute Move";
                             return RedirectToAction("Board");
                         }
-                        if (board.determineWin(db, currentRow, currentCol))
+                        if (board.determineWin(db, currentRow))
                         {
                             board.finished = true;
                             board.winnerID = currentPerson.Id;
@@ -297,6 +297,7 @@ namespace ActualConnectTrip.Controllers
 
             using (Entities enti = new Entities())
             {
+
 
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
@@ -452,16 +453,18 @@ namespace ActualConnectTrip.Controllers
                             Column column = new Column();
                             enti.SaveChanges();
                             enti.Columns.Add(column);
+                            newgame.theColumns.Add(column);
                             column.ColumnNumber = i;
                             for (int j = 1; j <= newgame.maxCols; j++)
                             {
-                                Row row = new Row {  RowNumber = j, Value = null };
+                                Row row = new Row { RowNumber = j, columnNumber = i, gameID = newgame.Id, Value = null };
                                 enti.Rows.Add(row);
+                                column.theRows.Add(row);
                                 enti.SaveChanges();
-                                column.RowList.Add(row);
+                                
 
                             }
-                            newgame.Grid.Add(column);
+                            
                         }
                             
                             enti.SaveChanges();

@@ -12,11 +12,13 @@ namespace DataLayer
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int ColumnNumber { get; set; }
-        /*public List<Row> RowList
+        public List<Row> theRows
         {
             get; set;
-        } = new List<Row>();*/
+        } = new List<Row>();
 
-        public virtual ICollection<Row> RowList { get; set; }
+        //public virtual ICollection<Row> theRows { get; set; } 
+
+        int gameID { get; set; }
     }
 }

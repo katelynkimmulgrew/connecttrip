@@ -211,6 +211,14 @@
     <Compile Include="Migrations\201605112005246_rowlist.Designer.cs">
       <DependentUpon>201605112005246_rowlist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605121452182_changeNames.cs" />
+    <Compile Include="Migrations\201605121452182_changeNames.Designer.cs">
+      <DependentUpon>201605121452182_changeNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605121531119_changeColumnsAndRows.cs" />
+    <Compile Include="Migrations\201605121531119_changeColumnsAndRows.Designer.cs">
+      <DependentUpon>201605121531119_changeColumnsAndRows.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\forumViewModel.cs" />
@@ -323,6 +331,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605112005246_rowlist.resx">
       <DependentUpon>201605112005246_rowlist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605121452182_changeNames.resx">
+      <DependentUpon>201605121452182_changeNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605121531119_changeColumnsAndRows.resx">
+      <DependentUpon>201605121531119_changeColumnsAndRows.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
