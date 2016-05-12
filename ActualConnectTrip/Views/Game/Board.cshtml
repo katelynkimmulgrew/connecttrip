@@ -1,13 +1,25 @@
 ﻿@using BizLogic;
+@using DataLayer;
 @model DataLayer.Game
 @{
     ViewBag.Title = "Board";
 }
-
+<style>
+    td {
+        border: 1px solid black;
+        width: 20px;
+        height: 20px;
+        empty-cells: show;
+    }
+</style>
 <h2>Board</h2>
 <p>@ViewBag.Message</p>
 <p>@ViewBag.Turn</p>
-<p>@ViewBag.YourTurn</p>
+@if (TempData["YourTurn"] != null)
+{
+    <p>@TempData["YourTurn"]</p>
+}
+
 @{
     var db = new DataLayer.Entities();
     bool?[,] array = Model.switchToBools(db);
@@ -24,35 +36,37 @@ else if (i == true)
 else if (i == false)
 { <td><img width="15" src="/Content/black.png" /></td> }
 }
-@if(!currentPerson.answeredMathQuestion)
+@if(!currentPerson.answeredMathQuestion && currentPerson.assignedBool == Model.currentUser)
 {
  <p>@ViewBag.Question</p>  
-    @Html.Raw("<input type='text' name='answer'>")
-    using (Html.BeginForm())
+    
+    using (Html.BeginForm(FormMethod.Post))
     {
-        <input type="submit" value="submit Answer"/>
+        @Html.AntiForgeryToken()
+        @Html.Raw("<input type='text' name='answer'>")
+        <input type="submit" value="submit answer"/>
     }
 }
 
 <table>
     @{ 
 
-        for (int i = 0; i < Model.maxRows; i++)
+        for (int i = Model.maxRows-1; i >= 0; i--)
         {
-            Html.Raw("<tr>");
-            for (int j = 0; j < Model.maxCols; j++)
+            @Html.Raw("<tr>");
+            for (int j = 0; j <Model.maxCols; j++)
             {
-                Html.Raw((ViewHelper(array[i, j])));
+                @Html.Raw((ViewHelper(array[i, j])));
 
             }
-                  Html.Raw("</tr>");
+                  @Html.Raw("</tr>");
             }
         }
 </table>
-@if (currentPerson.answeredMathQuestion)
+@if (currentPerson.answeredMathQuestion && TempData["isRight"]!=null && TempData["Answer"]!=null)
 {
-    <p>Answer was ViewBag.Answer</p>
-    if (@ViewBag.isRight == "true")
+    <p>Answer was @TempData["Answer"]</p>
+    if ((bool)@TempData["isRight"] == true)
     {
         <p>Your answer was right.</p>
     }
@@ -67,17 +81,18 @@ else if (i == false)
     using (Html.BeginForm(FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        for (int j = 0; j < Model.maxCols; j++)
+        for (int j = 1; j < Model.maxCols+1; j++)
         {
-            @Html.RadioButton("col", j);
+            @Html.RadioButton("col", j) @j;
 
         }
-        
+        <input type="submit" value="submit" />
     }
 }
 
 
 @using (Html.BeginForm(FormMethod.Post))
 {
-    Html.Raw("<input type='button' name = 'button' value='cancel' />");
+    @Html.AntiForgeryToken()
+    @Html.Raw("<input type='button' name = 'button' value='cancel' />");
 }
