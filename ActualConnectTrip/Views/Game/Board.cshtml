@@ -1,4 +1,5 @@
 ﻿@using BizLogic;
+@using DataLayer;
 @model DataLayer.Game
 @{
     ViewBag.Title = "Board";
@@ -43,7 +44,7 @@ else if (i == false)
     {
         @Html.AntiForgeryToken()
         @Html.Raw("<input type='text' name='answer'>")
-        <input type="submit" value="submit Answer"/>
+        <input type="submit" value="submit answer"/>
     }
 }
 
@@ -65,7 +66,7 @@ else if (i == false)
 @if (currentPerson.answeredMathQuestion && TempData["isRight"]!=null && TempData["Answer"]!=null)
 {
     <p>Answer was @TempData["Answer"]</p>
-    if ((string)@TempData["isRight"] == "true")
+    if ((bool)@TempData["isRight"] == true)
     {
         <p>Your answer was right.</p>
     }
