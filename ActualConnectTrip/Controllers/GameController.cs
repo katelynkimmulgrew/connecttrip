@@ -136,11 +136,12 @@ namespace ActualConnectTrip.Controllers
                         TempData["Answer"] = problem.answer;
                         
                         bool isRight = problem.answer == answer;
-
+                        problem.isRight = isRight;
+                        TempData["isRight"] = isRight;
                         if (isRight == false)
                         {
-                            TempData["isRight"] = "true";
-                            TempData["YourTurn"] = "You lost your turn";
+                            
+                             TempData["YourTurn"] = "You lost your turn";
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredIncorrectly++;
@@ -162,7 +163,7 @@ namespace ActualConnectTrip.Controllers
                         }
                         else
                         {
-                            TempData["isRight"] = "false";
+                            
                             if (board.level == 1)
                             {
                                 currentPerson.levelOneAnsweredCorrectly++;
@@ -685,38 +686,16 @@ namespace ActualConnectTrip.Controllers
         }
 
         [HttpPost]
-        public ActionResult PracticeMath(string level)
+        public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
+            var level = inputdata.levelchosen;
             var mobj = new BizLogic.mathProblems();
-            if(level=="1")
+            var model = new PracticeMathViewModel()
             {
-                var model = new PracticeMathViewModel()
-                {
-                    levelchosen = 1,
-                    mathQuestion = mobj.mathQuestion(1)
-                };
-                return View(model);
-            }
-            else if(level=="2")
-            {
-                var model = new PracticeMathViewModel()
-                {
-                    levelchosen = 2,
-                    mathQuestion = mobj.mathQuestion(2)
-                };
-                return View(model);
-            }
-            else
-            {
-                var model = new PracticeMathViewModel()
-                {
-                    levelchosen = 3,
-                    mathQuestion = mobj.mathQuestion(3)
-                };
-                return View(model);
-            }
+                mathQuestion = mobj.mathQuestion(level)
+            };
+            return View(model);
         }
-        
 
         public ActionResult PracticeMath()
         {
@@ -724,20 +703,24 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isVisable = true
+                    isSelectLevelVisable = true
                 };
                 return View(model);
             }
         }
+        
         /*
         [HttpPost]
-        public ActionResult PracticeMath(int answer)
+        public ActionResult PracticeMath(PracticeMathViewModel 
+            inputdata)
         {
+ 
             using (var context = new Entities())
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isVisable = true
+                    isVisable = true,
+                    mathAnswer = inputdata.userAnswer
                 };
                 return View(model);
             }
