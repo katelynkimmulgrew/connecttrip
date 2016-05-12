@@ -77,16 +77,16 @@
             level 1:
         </tr>
         {
-            int currentIndex = 1;
+            int currentIndex = 0;
             foreach (var item in Model.L1rivals)
             {
 
         <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.player1Id)
-                    @Html.DisplayFor(modelItem => Model.L1names)
+                    @Html.DisplayFor(modelItem => Model.L1names[currentIndex])
                 </td>
-            @*@currentIndex=@currentIndex+1*@
+            @currentIndex=@currentIndex+1
             </tr>
             <tr>
                 @using (Html.BeginForm())
@@ -113,16 +113,18 @@
     @if (Model.isThereOtherGamesLevel2)
     {
         <tr>level 2:</tr>
-        foreach (var item in Model.L2rivals)
         {
-            int currentIndex = 1;
+            int currentIndex = 0;
+            foreach (var item in Model.L2rivals)
+            {
+
             <tr>
                 <td>
                   @Html.DisplayFor(modelItem => item.player1Id)
                   @Html.DisplayFor(modelItem => Model.L2names[currentIndex]) 
                 </td>
             </tr>
-            currentIndex = currentIndex + 1;
+                currentIndex = currentIndex + 1;
             <tr>
                 @using (Html.BeginForm())
                 {
@@ -136,26 +138,29 @@
                 </td>
                 }
             </tr>
+            }
         }
     }
     else
     {
         <caption>No Games for Level 2</caption>
     }
-    
+
     @if (Model.isThereOtherGamesLevel3)
     {
     <tr>level 3:</tr>
-        foreach (var item in Model.L3rivals)
         {
-            int currentIndex = 1;
+            int currentIndex = 0;
+            foreach (var item in Model.L3rivals)
+            {
+
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.player1Id)
                 @Html.DisplayFor(modelItem => Model.L3names[currentIndex])                
             </td>
         </tr>
-            currentIndex = currentIndex + 1;
+                currentIndex = currentIndex + 1;
         <tr>
             @using (Html.BeginForm())
             {
@@ -169,6 +174,7 @@
                 </td>
             }
         </tr>
+            }
         }
     }
     else
