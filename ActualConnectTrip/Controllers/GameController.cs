@@ -10,6 +10,7 @@ using ActualConnectTrip.Models;
 
 namespace ActualConnectTrip.Controllers
 {
+    //check
     public class GameController : Controller
     {
         private Entities db = new Entities();
