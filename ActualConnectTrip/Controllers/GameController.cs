@@ -616,6 +616,7 @@ namespace ActualConnectTrip.Controllers
                             newgame.Player1Id = person1.Id;
                             newgame.Player2Id = person2.Id;
                         newgame.gameCancelled = false;
+                        
                             enti.SaveChanges();
                             ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
                             return RedirectToAction("Board");
