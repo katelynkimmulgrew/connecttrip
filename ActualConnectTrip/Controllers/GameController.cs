@@ -476,12 +476,14 @@ namespace ActualConnectTrip.Controllers
                     newstart.player1Id = startdata.myid;
                     newstart.level = startdata.gamelevel;
                     newstart.isStarted = false;
+                    
                     using (Entities enti = new Entities())
                     {
                         enti.startGamePlayers.Add(newstart);
                         enti.SaveChanges();
 
                     }
+                    
                     return RedirectToAction("waitingPage");
                 }
 
