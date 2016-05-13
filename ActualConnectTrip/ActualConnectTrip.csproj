@@ -284,6 +284,7 @@
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\Game\PracticeMath.cshtml" />
     <Content Include="Views\Game\Forum.cshtml" />
+    <Content Include="Views\Game\PermissionDenied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

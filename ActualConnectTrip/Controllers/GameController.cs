@@ -19,23 +19,7 @@ namespace ActualConnectTrip.Controllers
             
 
     // GET: Game
-    public ActionResult Error()
-        {
-            return View();
-        }
-
-    public ActionResult GameOver()
-        {
-            
-            return View();
-        }
-
-        public ActionResult NoGame()
-        {
-            return View();
-        }
-
-
+   
     public ActionResult Index()
         {
             return View();
@@ -44,6 +28,12 @@ namespace ActualConnectTrip.Controllers
 
 
         {
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             using (var db = new Entities2())
             {
 
@@ -51,7 +41,7 @@ namespace ActualConnectTrip.Controllers
                 Game board = db.getGameById(currentPerson.CurrentGameId);
                 if (board == null)
                 {
-                    return RedirectToAction("NoGame");
+                    return View("NoGame");
                 }
                 if (board.finished == true)
                 {
@@ -64,7 +54,7 @@ namespace ActualConnectTrip.Controllers
                         TempData["Winner"] = db.getPersonById(board.winnerID).UserName + " won!";
                     }
 
-                    return RedirectToAction("GameOver");
+                    return View("GameOver");
                 }
                 if (currentPerson.answeredMathQuestion == false)
                 {
@@ -106,14 +96,14 @@ namespace ActualConnectTrip.Controllers
                     board.finished = true;
                     TempData["Winner"] = "No one won.  The board is full!";
                     db.SaveChanges();
-                    return RedirectToAction("GameOver");
+                    return View("GameOver");
                 }
 
                 bool? currentBool = board.currentUser;
                 if (currentPerson != person1 && currentPerson != person2)
                 {
                     ViewBag.Error = "You do not have permission to view that game";
-                    return RedirectToAction("Error");
+                    return View("Error");
                 }
                 if (currentBool == currentPerson.assignedBool)
                 {
@@ -132,7 +122,11 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Board(int? col, string button, string answer)
         {
-            
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             lock (lockObject)
             {
                 using (var db = new Entities2())
@@ -222,7 +216,7 @@ namespace ActualConnectTrip.Controllers
                         person2.isPlaying = false;
                         TempData["IsCancelled"] = "This game was cancelled";
                         db.SaveChanges();
-                        return RedirectToAction("GameOver");
+                        return View("GameOver");
                     }
                     
                     
@@ -268,7 +262,7 @@ namespace ActualConnectTrip.Controllers
                                 otherPerson.LevelThreeLose++;
                             }
                             db.SaveChanges();
-                            return RedirectToAction("GameOver");
+                            return View("GameOver");
                         }
                         else
                         {
@@ -296,6 +290,11 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult GameStats()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             using (var context = new Entities2())
             {
                 
@@ -492,6 +491,11 @@ namespace ActualConnectTrip.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult stindex(StartpageViewModel startdata)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             if (startdata.request == true)
             {
                 lock (lockObject)
@@ -591,6 +595,11 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Forum()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             using (Entities2 enti = new Entities2())
             {
 
@@ -610,6 +619,11 @@ namespace ActualConnectTrip.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Forum(forumViewModel ques, string keyword) /*[Bind(Include = "Id,title,description")] Ques ques*/
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             using (Entities2 enti = new Entities2())
             {
                 if (ques.model2 != null)
@@ -667,6 +681,11 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult waitingPage()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
             {
@@ -694,6 +713,11 @@ namespace ActualConnectTrip.Controllers
         [HttpPost]
         public ActionResult waitingPage(StartpageViewModel startdata)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
             {
@@ -756,6 +780,11 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult PracticeMath()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             using (var context = new Entities2())
             {
                 var model = new PracticeMathViewModel()
@@ -771,6 +800,11 @@ namespace ActualConnectTrip.Controllers
         
         public PartialViewResult EachTurnMathQuestion(int level)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return PartialView("PermissionDenied");
+            }
             using (var context = new Entities2())
             {
                 var mathObj = new mathProblems();
