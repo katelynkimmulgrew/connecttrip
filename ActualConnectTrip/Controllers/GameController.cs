@@ -24,6 +24,12 @@ namespace ActualConnectTrip.Controllers
             return View();
         }
 
+    public ActionResult GameOver()
+        {
+            
+            return View();
+        }
+
         public ActionResult NoGame()
         {
             return View();
@@ -50,7 +56,7 @@ namespace ActualConnectTrip.Controllers
                 if (board.finished == true)
                 {
 
-                    ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                    TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
 
                     return RedirectToAction("GameOver");
                 }
@@ -92,7 +98,7 @@ namespace ActualConnectTrip.Controllers
                     person1.isPlaying = false;
                     person2.isPlaying = false;
                     board.finished = true;
-                    ViewBag.Winner = "No one won.  The board is full!";
+                    TempData["Winner"] = "No one won.  The board is full!";
                     db.SaveChanges();
                     return RedirectToAction("GameOver");
                 }
@@ -206,7 +212,7 @@ namespace ActualConnectTrip.Controllers
                         board.finished = true;
                         person1.isPlaying = false;
                         person2.isPlaying = false;
-                        ViewBag.IsCancelled = "This game was cancelled";
+                        TempData["IsCancelled"] = "This game was cancelled";
                         db.SaveChanges();
                         return RedirectToAction("GameOver");
                     }
@@ -218,7 +224,7 @@ namespace ActualConnectTrip.Controllers
                         Row currentRow = board.determinePlace(board.currentUser, (int)col, db);
                         if (currentRow == null)
                         {
-                            ViewBag.Message = "Cannot execute Move";
+                            TempData["Message"] = "Cannot execute Move";
                             return RedirectToAction("Board");
                         }
                         if (board.determineWin(db, currentRow))
@@ -236,7 +242,7 @@ namespace ActualConnectTrip.Controllers
                                 otherPerson = person1;
                             }
                             otherPerson.isPlaying = false;
-                            ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                            TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
                             if (board.level == 1)
                             {
                                 currentPerson.LevelOneWins++;

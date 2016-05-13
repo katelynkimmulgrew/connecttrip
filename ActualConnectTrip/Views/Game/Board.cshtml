@@ -14,7 +14,12 @@
 </style>
 <h2>Board</h2>
 <p>@ViewBag.Message</p>
+@if (TempData["Message"] != null)
+{
+    <p>@TempData["Message"]</p>
+}
 <p>@ViewBag.Turn</p>
+
 @if (TempData["YourTurn"] != null)
 {
     <p>@TempData["YourTurn"]</p>
