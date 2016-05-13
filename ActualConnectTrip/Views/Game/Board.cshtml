@@ -25,6 +25,16 @@
     bool?[,] array = Model.switchToBools(db);
     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
 }
+
+@if(currentPerson.assignedBool==true)
+{
+    <p>Your color is red.</p>
+}
+else
+{
+    <p>Your color is black.</p>
+}
+
     @helper ViewHelper(bool? i)
     {
 if (i == null)

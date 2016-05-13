@@ -180,7 +180,7 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.overallAnsweredCorrectly++;
                             db.SaveChanges();
                         }
-                        mathProblemResult problemData = new mathProblemResult();
+                        /*mathProblemResult problemData = new mathProblemResult();
                         db.mathProblemResults.Add(problemData);
                         db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
@@ -188,8 +188,8 @@ namespace ActualConnectTrip.Controllers
                         string question = problem2.mathQuestion(board.level);
                         problemData.question = question;
                         string answer2 = problem2.mathAnswer(question);
-                        problemData.answer = answer;
-                        
+                        problemData.answer = answer;*/
+                        currentPerson.currentMathProblemID = null;
                         
                         db.SaveChanges();
                         return RedirectToAction("Board");
