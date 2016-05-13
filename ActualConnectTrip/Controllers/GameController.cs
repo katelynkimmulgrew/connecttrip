@@ -11,6 +11,7 @@ using ActualConnectTrip.Models;
 namespace ActualConnectTrip.Controllers
 {
     //check
+    //check again
     public class GameController : Controller
     {
         private Entities db = new Entities();
@@ -476,12 +477,14 @@ namespace ActualConnectTrip.Controllers
                     newstart.player1Id = startdata.myid;
                     newstart.level = startdata.gamelevel;
                     newstart.isStarted = false;
+                    
                     using (Entities enti = new Entities())
                     {
                         enti.startGamePlayers.Add(newstart);
                         enti.SaveChanges();
 
                     }
+                    
                     return RedirectToAction("waitingPage");
                 }
 
@@ -683,39 +686,49 @@ namespace ActualConnectTrip.Controllers
             return RedirectToAction("stindex");
         }
 
+        public static bool PracticeMathFlag = false;
         [HttpPost]
-        public ActionResult PracticeMath(string level)
+        public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
-            var mobj = new BizLogic.mathProblems();
-            if(level=="1")
+            if (PracticeMathFlag == true)
             {
+                var level = inputdata.levelchosen;
+                var mobj = new BizLogic.mathProblems();
                 var model = new PracticeMathViewModel()
                 {
-                    levelchosen = 1,
-                    mathQuestion = mobj.mathQuestion(1)
+                    mathQuestion = mobj.mathQuestion(level),
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = true
                 };
-                return View(model);
-            }
-            else if(level=="2")
-            {
-                var model = new PracticeMathViewModel()
-                {
-                    levelchosen = 2,
-                    mathQuestion = mobj.mathQuestion(2)
-                };
+                PracticeMathFlag = false;
                 return View(model);
             }
             else
             {
                 var model = new PracticeMathViewModel()
                 {
-                    levelchosen = 3,
-                    mathQuestion = mobj.mathQuestion(3)
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = false
                 };
+                var answer = inputdata.mathAnswer;
+                var mobj = new BizLogic.mathProblems();
+                var realAnswer = mobj.mathAnswer(inputdata.mathQuestion);
+
+                if (!realAnswer.Equals(inputdata.userAnswer))
+                {
+                    ViewBag.message = "Your Answer is Wrong";
+                }
+                else
+                {
+                    ViewBag.message = "Your Answer is Right";
+                }
                 return View(model);
             }
+            
+           
+            
+            
         }
-        
 
         public ActionResult PracticeMath()
         {
@@ -723,25 +736,14 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isVisable = true
+                    isSelectLevelVisable = true,
+                    isAnswerAreaVisable= false
                 };
+                PracticeMathFlag = model.isSelectLevelVisable;
                 return View(model);
             }
         }
-        /*
-        [HttpPost]
-        public ActionResult PracticeMath(int answer)
-        {
-            using (var context = new Entities())
-            {
-                var model = new PracticeMathViewModel()
-                {
-                    isVisable = true
-                };
-                return View(model);
-            }
-        }
-        */
+        
         
         public PartialViewResult EachTurnMathQuestion(int level)
         {
