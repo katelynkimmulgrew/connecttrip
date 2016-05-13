@@ -323,6 +323,11 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult stindex()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             var UserName = User.Identity.Name;
             StartpageViewModel startInput = new StartpageViewModel();
 
@@ -606,7 +611,7 @@ namespace ActualConnectTrip.Controllers
                 
                 forumViewModel tempone = new forumViewModel();
 
-                tempone.model1 = enti.Questions.Include("answers").ToList();
+                tempone.model1 = enti.Questions.Include("answers2").ToList();
                 tempone.model2 = null;
                 tempone.model3 = enti.theAnswers.ToList();
                 return View(tempone);
@@ -635,7 +640,7 @@ namespace ActualConnectTrip.Controllers
 
 
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = enti.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers2").ToList();
                     tempone.model2 = null;
                     return View(tempone);
 
@@ -645,7 +650,7 @@ namespace ActualConnectTrip.Controllers
                     enti.Getquesforid(ques.model5).answers2.Add(ques.model4);
                     enti.SaveChanges();
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = enti.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers2").ToList();
                     //tempone.model2 = null;
                     ModelState.Clear();
                     return View(tempone);
@@ -657,7 +662,7 @@ namespace ActualConnectTrip.Controllers
                     //var infoUB = (from c in db.Questions
                     //              where c.title.ToString().Contains(keyword)
                     //              select c);
-                    var infoUB = (from c in enti.Questions.Include("answers")
+                    var infoUB = (from c in enti.Questions.Include("answers2")
                                   where c.title.ToString().Contains(keyword)
                                   select c);
                     forumViewModel tempone = new forumViewModel();
@@ -670,7 +675,7 @@ namespace ActualConnectTrip.Controllers
                 else
                 {
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = enti.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers2").ToList();
                     tempone.model2 = null;
                     return View(tempone);
                 }
