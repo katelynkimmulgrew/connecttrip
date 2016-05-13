@@ -149,14 +149,14 @@ namespace ActualConnectTrip.Controllers
                         mathProblemResult problem = db.getmathProblemResultById((int)currentPerson.currentMathProblemID);
                         DateTime end = DateTime.Now;
                         TimeSpan diff = end - problem.start;
-                        int differenceMinutes = diff.Minutes;
+                        int differenceSeconds = diff.Seconds;
                         
                         TempData["Answer"] = problem.answer;
                         
                         bool isRight = problem.answer == answer;
                         problem.isRight = isRight;
                         TempData["isRight"] = isRight;
-                        if (differenceMinutes > 2)
+                        if (differenceSeconds > 120)
                         {
                             TempData["YourTurn"] = "You ran out of time and lost your turn";
                             
