@@ -109,5 +109,5 @@ else if (i == false)
 @using (Html.BeginForm(FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    @Html.Raw("<input type='button' name = 'button' value='cancel' />");
+    @Html.Raw("<input type='submit' name = 'button' value='cancel' />");
 }

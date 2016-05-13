@@ -55,8 +55,14 @@ namespace ActualConnectTrip.Controllers
                 }
                 if (board.finished == true)
                 {
-
-                    TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
+                    if(board.gameCancelled)
+                    {
+                        TempData["IsCancelled"] = "The game was cancelled!";
+                    }
+                    else
+                    {
+                        TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
+                    }
 
                     return RedirectToAction("GameOver");
                 }
@@ -210,6 +216,7 @@ namespace ActualConnectTrip.Controllers
                     if (button == "cancel")
                     {
                         board.finished = true;
+                        board.gameCancelled = true;
                         person1.isPlaying = false;
                         person2.isPlaying = false;
                         TempData["IsCancelled"] = "This game was cancelled";
@@ -545,12 +552,12 @@ namespace ActualConnectTrip.Controllers
                             var person1 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player1Id)
                                            select c).FirstOrDefault();
-                            person1.assignedBool = true;
+                            person1.assignedBool = false;
 
                             var person2 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player2Id)
                                            select c).FirstOrDefault();
-                            person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
+                            person2.assignedBool = true;                       // so when a player accept the game, he will be player2 
                                                                                 // and set to false
                             person1.CurrentGameId = newgame.Id;
                             person2.CurrentGameId = newgame.Id;
@@ -558,6 +565,7 @@ namespace ActualConnectTrip.Controllers
                             person2.isPlaying = true;
                             newgame.Player1Id = person1.Id;
                             newgame.Player2Id = person2.Id;
+                        newgame.gameCancelled = false;
                             enti.SaveChanges();
                             ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
                             return RedirectToAction("Board");
