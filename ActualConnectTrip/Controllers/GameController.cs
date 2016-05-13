@@ -241,6 +241,8 @@ namespace ActualConnectTrip.Controllers
                         board.gameCancelled = true;
                         person1.isPlaying = false;
                         person2.isPlaying = false;
+                        person1.answeredMathQuestion = false;
+                        person2.answeredMathQuestion = false;
                         TempData["IsCancelled"] = "This game was cancelled";
                         db.SaveChanges();
                         return View("GameOver");
@@ -288,6 +290,8 @@ namespace ActualConnectTrip.Controllers
                                 currentPerson.LevelThreeWins++;
                                 otherPerson.LevelThreeLose++;
                             }
+                            person1.answeredMathQuestion = false;
+                            person2.answeredMathQuestion = false;
                             db.SaveChanges();
                             return View("GameOver");
                         }
