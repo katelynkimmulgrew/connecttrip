@@ -522,8 +522,8 @@ namespace ActualConnectTrip.Controllers
                         Game newgame = new Game();
                         enti.Games.Add(newgame);
                         enti.SaveChanges();
-                        newgame.maxCols = 6;
-                        newgame.maxRows = 7;
+                        newgame.maxCols = 7;
+                        newgame.maxRows = 6;
 
                         for (int i = 1; i <= newgame.maxCols; i++)
                         {
