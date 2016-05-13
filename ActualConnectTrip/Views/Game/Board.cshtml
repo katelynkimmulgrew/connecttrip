@@ -14,7 +14,12 @@
 </style>
 <h2>Board</h2>
 <p>@ViewBag.Message</p>
+@if (TempData["Message"] != null)
+{
+    <p>@TempData["Message"]</p>
+}
 <p>@ViewBag.Turn</p>
+
 @if (TempData["YourTurn"] != null)
 {
     <p>@TempData["YourTurn"]</p>
@@ -25,6 +30,16 @@
     bool?[,] array = Model.switchToBools(db);
     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
 }
+
+@if(currentPerson.assignedBool==true)
+{
+    <p>Your color is red.</p>
+}
+else
+{
+    <p>Your color is black.</p>
+}
+
     @helper ViewHelper(bool? i)
     {
 if (i == null)
@@ -94,5 +109,5 @@ else if (i == false)
 @using (Html.BeginForm(FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    @Html.Raw("<input type='button' name = 'button' value='cancel' />");
+    @Html.Raw("<input type='submit' name = 'button' value='cancel' />");
 }

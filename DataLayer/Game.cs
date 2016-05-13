@@ -34,6 +34,7 @@ namespace DataLayer
 
         public bool finished { get; set; }
 
+        public bool gameCancelled { get; set; }
         public int winnerID { get; set; }
         public int level { get; set; }
     }

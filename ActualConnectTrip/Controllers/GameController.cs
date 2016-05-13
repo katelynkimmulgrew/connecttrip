@@ -24,6 +24,12 @@ namespace ActualConnectTrip.Controllers
             return View();
         }
 
+    public ActionResult GameOver()
+        {
+            
+            return View();
+        }
+
         public ActionResult NoGame()
         {
             return View();
@@ -49,8 +55,14 @@ namespace ActualConnectTrip.Controllers
                 }
                 if (board.finished == true)
                 {
-
-                    ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                    if(board.gameCancelled)
+                    {
+                        TempData["IsCancelled"] = "The game was cancelled!";
+                    }
+                    else
+                    {
+                        TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
+                    }
 
                     return RedirectToAction("GameOver");
                 }
@@ -92,7 +104,7 @@ namespace ActualConnectTrip.Controllers
                     person1.isPlaying = false;
                     person2.isPlaying = false;
                     board.finished = true;
-                    ViewBag.Winner = "No one won.  The board is full!";
+                    TempData["Winner"] = "No one won.  The board is full!";
                     db.SaveChanges();
                     return RedirectToAction("GameOver");
                 }
@@ -181,7 +193,7 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.overallAnsweredCorrectly++;
                             db.SaveChanges();
                         }
-                        mathProblemResult problemData = new mathProblemResult();
+                        /*mathProblemResult problemData = new mathProblemResult();
                         db.mathProblemResults.Add(problemData);
                         db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
@@ -189,8 +201,8 @@ namespace ActualConnectTrip.Controllers
                         string question = problem2.mathQuestion(board.level);
                         problemData.question = question;
                         string answer2 = problem2.mathAnswer(question);
-                        problemData.answer = answer;
-                        
+                        problemData.answer = answer;*/
+                        currentPerson.currentMathProblemID = null;
                         
                         db.SaveChanges();
                         return RedirectToAction("Board");
@@ -204,9 +216,10 @@ namespace ActualConnectTrip.Controllers
                     if (button == "cancel")
                     {
                         board.finished = true;
+                        board.gameCancelled = true;
                         person1.isPlaying = false;
                         person2.isPlaying = false;
-                        ViewBag.IsCancelled = "This game was cancelled";
+                        TempData["IsCancelled"] = "This game was cancelled";
                         db.SaveChanges();
                         return RedirectToAction("GameOver");
                     }
@@ -218,7 +231,7 @@ namespace ActualConnectTrip.Controllers
                         Row currentRow = board.determinePlace(board.currentUser, (int)col, db);
                         if (currentRow == null)
                         {
-                            ViewBag.Message = "Cannot execute Move";
+                            TempData["Message"] = "Cannot execute Move";
                             return RedirectToAction("Board");
                         }
                         if (board.determineWin(db, currentRow))
@@ -236,7 +249,7 @@ namespace ActualConnectTrip.Controllers
                                 otherPerson = person1;
                             }
                             otherPerson.isPlaying = false;
-                            ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                            TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
                             if (board.level == 1)
                             {
                                 currentPerson.LevelOneWins++;
@@ -539,12 +552,12 @@ namespace ActualConnectTrip.Controllers
                             var person1 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player1Id)
                                            select c).FirstOrDefault();
-                            person1.assignedBool = true;
+                            person1.assignedBool = false;
 
                             var person2 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player2Id)
                                            select c).FirstOrDefault();
-                            person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
+                            person2.assignedBool = true;                       // so when a player accept the game, he will be player2 
                                                                                 // and set to false
                             person1.CurrentGameId = newgame.Id;
                             person2.CurrentGameId = newgame.Id;
@@ -552,6 +565,7 @@ namespace ActualConnectTrip.Controllers
                             person2.isPlaying = true;
                             newgame.Player1Id = person1.Id;
                             newgame.Player2Id = person2.Id;
+                        newgame.gameCancelled = false;
                             enti.SaveChanges();
                             ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
                             return RedirectToAction("Board");
@@ -567,15 +581,15 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Forum()
         {
-            using (ForumContext db = new ForumContext())
+            using (Entities enti = new Entities())
             {
 
-                db.SaveChanges();
+                
                 forumViewModel tempone = new forumViewModel();
 
-                tempone.model1 = db.Questions.Include("answers").ToList();
+                tempone.model1 = enti.Questions.Include("answers").ToList();
                 tempone.model2 = null;
-                tempone.model3 = db.Answers.ToList();
+                tempone.model3 = enti.Answers.ToList();
                 return View(tempone);
             }
 
@@ -586,28 +600,28 @@ namespace ActualConnectTrip.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Forum(forumViewModel ques, string keyword) /*[Bind(Include = "Id,title,description")] Ques ques*/
         {
-            using (ForumContext db = new ForumContext())
+            using (Entities enti = new Entities())
             {
                 if (ques.model2 != null)
                 {
 
 
-                    db.Questions.Add(ques.model2);
-                    db.SaveChanges();
+                    enti.Questions.Add(ques.model2);
+                    enti.SaveChanges();
 
 
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers").ToList();
                     tempone.model2 = null;
                     return View(tempone);
 
                 }
                 else if (ques.model4 != null)
                 {
-                    db.Getquesforid(ques.model5).answers.Add(ques.model4);
-                    db.SaveChanges();
+                    enti.Getquesforid(ques.model5).answers.Add(ques.model4);
+                    enti.SaveChanges();
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers").ToList();
                     //tempone.model2 = null;
                     ModelState.Clear();
                     return View(tempone);
@@ -619,7 +633,7 @@ namespace ActualConnectTrip.Controllers
                     //var infoUB = (from c in db.Questions
                     //              where c.title.ToString().Contains(keyword)
                     //              select c);
-                    var infoUB = (from c in db.Questions.Include("answers")
+                    var infoUB = (from c in enti.Questions.Include("answers")
                                   where c.title.ToString().Contains(keyword)
                                   select c);
                     forumViewModel tempone = new forumViewModel();
@@ -632,7 +646,7 @@ namespace ActualConnectTrip.Controllers
                 else
                 {
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers").ToList();
                     tempone.model2 = null;
                     return View(tempone);
                 }
