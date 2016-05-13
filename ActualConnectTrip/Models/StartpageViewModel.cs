@@ -17,6 +17,7 @@ namespace ActualConnectTrip.Models
         public virtual List<startGamePlayer> L3rivals { get; set; }
         public virtual List<string> L3names { get; set; }
         public virtual List<startGamePlayer> Recommended { get; set; }
+        public virtual List<string> RCnames { get; set; }
 
         public bool isThereRecommended { get; set; }
 

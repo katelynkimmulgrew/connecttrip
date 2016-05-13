@@ -373,6 +373,15 @@ namespace ActualConnectTrip.Controllers
                 {
                     startInput.Recommended = recommended.ToList();
                     startInput.isThereRecommended = true;
+                    List<string> RCnames = new List<string>();
+                    foreach (var plga in recommended)
+                    {
+                        var Names = (from c in enti.Persons
+                                     where c.Id.Equals(plga.player1Id)
+                                     select c.UserName).FirstOrDefault();
+                        RCnames.Add(Names);
+                    }
+                    startInput.RCnames = RCnames;
                 }
                
                     
