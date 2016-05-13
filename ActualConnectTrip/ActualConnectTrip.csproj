@@ -216,7 +216,7 @@
     <Content Include="Content\black.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\ConnectTripImage.jpg" />
+    <Content Include="Content\ConnectTrip.png" />
     <Content Include="Content\red.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -285,7 +285,11 @@
     <Content Include="Views\Game\Error.cshtml" />
     <Content Include="Views\Game\PracticeMath.cshtml" />
     <Content Include="Views\Game\Forum.cshtml" />
-    <Content Include="Views\Game\PermissionDenied.cshtml" />
+    <Content Include="Views\Home\PermissionDenied.cshtml" />
+    <Content Include="Views\Shared\_LayoutForUsers.cshtml" />
+    <Content Include="Views\Game\_ViewStart.cshtml" />
+    <Content Include="Views\Game\Rules.cshtml" />
+    <Content Include="Views\Game\Image.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
