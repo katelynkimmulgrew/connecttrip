@@ -173,6 +173,8 @@ namespace ActualConnectTrip.Controllers
                     newPerson.levelThreeAnsweredIncorrectly = 0;
                     newPerson.overallAnsweredCorrectly = 0;
                     newPerson.overllAndsweredIncorrectly = 0;
+                    newPerson.Answered = 0;
+                    newPerson.DidNotAnswer = 0;
                     newPerson.isPlaying = false;
                     context.Persons.Add(newPerson);
                     context.SaveChanges();

@@ -61,6 +61,7 @@ namespace ActualConnectTrip.Controllers
                     if (currentPerson.currentMathProblemID == null)
                     {
                         mathProblemResult problemData = new mathProblemResult();
+                        problemData.start = DateTime.Now;
                         db.mathProblemResults.Add(problemData);
                         db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
@@ -69,6 +70,7 @@ namespace ActualConnectTrip.Controllers
                         problemData.question = question;
                         string answer = problem.mathAnswer(question);
                         problemData.answer = answer;
+                        
                         db.SaveChanges();
                         ViewBag.Question = problemData.question;
                     }
@@ -138,14 +140,32 @@ namespace ActualConnectTrip.Controllers
                    
                     if(currentPerson.answeredMathQuestion==false && answer!=null)
                     {
+                        
                         currentPerson.answeredMathQuestion = true;
                         db.SaveChanges(); 
                         mathProblemResult problem = db.getmathProblemResultById((int)currentPerson.currentMathProblemID);
+                        DateTime end = DateTime.Now;
+                        TimeSpan diff = end - problem.start;
+                        int differenceMinutes = diff.Minutes;
+                        
                         TempData["Answer"] = problem.answer;
                         
                         bool isRight = problem.answer == answer;
                         problem.isRight = isRight;
                         TempData["isRight"] = isRight;
+                        if (differenceMinutes > 2)
+                        {
+                            TempData["YourTurn"] = "You ran out of time and lost your turn";
+                            
+                            board.SwitchPlayers();
+                            currentPerson.answeredMathQuestion = false;
+                            currentPerson.DidNotAnswer++;
+                            currentPerson.currentMathProblemID = null;
+
+                            db.SaveChanges();
+                            return RedirectToAction("Board");
+                        }
+                        currentPerson.Answered++;
                         if (isRight == false)
                         {
                             

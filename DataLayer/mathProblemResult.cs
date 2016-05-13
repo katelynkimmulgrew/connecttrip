@@ -27,6 +27,8 @@ namespace DataLayer
 
         public bool current { get; set; }
 
-        
+        public DateTime start { get; set; }
+
+ 
     }
 }
