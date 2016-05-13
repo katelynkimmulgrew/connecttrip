@@ -7,8 +7,8 @@
 <style>
     td {
         border: 1px solid black;
-        width: 20px;
-        height: 20px;
+        width: 70px;
+        height: 70px;
         empty-cells: show;
     }
 </style>
@@ -46,10 +46,10 @@ if (i == null)
 { <td></td> }
 
 else if (i == true)
-{ <td><img width="15" src="/Content/red.png" /></td> }
+{ <td><img width="70" src="/Content/red.png" /></td> }
 
 else if (i == false)
-{ <td><img width="15" src="/Content/black.png" /></td> }
+{ <td><img width="70" src="/Content/black.png" /></td> }
 }
 @if(!currentPerson.answeredMathQuestion && currentPerson.assignedBool == Model.currentUser)
 {
@@ -78,7 +78,7 @@ else if (i == false)
             }
         }
 </table>
-@if (currentPerson.answeredMathQuestion && TempData["isRight"]!=null && TempData["Answer"]!=null)
+@if (TempData["isRight"]!=null && TempData["Answer"]!=null)
 {
     <p>Answer was @TempData["Answer"]</p>
     if ((bool)@TempData["isRight"] == true)
@@ -109,5 +109,5 @@ else if (i == false)
 @using (Html.BeginForm(FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    @Html.Raw("<input type='submit' name = 'button' value='cancel' />");
+    @Html.Raw("<input type='submit' name = 'button' value='cancel game' />");
 }

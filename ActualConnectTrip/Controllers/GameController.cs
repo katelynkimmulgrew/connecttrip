@@ -145,6 +145,7 @@ namespace ActualConnectTrip.Controllers
                     if(currentPerson.answeredMathQuestion==false && answer!=null)
                     {
                         currentPerson.answeredMathQuestion = true;
+                        db.SaveChanges(); 
                         mathProblemResult problem = db.getmathProblemResultById((int)currentPerson.currentMathProblemID);
                         TempData["Answer"] = problem.answer;
                         
@@ -213,7 +214,7 @@ namespace ActualConnectTrip.Controllers
                     var person1 = db.getPersonById(board.Player1Id);
                     var person2 = db.getPersonById(board.Player2Id);
 
-                    if (button == "cancel")
+                    if (button == "cancel game")
                     {
                         board.finished = true;
                         board.gameCancelled = true;
@@ -336,7 +337,7 @@ namespace ActualConnectTrip.Controllers
 
                 if (infoUB.isPlaying == true)
                 {
-                    ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
+                    TempData["Message"] = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
                     return RedirectToAction("Board");
                 }
 
@@ -665,7 +666,7 @@ namespace ActualConnectTrip.Controllers
                               select c).FirstOrDefault();
                 if (infoUB.isPlaying == true)
                 {
-                    ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
+                    TempData["Message"] = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
                     return RedirectToAction("Board");
                 }
                 var oldgame = (from c in enti.startGamePlayers
