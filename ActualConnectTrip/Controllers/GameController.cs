@@ -56,7 +56,7 @@ namespace ActualConnectTrip.Controllers
 
                     return View("GameOver");
                 }
-                if (currentPerson.answeredMathQuestion == false)
+                if (currentPerson.answeredMathQuestion == false&&currentPerson.assignedBool==board.currentUser)
                 {
                     //if (currentPerson.currentMathProblemID == null)
                     //{
@@ -166,7 +166,7 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.currentMathProblemID = null;
 
                             db.SaveChanges();
-                            return RedirectToAction("Board");
+                            return View(board);
                         }
                         currentPerson.Answered++;
                         if (isRight == false)
@@ -223,7 +223,7 @@ namespace ActualConnectTrip.Controllers
                         currentPerson.currentMathProblemID = null;
                         
                         db.SaveChanges();
-                        return RedirectToAction("Board");
+                        return View(board);
                     }
                     
                     
@@ -250,7 +250,7 @@ namespace ActualConnectTrip.Controllers
                         if (currentRow == null)
                         {
                             TempData["Message"] = "Cannot execute Move";
-                            return RedirectToAction("Board");
+                            return View(board);
                         }
                         if (board.determineWin(db, currentRow))
                         {
@@ -293,12 +293,12 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.answeredMathQuestion = false;
                             db.SaveChanges();
                         }
-                        return RedirectToAction("Board");
+                        return View(board);
                     }
                     else
                     {
                         ViewBag.Message = "Invalid Cannot Execute when it is not your turn";
-                        return RedirectToAction("Board");
+                        return View(board);
                     }
                     
              }
