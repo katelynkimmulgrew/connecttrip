@@ -1,10 +1,17 @@
-﻿
+﻿@model DataLayer.Game
 @{
     ViewBag.Title = "GameOver";
 }
 
 <h2>GameOver</h2>
-<p>@ViewBag.Winner</p>
-<p>@ViewBag.IsCancelled</p>
+@if(TempData["Winner"]!=null)
+{
+   <p>@TempData["Winner"]</p> 
+}
+@if(TempData["IsCancelled"]!=null)
+{
+    <p>@TempData["IsCancelled"]</p>
+}
+
 
 @Html.ActionLink("Start another game!", "stindex");

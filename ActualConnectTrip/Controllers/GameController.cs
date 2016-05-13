@@ -11,6 +11,7 @@ using ActualConnectTrip.Models;
 namespace ActualConnectTrip.Controllers
 {
     //check
+    //check again
     public class GameController : Controller
     {
         private Entities db = new Entities();
@@ -20,6 +21,12 @@ namespace ActualConnectTrip.Controllers
     // GET: Game
     public ActionResult Error()
         {
+            return View();
+        }
+
+    public ActionResult GameOver()
+        {
+            
             return View();
         }
 
@@ -48,8 +55,14 @@ namespace ActualConnectTrip.Controllers
                 }
                 if (board.finished == true)
                 {
-
-                    ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                    if(board.gameCancelled)
+                    {
+                        TempData["IsCancelled"] = "The game was cancelled!";
+                    }
+                    else
+                    {
+                        TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
+                    }
 
                     return RedirectToAction("GameOver");
                 }
@@ -91,7 +104,7 @@ namespace ActualConnectTrip.Controllers
                     person1.isPlaying = false;
                     person2.isPlaying = false;
                     board.finished = true;
-                    ViewBag.Winner = "No one won.  The board is full!";
+                    TempData["Winner"] = "No one won.  The board is full!";
                     db.SaveChanges();
                     return RedirectToAction("GameOver");
                 }
@@ -180,7 +193,7 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.overallAnsweredCorrectly++;
                             db.SaveChanges();
                         }
-                        mathProblemResult problemData = new mathProblemResult();
+                        /*mathProblemResult problemData = new mathProblemResult();
                         db.mathProblemResults.Add(problemData);
                         db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
@@ -188,8 +201,8 @@ namespace ActualConnectTrip.Controllers
                         string question = problem2.mathQuestion(board.level);
                         problemData.question = question;
                         string answer2 = problem2.mathAnswer(question);
-                        problemData.answer = answer;
-                        
+                        problemData.answer = answer;*/
+                        currentPerson.currentMathProblemID = null;
                         
                         db.SaveChanges();
                         return RedirectToAction("Board");
@@ -203,9 +216,10 @@ namespace ActualConnectTrip.Controllers
                     if (button == "cancel")
                     {
                         board.finished = true;
+                        board.gameCancelled = true;
                         person1.isPlaying = false;
                         person2.isPlaying = false;
-                        ViewBag.IsCancelled = "This game was cancelled";
+                        TempData["IsCancelled"] = "This game was cancelled";
                         db.SaveChanges();
                         return RedirectToAction("GameOver");
                     }
@@ -217,7 +231,7 @@ namespace ActualConnectTrip.Controllers
                         Row currentRow = board.determinePlace(board.currentUser, (int)col, db);
                         if (currentRow == null)
                         {
-                            ViewBag.Message = "Cannot execute Move";
+                            TempData["Message"] = "Cannot execute Move";
                             return RedirectToAction("Board");
                         }
                         if (board.determineWin(db, currentRow))
@@ -235,7 +249,7 @@ namespace ActualConnectTrip.Controllers
                                 otherPerson = person1;
                             }
                             otherPerson.isPlaying = false;
-                            ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                            TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
                             if (board.level == 1)
                             {
                                 currentPerson.LevelOneWins++;
@@ -538,12 +552,12 @@ namespace ActualConnectTrip.Controllers
                             var person1 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player1Id)
                                            select c).FirstOrDefault();
-                            person1.assignedBool = true;
+                            person1.assignedBool = false;
 
                             var person2 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player2Id)
                                            select c).FirstOrDefault();
-                            person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
+                            person2.assignedBool = true;                       // so when a player accept the game, he will be player2 
                                                                                 // and set to false
                             person1.CurrentGameId = newgame.Id;
                             person2.CurrentGameId = newgame.Id;
@@ -551,6 +565,7 @@ namespace ActualConnectTrip.Controllers
                             person2.isPlaying = true;
                             newgame.Player1Id = person1.Id;
                             newgame.Player2Id = person2.Id;
+                        newgame.gameCancelled = false;
                             enti.SaveChanges();
                             ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
                             return RedirectToAction("Board");
@@ -685,16 +700,48 @@ namespace ActualConnectTrip.Controllers
             return RedirectToAction("stindex");
         }
 
+        public static bool PracticeMathFlag = false;
         [HttpPost]
         public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
-            var level = inputdata.levelchosen;
-            var mobj = new BizLogic.mathProblems();
-            var model = new PracticeMathViewModel()
+            if (PracticeMathFlag == true)
             {
-                mathQuestion = mobj.mathQuestion(level)
-            };
-            return View(model);
+                var level = inputdata.levelchosen;
+                var mobj = new BizLogic.mathProblems();
+                var model = new PracticeMathViewModel()
+                {
+                    mathQuestion = mobj.mathQuestion(level),
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = true
+                };
+                PracticeMathFlag = false;
+                return View(model);
+            }
+            else
+            {
+                var model = new PracticeMathViewModel()
+                {
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = false
+                };
+                var answer = inputdata.mathAnswer;
+                var mobj = new BizLogic.mathProblems();
+                var realAnswer = mobj.mathAnswer(inputdata.mathQuestion);
+
+                if (!realAnswer.Equals(inputdata.userAnswer))
+                {
+                    ViewBag.message = "Your Answer is Wrong";
+                }
+                else
+                {
+                    ViewBag.message = "Your Answer is Right";
+                }
+                return View(model);
+            }
+            
+           
+            
+            
         }
 
         public ActionResult PracticeMath()
@@ -703,29 +750,14 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelVisable = true
+                    isSelectLevelVisable = true,
+                    isAnswerAreaVisable= false
                 };
+                PracticeMathFlag = model.isSelectLevelVisable;
                 return View(model);
             }
         }
         
-        /*
-        [HttpPost]
-        public ActionResult PracticeMath(PracticeMathViewModel 
-            inputdata)
-        {
- 
-            using (var context = new Entities())
-            {
-                var model = new PracticeMathViewModel()
-                {
-                    isVisable = true,
-                    mathAnswer = inputdata.userAnswer
-                };
-                return View(model);
-            }
-        }
-        */
         
         public PartialViewResult EachTurnMathQuestion(int level)
         {
