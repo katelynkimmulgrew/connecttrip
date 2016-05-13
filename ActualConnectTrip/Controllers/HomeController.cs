@@ -27,16 +27,6 @@ namespace ActualConnectTrip.Controllers
 
             return View();
         }
-        public ActionResult PracticeMath()
-        {
-           
-                var model = new PracticeMathViewModel
-                {
-                    //mathQuestion = mObj.mathQuestion(game.level),
-                    // mathAnswer = mObj.mathAnswer(mObj.mathQuestion(game.level))
-                };
-                return View();
-  
-        }
+        
     }
 }
