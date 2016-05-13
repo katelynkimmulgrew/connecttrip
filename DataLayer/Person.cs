@@ -12,7 +12,7 @@ namespace DataLayer
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string UserName { get; set; }
-        public int CurrentGameId { get; set; }
+        public int? CurrentGameId { get; set; }
         public string CatchPhrase { get; set; }
 
         public double LevelOneWins { get; set; }

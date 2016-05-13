@@ -38,7 +38,11 @@ namespace ActualConnectTrip.Controllers
             {
 
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
-                Game board = db.getGameById(currentPerson.CurrentGameId);
+                if (currentPerson.CurrentGameId == null)
+                {
+                    return RedirectToAction("stindex");
+                }
+                Game board = db.getGameById((int)currentPerson.CurrentGameId);
                 if (board == null)
                 {
                     return View("NoGame");
@@ -139,7 +143,7 @@ namespace ActualConnectTrip.Controllers
                     
                     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                     
-                    Game board = db.getGameById(currentPerson.CurrentGameId);
+                    Game board = db.getGameById((int)currentPerson.CurrentGameId);
                    
                     if(currentPerson.answeredMathQuestion==false && answer!=null)
                     {
