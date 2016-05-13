@@ -56,7 +56,6 @@
     <Compile Include="Answer.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="Entities.cs" />
-    <Compile Include="ForumContext.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="mathProblemResult.cs" />
     <Compile Include="Migrations\201605130315567_cancelled.cs" />

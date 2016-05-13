@@ -581,15 +581,15 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Forum()
         {
-            using (ForumContext db = new ForumContext())
+            using (Entities enti = new Entities())
             {
 
-                db.SaveChanges();
+                
                 forumViewModel tempone = new forumViewModel();
 
-                tempone.model1 = db.Questions.Include("answers").ToList();
+                tempone.model1 = enti.Questions.Include("answers").ToList();
                 tempone.model2 = null;
-                tempone.model3 = db.Answers.ToList();
+                tempone.model3 = enti.Answers.ToList();
                 return View(tempone);
             }
 
@@ -600,28 +600,28 @@ namespace ActualConnectTrip.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Forum(forumViewModel ques, string keyword) /*[Bind(Include = "Id,title,description")] Ques ques*/
         {
-            using (ForumContext db = new ForumContext())
+            using (Entities enti = new Entities())
             {
                 if (ques.model2 != null)
                 {
 
 
-                    db.Questions.Add(ques.model2);
-                    db.SaveChanges();
+                    enti.Questions.Add(ques.model2);
+                    enti.SaveChanges();
 
 
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers").ToList();
                     tempone.model2 = null;
                     return View(tempone);
 
                 }
                 else if (ques.model4 != null)
                 {
-                    db.Getquesforid(ques.model5).answers.Add(ques.model4);
-                    db.SaveChanges();
+                    enti.Getquesforid(ques.model5).answers.Add(ques.model4);
+                    enti.SaveChanges();
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers").ToList();
                     //tempone.model2 = null;
                     ModelState.Clear();
                     return View(tempone);
@@ -633,7 +633,7 @@ namespace ActualConnectTrip.Controllers
                     //var infoUB = (from c in db.Questions
                     //              where c.title.ToString().Contains(keyword)
                     //              select c);
-                    var infoUB = (from c in db.Questions.Include("answers")
+                    var infoUB = (from c in enti.Questions.Include("answers")
                                   where c.title.ToString().Contains(keyword)
                                   select c);
                     forumViewModel tempone = new forumViewModel();
@@ -646,7 +646,7 @@ namespace ActualConnectTrip.Controllers
                 else
                 {
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers").ToList();
                     tempone.model2 = null;
                     return View(tempone);
                 }
