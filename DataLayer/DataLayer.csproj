@@ -53,9 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Answer.cs" />
+    <Compile Include="Migrations\201605131348351_update.cs" />
+    <Compile Include="Migrations\201605131348351_update.Designer.cs">
+      <DependentUpon>201605131348351_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="theAnswer.cs" />
     <Compile Include="Column.cs" />
-    <Compile Include="Entities.cs" />
+    <Compile Include="Entities2.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="mathProblemResult.cs" />
     <Compile Include="Migrations\201605130315567_cancelled.cs" />
@@ -76,6 +80,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201605130315567_cancelled.resx">
       <DependentUpon>201605130315567_cancelled.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605131348351_update.resx">
+      <DependentUpon>201605131348351_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

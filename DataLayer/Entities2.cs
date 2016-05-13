@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class Entities : DbContext
+    public class Entities2 : DbContext
     {
         
         
@@ -23,7 +23,7 @@ namespace DataLayer
         
 
         public virtual DbSet<Ques> Questions { get; set; }
-        public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<theAnswer> theAnswers { get; set; }
 
         public virtual DbSet<mathProblemResult> mathProblemResults { get; set; }
 

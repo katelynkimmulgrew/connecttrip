@@ -154,7 +154,7 @@ namespace ActualConnectTrip.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                using (var context = new Entities())
+                using (var context = new Entities2())
                 {
                     var newPerson = new Person();
                     newPerson.UserName = model.Email;

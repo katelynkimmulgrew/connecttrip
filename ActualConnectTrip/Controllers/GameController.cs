@@ -14,7 +14,7 @@ namespace ActualConnectTrip.Controllers
     //check again
     public class GameController : Controller
     {
-        private Entities db = new Entities();
+        private Entities2 db = new Entities2();
         static private Object lockObject = new object();
             
 
@@ -44,7 +44,7 @@ namespace ActualConnectTrip.Controllers
 
 
         {
-            using (var db = new Entities())
+            using (var db = new Entities2())
             {
 
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
@@ -61,7 +61,7 @@ namespace ActualConnectTrip.Controllers
                     }
                     else
                     {
-                        TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
+                        TempData["Winner"] = db.getPersonById(board.winnerID).UserName + " won!";
                     }
 
                     return RedirectToAction("GameOver");
@@ -135,7 +135,7 @@ namespace ActualConnectTrip.Controllers
             
             lock (lockObject)
             {
-                using (var db = new Entities())
+                using (var db = new Entities2())
                 {
                     
                     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
@@ -249,7 +249,7 @@ namespace ActualConnectTrip.Controllers
                                 otherPerson = person1;
                             }
                             otherPerson.isPlaying = false;
-                            TempData["Winner"] = db.getPersonById(board.winnerID).UserName + "won!";
+                            TempData["Winner"] = db.getPersonById(board.winnerID).UserName + " won!";
                             if (board.level == 1)
                             {
                                 currentPerson.LevelOneWins++;
@@ -295,7 +295,7 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult GameStats()
         {
-            using (var context = new Entities())
+            using (var context = new Entities2())
             {
                 
                 var currentPerson = (from p in context.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
@@ -326,7 +326,7 @@ namespace ActualConnectTrip.Controllers
             var UserName = User.Identity.Name;
             StartpageViewModel startInput = new StartpageViewModel();
 
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
 
 
@@ -351,7 +351,7 @@ namespace ActualConnectTrip.Controllers
                 }
             }
 
-                using (Entities enti = new Entities())
+                using (Entities2 enti = new Entities2())
             {
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
@@ -500,7 +500,7 @@ namespace ActualConnectTrip.Controllers
                     newstart.level = startdata.gamelevel;
                     newstart.isStarted = false;
                     
-                    using (Entities enti = new Entities())
+                    using (Entities2 enti = new Entities2())
                     {
                         enti.startGamePlayers.Add(newstart);
                         enti.SaveChanges();
@@ -516,7 +516,7 @@ namespace ActualConnectTrip.Controllers
             {
                 lock (lockObject)
                 {
-                    using (Entities enti = new Entities())
+                    using (Entities2 enti = new Entities2())
                     {
                         Game newgame = new Game();
                         enti.Games.Add(newgame);
@@ -590,7 +590,7 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Forum()
         {
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
 
                 
@@ -598,7 +598,7 @@ namespace ActualConnectTrip.Controllers
 
                 tempone.model1 = enti.Questions.Include("answers").ToList();
                 tempone.model2 = null;
-                tempone.model3 = enti.Answers.ToList();
+                tempone.model3 = enti.theAnswers.ToList();
                 return View(tempone);
             }
 
@@ -609,7 +609,7 @@ namespace ActualConnectTrip.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Forum(forumViewModel ques, string keyword) /*[Bind(Include = "Id,title,description")] Ques ques*/
         {
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
                 if (ques.model2 != null)
                 {
@@ -627,7 +627,7 @@ namespace ActualConnectTrip.Controllers
                 }
                 else if (ques.model4 != null)
                 {
-                    enti.Getquesforid(ques.model5).answers.Add(ques.model4);
+                    enti.Getquesforid(ques.model5).answers2.Add(ques.model4);
                     enti.SaveChanges();
                     forumViewModel tempone = new forumViewModel();
                     tempone.model1 = enti.Questions.Include("answers").ToList();
@@ -667,7 +667,7 @@ namespace ActualConnectTrip.Controllers
         public ActionResult waitingPage()
         {
             var UserName = User.Identity.Name;
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
@@ -694,7 +694,7 @@ namespace ActualConnectTrip.Controllers
         public ActionResult waitingPage(StartpageViewModel startdata)
         {
             var UserName = User.Identity.Name;
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
@@ -755,7 +755,7 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult PracticeMath()
         {
-            using (var context = new Entities())
+            using (var context = new Entities2())
             {
                 var model = new PracticeMathViewModel()
                 {
@@ -770,7 +770,7 @@ namespace ActualConnectTrip.Controllers
         
         public PartialViewResult EachTurnMathQuestion(int level)
         {
-            using (var context = new Entities())
+            using (var context = new Entities2())
             {
                 var mathObj = new mathProblems();
                 var mathViewModel = new PracticeMathViewModel()

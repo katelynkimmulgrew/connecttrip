@@ -282,7 +282,6 @@
     <Content Include="Views\Game\waitingPage.cshtml" />
     <Content Include="Views\Game\NoGame.cshtml" />
     <Content Include="Views\Game\Error.cshtml" />
-    <Content Include="Views\Game\EachTurnMathQuestion.cshtml" />
     <Content Include="Views\Game\PracticeMath.cshtml" />
     <Content Include="Views\Game\Forum.cshtml" />
   </ItemGroup>

@@ -19,11 +19,11 @@ namespace DataLayer
         [Required]
         public string description { get; set; }
 
-        public virtual ICollection<Answer> answers { get; set; }
+        public virtual ICollection<theAnswer> answers2 { get; set; }
 
         public Ques()
         {
-            answers = new List<Answer>();
+            answers2 = new List<theAnswer>();
         }
     }
 }
