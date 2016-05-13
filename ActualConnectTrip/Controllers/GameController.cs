@@ -11,6 +11,7 @@ using ActualConnectTrip.Models;
 namespace ActualConnectTrip.Controllers
 {
     //check
+    //check again
     public class GameController : Controller
     {
         private Entities db = new Entities();
