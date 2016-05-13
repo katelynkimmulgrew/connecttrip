@@ -11,7 +11,7 @@ namespace ActualConnectTrip.Models
         public double levelOnePercentageView { get; set; }
         public double levelTwoPercentageView { get; set; }
         public double levelThreePercentageView { get; set; }
-        //public double didNotAnswerView { get; set; }
+        public double didNotAnswerView { get; set; }
         public double totalNumberOfGames { get; set; }
         public double totalNumberOfWins { get; set; }
         public double totalNumberOfLose { get; set; }

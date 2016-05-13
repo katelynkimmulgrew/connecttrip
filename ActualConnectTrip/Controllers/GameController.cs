@@ -328,7 +328,7 @@ namespace ActualConnectTrip.Controllers
                     levelOnePercentageView = statsAndRecommendationLogic.levelOnePercentage(currentPerson),
                     levelTwoPercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
                     levelThreePercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
-                    //didNotAnswerView = statsAndRecommendationLogic.didNotAnwserPercentage(currentPerson),
+                    didNotAnswerView = statsAndRecommendationLogic.didNotAnwserPercentage(currentPerson),
                     totalNumberOfGames = statsAndRecommendationLogic.numGames(currentPerson),
                     totalNumberOfWins = statsAndRecommendationLogic.numWins(currentPerson),
                     totalNumberOfLose = statsAndRecommendationLogic.numLose(currentPerson),

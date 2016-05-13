@@ -11,16 +11,19 @@ namespace BizLogic
     {
         public static double overallPercentage(this Person user)
         {
+            
             return percentage(user.LevelOneWins + user.LevelTwoWins + user.LevelThreeWins, user.LevelOneLose + user.LevelTwoLose + user.LevelThreeLose);
         }
 
         public static double levelOnePercentage(this Person user)
         {
+           
             return percentage(user.LevelOneWins, user.LevelOneLose);
         }
 
         public static double levelTwoPercentage(this Person user)
         {
+            
             return percentage(user.LevelTwoWins, user.LevelTwoLose);
 
         }
@@ -32,11 +35,13 @@ namespace BizLogic
 
         public static double didNotAnwserPercentage(this Person user)
         {
+           
             return percentage(user.DidNotAnswer, user.Answered);
         }
 
         public static double levelOneMathCorrectPerecentage(this Person user)
         {
+            
             return percentage(user.levelOneAnsweredCorrectly, user.levelOneAnsweredIncorrectly);
         }
 
@@ -70,6 +75,7 @@ namespace BizLogic
         }
         public static double percentage(double one, double two)
         {
+            if (one + two == 0) return 0;
             return (one / (one + two)) * 100;
         }
 
