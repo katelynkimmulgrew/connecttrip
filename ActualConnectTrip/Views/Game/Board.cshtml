@@ -26,7 +26,7 @@
 }
 
 @{
-    var db = new DataLayer.Entities();
+    var db = new DataLayer.Entities2();
     bool?[,] array = Model.switchToBools(db);
     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
 }

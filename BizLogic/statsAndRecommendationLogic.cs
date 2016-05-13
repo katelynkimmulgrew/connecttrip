@@ -73,7 +73,7 @@ namespace BizLogic
             return (one / (one + two)) * 100;
         }
 
-        public static IEnumerable<startGamePlayer> findMatch(this Person user, IEnumerable<startGamePlayer> pool, Entities Context)
+        public static IEnumerable<startGamePlayer> findMatch(this Person user, IEnumerable<startGamePlayer> pool, Entities2 Context)
         {
 
             double level1Percentage = levelOnePercentage(user);

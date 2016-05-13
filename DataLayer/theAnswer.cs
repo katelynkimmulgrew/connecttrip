@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataLayer
 {
-    public class Answer
+    public class theAnswer
     {
        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
