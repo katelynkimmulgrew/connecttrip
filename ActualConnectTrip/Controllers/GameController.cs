@@ -686,16 +686,48 @@ namespace ActualConnectTrip.Controllers
             return RedirectToAction("stindex");
         }
 
+        public static bool PracticeMathFlag = false;
         [HttpPost]
         public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
-            var level = inputdata.levelchosen;
-            var mobj = new BizLogic.mathProblems();
-            var model = new PracticeMathViewModel()
+            if (PracticeMathFlag == true)
             {
-                mathQuestion = mobj.mathQuestion(level)
-            };
-            return View(model);
+                var level = inputdata.levelchosen;
+                var mobj = new BizLogic.mathProblems();
+                var model = new PracticeMathViewModel()
+                {
+                    mathQuestion = mobj.mathQuestion(level),
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = true
+                };
+                PracticeMathFlag = false;
+                return View(model);
+            }
+            else
+            {
+                var model = new PracticeMathViewModel()
+                {
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = false
+                };
+                var answer = inputdata.mathAnswer;
+                var mobj = new BizLogic.mathProblems();
+                var realAnswer = mobj.mathAnswer(inputdata.mathQuestion);
+
+                if (!realAnswer.Equals(inputdata.userAnswer))
+                {
+                    ViewBag.message = "Your Answer is Wrong";
+                }
+                else
+                {
+                    ViewBag.message = "Your Answer is Right";
+                }
+                return View(model);
+            }
+            
+           
+            
+            
         }
 
         public ActionResult PracticeMath()
@@ -704,29 +736,14 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelVisable = true
+                    isSelectLevelVisable = true,
+                    isAnswerAreaVisable= false
                 };
+                PracticeMathFlag = model.isSelectLevelVisable;
                 return View(model);
             }
         }
         
-        /*
-        [HttpPost]
-        public ActionResult PracticeMath(PracticeMathViewModel 
-            inputdata)
-        {
- 
-            using (var context = new Entities())
-            {
-                var model = new PracticeMathViewModel()
-                {
-                    isVisable = true,
-                    mathAnswer = inputdata.userAnswer
-                };
-                return View(model);
-            }
-        }
-        */
         
         public PartialViewResult EachTurnMathQuestion(int level)
         {
