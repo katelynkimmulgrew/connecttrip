@@ -64,9 +64,9 @@
             </tr>
                 currentIndex = currentIndex + 1;
             <tr>
-                using (Html.BeginForm())
+                @using (Html.BeginForm())
                 {
-                    Html.AntiForgeryToken();
+                    @Html.AntiForgeryToken();
                     <td>
                         @Html.HiddenFor(model => model.oppoid, new { Value = item.player1Id });
                         @Html.HiddenFor(model => model.myid, new { Value = Model.myid });
