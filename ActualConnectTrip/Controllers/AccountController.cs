@@ -154,10 +154,11 @@ namespace ActualConnectTrip.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, CatchPhrase = model.CatchPhrase };
                 using (var context = new Entities2())
                 {
                     var newPerson = new Person();
+                    newPerson.CatchPhrase = model.CatchPhrase;
                     newPerson.UserName = model.Email;
                     newPerson.isPlaying = false;
                     newPerson.LevelOneWins = 0;
