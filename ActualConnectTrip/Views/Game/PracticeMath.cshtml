@@ -4,31 +4,20 @@
     ViewBag.Title = "PracticeMath";
 }
 
-<h2>Practice Math Question
-       
-    </h2>
+<h2>Practice Math Question </h2>
+<h2>@ViewBag.message</h2>
 
-
-<h2>
-    @ViewBag.message
-    
-</h2>
-
-
-@if (Model.isSelectLevelVisable)
+@if (Model.isSelectLevelBlockVisable)
 {
     using (Html.BeginForm())
     {
-
         <div class="col-md-offset-2 col-md-10">
             <div>Level 1 Game</div>
             <input type="submit" value="Select" class="btn btn-default" /> @Html.HiddenFor(model => model.levelchosen, new { Value = 1 })
         </div>
-
     }
     using (Html.BeginForm())
     {
-
         <div class="col-md-offset-2 col-md-10">
             <div>Level 2 Game</div>
             <input type="submit" value="Select" class="btn btn-default" /> @Html.HiddenFor(model => model.levelchosen, new { Value = 2 }) 
@@ -36,7 +25,6 @@
     }
     using (Html.BeginForm())
     {
-
         <div class="col-md-offset-2 col-md-10">
             <div>Level 3 Game</div>
             <input type="submit" value="Select" class="btn btn-default" /> @Html.HiddenFor(model => model.levelchosen, new { Value = 3 })
@@ -44,7 +32,7 @@
     }
 }
 
-@if (Model.isAnswerAreaVisable)
+@if (Model.isAnswerBlockVisable)
 {
     <p> Your Math Question is: @Model.mathQuestion</p>
     using (Html.BeginForm())
@@ -56,6 +44,31 @@
             <input type="submit" value="submit" class="btn btn-default" />
         </div>
     }
-    
-
 }
+
+@if (Model.isNextQuesitonBlockVisable)
+{
+    <div class="form-actions no-color">
+        @Html.ActionLink("Next Question", "PracticeMath")
+    </div>
+}
+
+@if (Model.isTryAgainBlockVisable)
+{
+    <div>Woudl you like to try again</div>
+    using (Html.BeginForm())
+    {
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Yes" class="btn btn-default" /> 
+            @Html.HiddenFor(model => model.isTryAgain, new { Value = true })
+        </div>
+    }
+    using (Html.BeginForm())
+    {
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="No" class="btn btn-default" /> 
+            @Html.HiddenFor(model => model.isTryAgain, new { Value = false })
+        </div>
+    }
+}
+

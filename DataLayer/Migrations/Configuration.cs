@@ -5,15 +5,14 @@ namespace DataLayer.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataLayer.Entities>
+    internal sealed class Configuration : DbMigrationsConfiguration<DataLayer.Entities2>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "DataLayer.Entities";
         }
 
-        protected override void Seed(DataLayer.Entities context)
+        protected override void Seed(DataLayer.Entities2 context)
         {
             //  This method will be called after migrating to the latest version.
 

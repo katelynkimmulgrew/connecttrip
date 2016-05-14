@@ -52,14 +52,17 @@
     @if (Model.isThereRecommended)
     {
         <tr>Recommended</tr>
-
-        foreach (var item in Model.Recommended)
         {
+            int currentIndex = 0;
+            foreach (var item in Model.Recommended)
+            {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.player1Id)
+                    @*@Html.DisplayFor(modelItem => item.player1Id)*@
+                    @Html.DisplayFor(modelItem => Model.RCnames[currentIndex])
                 </td>
             </tr>
+                currentIndex = currentIndex + 1;
             <tr>
                 using (Html.BeginForm())
                 {
@@ -73,6 +76,7 @@
                     </td>
                 }
             </tr>
+            }
         }
     }
     else

@@ -3,7 +3,7 @@ namespace DataLayer.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class cancelled : DbMigration
     {
         public override void Up()
         {
@@ -36,6 +36,8 @@ namespace DataLayer.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        columnNumber = c.Int(nullable: false),
+                        gameID = c.Int(nullable: false),
                         RowNumber = c.Int(nullable: false),
                         Value = c.Boolean(),
                         Column_Id = c.Int(),
@@ -55,6 +57,7 @@ namespace DataLayer.Migrations
                         Player2Id = c.Int(nullable: false),
                         currentUser = c.Boolean(nullable: false),
                         finished = c.Boolean(nullable: false),
+                        cancelled = c.Boolean(nullable: false),
                         winnerID = c.Int(nullable: false),
                         level = c.Int(nullable: false),
                     })

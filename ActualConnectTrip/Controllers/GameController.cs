@@ -11,24 +11,15 @@ using ActualConnectTrip.Models;
 namespace ActualConnectTrip.Controllers
 {
     //check
+    //check again
     public class GameController : Controller
     {
-        private Entities db = new Entities();
+        private Entities2 db = new Entities2();
         static private Object lockObject = new object();
             
 
     // GET: Game
-    public ActionResult Error()
-        {
-            return View();
-        }
-
-        public ActionResult NoGame()
-        {
-            return View();
-        }
-
-
+   
     public ActionResult Index()
         {
             return View();
@@ -37,27 +28,40 @@ namespace ActualConnectTrip.Controllers
 
 
         {
-            using (var db = new Entities())
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
+            using (var db = new Entities2())
             {
 
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                 Game board = db.getGameById(currentPerson.CurrentGameId);
                 if (board == null)
                 {
-                    return RedirectToAction("NoGame");
+                    return View("NoGame");
                 }
                 if (board.finished == true)
                 {
-
-                    ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
-
-                    return RedirectToAction("GameOver");
-                }
-                if (currentPerson.answeredMathQuestion == false)
-                {
-                    if (currentPerson.currentMathProblemID == null)
+                    if(board.gameCancelled)
                     {
+                        TempData["IsCancelled"] = "The game was cancelled!";
+                    }
+                    else
+                    {
+                        TempData["Winner"] = db.getPersonById(board.winnerID).UserName + " won!";
+                    }
+
+                    return View("GameOver");
+                }
+                if (currentPerson.answeredMathQuestion == false&&currentPerson.assignedBool==board.currentUser)
+                {
+                    //if (currentPerson.currentMathProblemID == null)
+                    //{
                         mathProblemResult problemData = new mathProblemResult();
+                        problemData.start = DateTime.Now;
                         db.mathProblemResults.Add(problemData);
                         db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
@@ -66,15 +70,19 @@ namespace ActualConnectTrip.Controllers
                         problemData.question = question;
                         string answer = problem.mathAnswer(question);
                         problemData.answer = answer;
+                        
                         db.SaveChanges();
                         ViewBag.Question = problemData.question;
-                    }
+                    /*}
                     else
                     {
+                        
                         int problemDataID = (int)currentPerson.currentMathProblemID;
                         mathProblemResult problemData = db.getmathProblemResultById(problemDataID);
+                        problemData.start = DateTime.Now;
+                        db.SaveChanges();
                         ViewBag.Question = problemData.question;
-                    }
+                    }*/
                     
 
                     
@@ -91,16 +99,16 @@ namespace ActualConnectTrip.Controllers
                     person1.isPlaying = false;
                     person2.isPlaying = false;
                     board.finished = true;
-                    ViewBag.Winner = "No one won.  The board is full!";
+                    TempData["Winner"] = "No one won.  The board is full!";
                     db.SaveChanges();
-                    return RedirectToAction("GameOver");
+                    return View("GameOver");
                 }
 
                 bool? currentBool = board.currentUser;
                 if (currentPerson != person1 && currentPerson != person2)
                 {
                     ViewBag.Error = "You do not have permission to view that game";
-                    return RedirectToAction("Error");
+                    return View("Error");
                 }
                 if (currentBool == currentPerson.assignedBool)
                 {
@@ -119,10 +127,14 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Board(int? col, string button, string answer)
         {
-            
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             lock (lockObject)
             {
-                using (var db = new Entities())
+                using (var db = new Entities2())
                 {
                     
                     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
@@ -131,13 +143,32 @@ namespace ActualConnectTrip.Controllers
                    
                     if(currentPerson.answeredMathQuestion==false && answer!=null)
                     {
+                        
                         currentPerson.answeredMathQuestion = true;
+                        db.SaveChanges(); 
                         mathProblemResult problem = db.getmathProblemResultById((int)currentPerson.currentMathProblemID);
+                        DateTime end = DateTime.Now;
+                        TimeSpan diff = end - problem.start;
+                        int differenceSeconds = diff.Seconds;
+                        
                         TempData["Answer"] = problem.answer;
                         
                         bool isRight = problem.answer == answer;
                         problem.isRight = isRight;
                         TempData["isRight"] = isRight;
+                        if (differenceSeconds > 120)
+                        {
+                            TempData["YourTurn"] = "You ran out of time and lost your turn";
+                            
+                            board.SwitchPlayers();
+                            currentPerson.answeredMathQuestion = false;
+                            currentPerson.DidNotAnswer++;
+                            currentPerson.currentMathProblemID = null;
+
+                            db.SaveChanges();
+                            return View(board);
+                        }
+                        currentPerson.Answered++;
                         if (isRight == false)
                         {
                             
@@ -180,7 +211,7 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.overallAnsweredCorrectly++;
                             db.SaveChanges();
                         }
-                        mathProblemResult problemData = new mathProblemResult();
+                        /*mathProblemResult problemData = new mathProblemResult();
                         db.mathProblemResults.Add(problemData);
                         db.SaveChanges();
                         currentPerson.currentMathProblemID = problemData.Id;
@@ -188,11 +219,11 @@ namespace ActualConnectTrip.Controllers
                         string question = problem2.mathQuestion(board.level);
                         problemData.question = question;
                         string answer2 = problem2.mathAnswer(question);
-                        problemData.answer = answer;
-                        
+                        problemData.answer = answer;*/
+                        currentPerson.currentMathProblemID = null;
                         
                         db.SaveChanges();
-                        return RedirectToAction("Board");
+                        return View(board);
                     }
                     
                     
@@ -200,14 +231,15 @@ namespace ActualConnectTrip.Controllers
                     var person1 = db.getPersonById(board.Player1Id);
                     var person2 = db.getPersonById(board.Player2Id);
 
-                    if (button == "cancel")
+                    if (button == "cancel game")
                     {
                         board.finished = true;
+                        board.gameCancelled = true;
                         person1.isPlaying = false;
                         person2.isPlaying = false;
-                        ViewBag.IsCancelled = "This game was cancelled";
+                        TempData["IsCancelled"] = "This game was cancelled";
                         db.SaveChanges();
-                        return RedirectToAction("GameOver");
+                        return View("GameOver");
                     }
                     
                     
@@ -217,8 +249,8 @@ namespace ActualConnectTrip.Controllers
                         Row currentRow = board.determinePlace(board.currentUser, (int)col, db);
                         if (currentRow == null)
                         {
-                            ViewBag.Message = "Cannot execute Move";
-                            return RedirectToAction("Board");
+                            TempData["Message"] = "Cannot execute Move";
+                            return View(board);
                         }
                         if (board.determineWin(db, currentRow))
                         {
@@ -235,7 +267,7 @@ namespace ActualConnectTrip.Controllers
                                 otherPerson = person1;
                             }
                             otherPerson.isPlaying = false;
-                            ViewBag.Winner = db.getPersonById(board.winnerID).UserName + "won!";
+                            TempData["Winner"] = db.getPersonById(board.winnerID).UserName + " won!";
                             if (board.level == 1)
                             {
                                 currentPerson.LevelOneWins++;
@@ -253,7 +285,7 @@ namespace ActualConnectTrip.Controllers
                                 otherPerson.LevelThreeLose++;
                             }
                             db.SaveChanges();
-                            return RedirectToAction("GameOver");
+                            return View("GameOver");
                         }
                         else
                         {
@@ -261,12 +293,12 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.answeredMathQuestion = false;
                             db.SaveChanges();
                         }
-                        return RedirectToAction("Board");
+                        return View(board);
                     }
                     else
                     {
                         ViewBag.Message = "Invalid Cannot Execute when it is not your turn";
-                        return RedirectToAction("Board");
+                        return View(board);
                     }
                     
              }
@@ -281,7 +313,12 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult GameStats()
         {
-            using (var context = new Entities())
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
+            using (var context = new Entities2())
             {
                 
                 var currentPerson = (from p in context.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
@@ -291,7 +328,7 @@ namespace ActualConnectTrip.Controllers
                     levelOnePercentageView = statsAndRecommendationLogic.levelOnePercentage(currentPerson),
                     levelTwoPercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
                     levelThreePercentageView = statsAndRecommendationLogic.levelThreePercentage(currentPerson),
-                    //didNotAnswerView = statsAndRecommendationLogic.didNotAnwserPercentage(currentPerson),
+                    didNotAnswerView = statsAndRecommendationLogic.didNotAnwserPercentage(currentPerson),
                     totalNumberOfGames = statsAndRecommendationLogic.numGames(currentPerson),
                     totalNumberOfWins = statsAndRecommendationLogic.numWins(currentPerson),
                     totalNumberOfLose = statsAndRecommendationLogic.numLose(currentPerson),
@@ -309,10 +346,15 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult stindex()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             var UserName = User.Identity.Name;
             StartpageViewModel startInput = new StartpageViewModel();
 
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
 
 
@@ -322,7 +364,7 @@ namespace ActualConnectTrip.Controllers
 
                 if (infoUB.isPlaying == true)
                 {
-                    ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
+                    TempData["Message"] = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
                     return RedirectToAction("Board");
                 }
 
@@ -337,7 +379,7 @@ namespace ActualConnectTrip.Controllers
                 }
             }
 
-                using (Entities enti = new Entities())
+                using (Entities2 enti = new Entities2())
             {
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
@@ -358,6 +400,15 @@ namespace ActualConnectTrip.Controllers
                 {
                     startInput.Recommended = recommended.ToList();
                     startInput.isThereRecommended = true;
+                    List<string> RCnames = new List<string>();
+                    foreach (var plga in recommended)
+                    {
+                        var Names = (from c in enti.Persons
+                                     where c.Id.Equals(plga.player1Id)
+                                     select c.UserName).FirstOrDefault();
+                        RCnames.Add(Names);
+                    }
+                    startInput.RCnames = RCnames;
                 }
                
                     
@@ -468,6 +519,11 @@ namespace ActualConnectTrip.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult stindex(StartpageViewModel startdata)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             if (startdata.request == true)
             {
                 lock (lockObject)
@@ -477,7 +533,7 @@ namespace ActualConnectTrip.Controllers
                     newstart.level = startdata.gamelevel;
                     newstart.isStarted = false;
                     
-                    using (Entities enti = new Entities())
+                    using (Entities2 enti = new Entities2())
                     {
                         enti.startGamePlayers.Add(newstart);
                         enti.SaveChanges();
@@ -493,13 +549,13 @@ namespace ActualConnectTrip.Controllers
             {
                 lock (lockObject)
                 {
-                    using (Entities enti = new Entities())
+                    using (Entities2 enti = new Entities2())
                     {
                         Game newgame = new Game();
                         enti.Games.Add(newgame);
                         enti.SaveChanges();
-                        newgame.maxCols = 6;
-                        newgame.maxRows = 7;
+                        newgame.maxCols = 7;
+                        newgame.maxRows = 6;
 
                         for (int i = 1; i <= newgame.maxCols; i++)
                         {
@@ -538,12 +594,12 @@ namespace ActualConnectTrip.Controllers
                             var person1 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player1Id)
                                            select c).FirstOrDefault();
-                            person1.assignedBool = true;
+                            person1.assignedBool = false;
 
                             var person2 = (from c in enti.Persons
                                            where c.Id.Equals(newgame.Player2Id)
                                            select c).FirstOrDefault();
-                            person2.assignedBool = false;                       // so when a player accept the game, he will be player2 
+                            person2.assignedBool = true;                       // so when a player accept the game, he will be player2 
                                                                                 // and set to false
                             person1.CurrentGameId = newgame.Id;
                             person2.CurrentGameId = newgame.Id;
@@ -551,6 +607,7 @@ namespace ActualConnectTrip.Controllers
                             person2.isPlaying = true;
                             newgame.Player1Id = person1.Id;
                             newgame.Player2Id = person2.Id;
+                        newgame.gameCancelled = false;
                             enti.SaveChanges();
                             ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
                             return RedirectToAction("Board");
@@ -561,96 +618,97 @@ namespace ActualConnectTrip.Controllers
                 }
 
             }
-        
-
 
         public ActionResult Forum()
         {
-            using (ForumContext db = new ForumContext())
+            if (!User.Identity.IsAuthenticated)
             {
-
-                db.SaveChanges();
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
+            using (Entities2 enti = new Entities2())
+            {           
                 forumViewModel tempone = new forumViewModel();
-
-                tempone.model1 = db.Questions.Include("answers").ToList();
+                tempone.model1 = enti.Questions.Include("answers2").ToList();
                 tempone.model2 = null;
-                tempone.model3 = db.Answers.ToList();
+                tempone.model3 = enti.theAnswers.ToList();
                 return View(tempone);
             }
-
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Forum(forumViewModel ques, string keyword) /*[Bind(Include = "Id,title,description")] Ques ques*/
         {
-            using (ForumContext db = new ForumContext())
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
+            using (Entities2 enti = new Entities2())
             {
                 if (ques.model2 != null)
                 {
-
-
-                    db.Questions.Add(ques.model2);
-                    db.SaveChanges();
+                    enti.Questions.Add(ques.model2);
+                    enti.SaveChanges();
 
 
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers2").ToList();
                     tempone.model2 = null;
                     return View(tempone);
 
                 }
                 else if (ques.model4 != null)
                 {
-                    db.Getquesforid(ques.model5).answers.Add(ques.model4);
-                    db.SaveChanges();
+                    enti.Getquesforid(ques.model5).answers2.Add(ques.model4);
+                    enti.SaveChanges();
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers2").ToList();
                     //tempone.model2 = null;
                     ModelState.Clear();
                     return View(tempone);
                 }
                 else if (keyword != null)
                 {
-
-
                     //var infoUB = (from c in db.Questions
                     //              where c.title.ToString().Contains(keyword)
                     //              select c);
-                    var infoUB = (from c in db.Questions.Include("answers")
+                    var infoUB = (from c in enti.Questions.Include("answers2")
                                   where c.title.ToString().Contains(keyword)
                                   select c);
                     forumViewModel tempone = new forumViewModel();
                     tempone.model1 = infoUB.ToList();
                     tempone.model2 = null;
                     return View(tempone);
-
                 }
 
                 else
                 {
                     forumViewModel tempone = new forumViewModel();
-                    tempone.model1 = db.Questions.Include("answers").ToList();
+                    tempone.model1 = enti.Questions.Include("answers2").ToList();
                     tempone.model2 = null;
                     return View(tempone);
                 }
             }
         }
 
-
-
         public ActionResult waitingPage()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             var UserName = User.Identity.Name;
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
                               select c).FirstOrDefault();
                 if (infoUB.isPlaying == true)
                 {
-                    ViewBag.Message = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
+                    TempData["Message"] = "You are playing this game.  You cannot play a game until you complete or cancel this one.";
                     return RedirectToAction("Board");
                 }
                 var oldgame = (from c in enti.startGamePlayers
@@ -669,8 +727,13 @@ namespace ActualConnectTrip.Controllers
         [HttpPost]
         public ActionResult waitingPage(StartpageViewModel startdata)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
             var UserName = User.Identity.Name;
-            using (Entities enti = new Entities())
+            using (Entities2 enti = new Entities2())
             {
                 var infoUB = (from c in enti.Persons
                               where c.UserName.Equals(UserName)
@@ -686,9 +749,23 @@ namespace ActualConnectTrip.Controllers
         }
 
         public static bool PracticeMathFlag = false;
+        public string mathQuestion_external;
+        public string mathAnswer_external;
         [HttpPost]
         public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
+            if (inputdata.isTryAgainBlockVisable)
+            {
+                if (inputdata.isTryAgain)
+                {
+                    var model = new PracticeMathViewModel()
+                    {
+                        mathQuestion = inputdata.mathQuestion,
+                        isSelectLevelBlockVisable = false,
+                        isAnswerBlockVisable = true
+                    };
+                }
+            }
             if (PracticeMathFlag == true)
             {
                 var level = inputdata.levelchosen;
@@ -696,9 +773,10 @@ namespace ActualConnectTrip.Controllers
                 var model = new PracticeMathViewModel()
                 {
                     mathQuestion = mobj.mathQuestion(level),
-                    isSelectLevelVisable = false,
-                    isAnswerAreaVisable = true
+                    isSelectLevelBlockVisable = false,
+                    isAnswerBlockVisable = true
                 };
+                //mathQuestion_external = model.mathQuestion;
                 PracticeMathFlag = false;
                 return View(model);
             }
@@ -706,47 +784,61 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelVisable = false,
-                    isAnswerAreaVisable = false
+                    isSelectLevelBlockVisable = false,
+                    isAnswerBlockVisable = false
                 };
                 var answer = inputdata.mathAnswer;
                 var mobj = new BizLogic.mathProblems();
                 var realAnswer = mobj.mathAnswer(inputdata.mathQuestion);
-
+                //mathAnswer_external = realAnswer;
                 if (!realAnswer.Equals(inputdata.userAnswer))
                 {
                     ViewBag.message = "Your Answer is Wrong";
+                    model.isTryAgainBlockVisable = true;
+                    model.mathQuestion = inputdata.mathQuestion;
+                    model.mathAnswer = realAnswer;
+                    return View(model);
                 }
                 else
                 {
                     ViewBag.message = "Your Answer is Right";
+                    model.isNextQuesitonBlockVisable = true;
+                    return View(model);
                 }
-                return View(model);
-            }
-            
-           
-            
-            
+                
+            }      
         }
 
         public ActionResult PracticeMath()
         {
-            using (var context = new Entities())
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return View("PermissionDenied");
+            }
+            using (var context = new Entities2())
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelVisable = true,
-                    isAnswerAreaVisable= false
+                    isSelectLevelBlockVisable = true,
+                    isAnswerBlockVisable = false,
+                    isNextQuesitonBlockVisable = false,
+                    isTryAgainBlockVisable = false,
+                    isTryAgain = false
                 };
-                PracticeMathFlag = model.isSelectLevelVisable;
+                PracticeMathFlag = model.isSelectLevelBlockVisable;
                 return View(model);
             }
         }
         
-        
         public PartialViewResult EachTurnMathQuestion(int level)
         {
-            using (var context = new Entities())
+            if (!User.Identity.IsAuthenticated)
+            {
+                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
+                return PartialView("PermissionDenied");
+            }
+            using (var context = new Entities2())
             {
                 var mathObj = new mathProblems();
                 var mathViewModel = new PracticeMathViewModel()

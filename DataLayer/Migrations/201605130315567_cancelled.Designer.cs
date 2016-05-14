@@ -7,13 +7,13 @@ namespace DataLayer.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class nnew : IMigrationMetadata
+    public sealed partial class cancelled : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(nnew));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(cancelled));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605122152588_nnew"; }
+            get { return "201605130315567_cancelled"; }
         }
         
         string IMigrationMetadata.Source

@@ -11,7 +11,7 @@ namespace BizLogic
         {
 
         
-        public static bool?[,] switchToBools(this Game board, Entities db)
+        public static bool?[,] switchToBools(this Game board, Entities2 db)
         {
             
             bool?[,] array = new bool?[board.maxRows, board.maxCols];
@@ -31,7 +31,7 @@ namespace BizLogic
             
         }
 
-        public static bool isFull(this Game board, Entities db)
+        public static bool isFull(this Game board, Entities2 db)
         {
             bool?[,] array = switchToBools(board, db);
             
@@ -60,7 +60,7 @@ namespace BizLogic
 
             
 
-            public static Row determinePlace(this Game game, bool player, int columnNumber, Entities Context)
+            public static Row determinePlace(this Game game, bool player, int columnNumber, Entities2 Context)
             {
                 //Column determineColumn = Context.getCol(columnNumber, game);
             //foreach (var row in determineColumn.theRows)
@@ -81,7 +81,7 @@ namespace BizLogic
                 return null;
             }
 
-            public static bool determineWin(this Game game, Entities Context, Row row)
+            public static bool determineWin(this Game game, Entities2 Context, Row row)
             {
                 bool a = checkHoriz(game, Context, row);
                 bool b = checkVert(game, Context, row);
@@ -90,11 +90,11 @@ namespace BizLogic
                 return (a || b || c || d);
             }
 
-            public static bool checkHoriz(this Game game, Entities Context, Row row)
+            public static bool checkHoriz(this Game game, Entities2 Context, Row row)
             {
                 int colNo = row.columnNumber;
                 int rowNo = row.RowNumber;
-                int count = 0;
+                int count = 1;
                 int currentCol = colNo;
                 bool? typePlayer = row.Value;
                 while (currentCol >= 0)
@@ -135,11 +135,11 @@ namespace BizLogic
                 return count >= 4;
             }
 
-            public static bool checkVert(this Game game, Entities Context, Row row)
+            public static bool checkVert(this Game game, Entities2 Context, Row row)
             {
                 int colNo = row.columnNumber;
                 int rowNo = row.RowNumber;
-                int count = 0;
+                int count = 1;
                 int currentRow = rowNo;
                 bool? typePlayer = row.Value;
                 while (currentRow >= 1)
@@ -180,12 +180,12 @@ namespace BizLogic
                 return count >= 4;
             }
 
-            public static bool checkDiag(this Game game, Entities Context, Row row, string direction)
+            public static bool checkDiag(this Game game, Entities2 Context, Row row, string direction)
             {
             
                 int colNo = row.columnNumber;
                 int rowNo = row.RowNumber;
-                int count = 0;
+                int count = 1;
                 int currentCol = colNo;
                 int currentRow = rowNo;
                 bool? typePlayer = row.Value;

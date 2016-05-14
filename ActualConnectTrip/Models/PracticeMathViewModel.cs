@@ -15,10 +15,16 @@ namespace ActualConnectTrip.Models
 
         public int levelchosen { get; set; }
 
-        public bool isSelectLevelVisable { get; set; }
+        public bool isSelectLevelBlockVisable { get; set; }
 
-        public bool isAnswerAreaVisable { get; set; }
+        public bool isAnswerBlockVisable { get; set; }
 
         public string warning {get; set;}
+
+        public bool isNextQuesitonBlockVisable { get; set; }
+
+        public bool isTryAgainBlockVisable { get; set; }
+
+        public bool isTryAgain { get; set; }
     }
 }
