@@ -19,8 +19,6 @@ namespace ActualConnectTrip.Models
 
         public bool isAnswerBlockVisable { get; set; }
 
-        public string warning {get; set;}
-
         public bool isNextQuesitonBlockVisable { get; set; }
 
         public bool isTryAgainBlockVisable { get; set; }

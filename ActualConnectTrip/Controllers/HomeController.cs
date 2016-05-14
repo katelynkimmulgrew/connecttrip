@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DataLayer;
+using BizLogic;
 
 namespace ActualConnectTrip.Controllers
 {
@@ -17,7 +19,7 @@ namespace ActualConnectTrip.Controllers
             }
             else
             {
-                return RedirectToAction("stindex", "Game");
+                return RedirectToAction("Index", "Game");
             }
         }
 
@@ -39,6 +41,29 @@ namespace ActualConnectTrip.Controllers
 
             return View();
         }
-        
+
+        public ActionResult MyProfile(int id)
+        {
+            using (var db = new Entities2())
+            {
+                Person p = db.getPersonById(id);
+                if (p == null)
+                {
+                    return View("Error");
+                }
+
+                ProfilePageModel profile = new ProfilePageModel();
+                profile.userName = p.UserName;
+                profile.catchphraseView = p.CatchPhrase;
+                profile.levelOnePercentageView = p.levelOnePercentage();
+                profile.levelTwoPercentageView = p.levelTwoPercentage();
+                profile.levelTwoPercentageView = p.levelThreePercentage();
+                profile.totalNumberOfWins = p.numWins();
+                profile.totalNumberOfLose = p.numLose();
+                profile.overAllPercentageView = p.overallPercentage();
+
+                return View(profile);
+            }
+        }
     }
 }

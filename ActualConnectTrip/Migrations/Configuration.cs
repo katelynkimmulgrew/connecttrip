@@ -10,7 +10,6 @@ namespace ActualConnectTrip.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "ActualConnectTrip.Models.ApplicationDbContext";
         }
 
         protected override void Seed(ActualConnectTrip.Models.ApplicationDbContext context)

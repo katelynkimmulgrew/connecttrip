@@ -663,7 +663,6 @@ namespace ActualConnectTrip.Controllers
                 tempone.model3 = enti.theAnswers.ToList();
                 return View(tempone);
             }
-
         }
 
 
@@ -728,8 +727,6 @@ namespace ActualConnectTrip.Controllers
                 }
             }
         }
-
-
 
         public ActionResult waitingPage()
         {
