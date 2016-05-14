@@ -27,6 +27,11 @@ namespace ActualConnectTrip.Controllers
 
         }
 
+        public ActionResult Rules()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
