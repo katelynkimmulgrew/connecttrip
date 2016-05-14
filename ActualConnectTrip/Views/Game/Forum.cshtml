@@ -31,43 +31,52 @@
         </th>
         <th></th>
     </tr>
+    </table>
 
     @foreach (var item in Model.model1)
     {
+        <table>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+
+                </td>
+            </tr>
+
+        </table>
+        <table>
+            
+    @foreach (var ansitem in item.answers2)
+    {
         <tr>
-            <td>
-               @Html.DisplayFor(modelItem => item.title)
-            </td>
-            <td>
-               @Html.DisplayFor(modelItem => item.description)
-               
-            </td>
-            </tr>
-            ///////////////////////////
+            @Html.DisplayFor(modelItem => ansitem.content)
+        </tr>
+    }
+                  
+          
+        </table>
+        <table>
+
+
             <tr>
-                @foreach (var ansitem in item.answers2)
+                @using (Html.BeginForm())
                 {
+                    @Html.AntiForgeryToken()
                     <td>
-               @Html.DisplayFor(modelItem => ansitem.content)    
-                   </td>              
-                }            
-            </tr>
-            /////////////////
-            <tr>
-               @using (Html.BeginForm())
-               {
-                @Html.AntiForgeryToken()
-                 <td>   
                         @*@{Model.model5 = item.Id;}*@
-                        @Html.HiddenFor(model =>model.model5, new { Value=item.Id})
+                        @Html.HiddenFor(model => model.model5, new { Value = item.Id })
                         @Html.EditorFor(model => model.model4.content, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.model4.content, "", new { @class = "text-danger" })
-                  </td>
-                <td><input type="submit" value="Answer" class="btn btn-default" /></td>
-               }
-             </tr>
+                    </td>
+                    <td><input type="submit" value="Answer" class="btn btn-default" /></td>
+                }
+            </tr>
+        </table>
     }
-</table>
+<!--</table>-->
 
 @using (Html.BeginForm())
 {

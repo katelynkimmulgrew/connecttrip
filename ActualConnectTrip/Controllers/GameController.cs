@@ -671,7 +671,7 @@ namespace ActualConnectTrip.Controllers
             }
             using (Entities2 enti = new Entities2())
             {
-                if (ques.model2 != null)
+                if (ques.model2 != null && ques.model2.description != null && ques.model2.title!=null)
                 {
 
 
@@ -685,7 +685,7 @@ namespace ActualConnectTrip.Controllers
                     return View(tempone);
 
                 }
-                else if (ques.model4 != null)
+                else if (ques.model4!=null && ques.model4.content != null)
                 {
                     enti.Getquesforid(ques.model5).answers2.Add(ques.model4);
                     enti.SaveChanges();
