@@ -1,0 +1,18 @@
+﻿@model ActualConnectTrip.Models.ProfilePageModel
+@{
+    ViewBag.Title = "MyProfile";
+}
+
+<h2>MyProfile</h2>
+
+Username: @Model.userName
+CatchPhrase: @Model.catchphraseView
+
+Total Number of Winse: @Model.totalNumberOfWins
+Total Number of Losses: @Model.totalNumberOfLose
+Total Percentage Wins: @Model.overAllPercentageView
+
+Total Percentage wins in level 1: @Model.levelOnePercentageView
+Total Percentage wins in level 2: @Model.levelTwoPercentageView
+Total Percentage wins in level 3: @Model.levelThreePercentageView
+

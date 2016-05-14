@@ -207,6 +207,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PracticeMathViewModel.cs" />
+    <Compile Include="Models\ProfilePageModel.cs" />
     <Compile Include="Models\StartpageViewModel.cs" />
     <Compile Include="Models\StatsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -291,6 +292,8 @@
     <Content Include="Views\Game\Rules.cshtml" />
     <Content Include="Views\Game\Image.cshtml" />
     <Content Include="Views\Home\Rules.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
