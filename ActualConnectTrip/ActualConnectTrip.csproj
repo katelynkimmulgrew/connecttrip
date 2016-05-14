@@ -202,6 +202,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605130053336_InitialCreate.cs" />
+    <Compile Include="Migrations\201605130053336_InitialCreate.Designer.cs">
+      <DependentUpon>201605130053336_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605142043236_new.cs" />
+    <Compile Include="Migrations\201605142043236_new.Designer.cs">
+      <DependentUpon>201605142043236_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\forumViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -291,6 +300,9 @@
     <Content Include="Views\Game\Rules.cshtml" />
     <Content Include="Views\Game\Image.cshtml" />
     <Content Include="Views\Home\Rules.cshtml" />
+    <Content Include="Views\Game\Welcome.cshtml" />
+    <Content Include="Views\Home\UsersList.cshtml" />
+    <Content Include="Views\Game\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -313,6 +325,14 @@
       <Project>{8bc8697b-bde9-44e3-9dc3-e56ba5d9ed69}</Project>
       <Name>DataLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605130053336_InitialCreate.resx">
+      <DependentUpon>201605130053336_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605142043236_new.resx">
+      <DependentUpon>201605142043236_new.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
