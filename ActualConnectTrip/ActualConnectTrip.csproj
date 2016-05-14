@@ -202,6 +202,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605141850146_test.cs" />
+    <Compile Include="Migrations\201605141850146_test.Designer.cs">
+      <DependentUpon>201605141850146_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\forumViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -316,6 +321,11 @@
       <Project>{8bc8697b-bde9-44e3-9dc3-e56ba5d9ed69}</Project>
       <Name>DataLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605141850146_test.resx">
+      <DependentUpon>201605141850146_test.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
