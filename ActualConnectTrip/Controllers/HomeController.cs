@@ -1,4 +1,6 @@
 ﻿using ActualConnectTrip.Models;
+using BizLogic;
+using DataLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +13,9 @@ namespace ActualConnectTrip.Controllers
     {
         public ActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("stindex", "Game");
-            }
+            return View();
         }
 
-        
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -31,10 +25,24 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contact Us!";
+            ViewBag.Message = "Your contact page.";
 
             return View();
         }
         
+        public ActionResult Userlist()
+        {
+            ViewBag.Message = "The User List";
+            ViewBag.Nouser = "Not any user yet.";
+
+            using (var db = new Entities2())
+            {
+                List<Person> tempone = (db.Persons.Include("CatchPhrase").OrderBy(a=>a.overallPercentage())).ToList();
+                return View(tempone);
+            }
+
+                
+        }
+
     }
 }
