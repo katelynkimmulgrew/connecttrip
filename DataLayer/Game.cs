@@ -1,5 +1,6 @@
 ﻿
 
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +13,9 @@ namespace DataLayer
 {
     public class Game 
     {
+       
+
+        
         public int maxRows { get; set; }
         public int maxCols { get; set; }
         public int Player1Id { get; set; }
