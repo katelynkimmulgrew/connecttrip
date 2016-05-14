@@ -7,6 +7,13 @@
 <h2>Practice Math Question </h2>
 <h2>@ViewBag.message</h2>
 
+@if (Model.isShowAnswer)
+{
+    
+    <p> Your Math Question was: @Model.mathQuestion</p>
+    <p> The correct answer is: @Model.mathAnswer</p>
+}
+
 @if (Model.isSelectLevelBlockVisable)
 {
     using (Html.BeginForm())
@@ -61,6 +68,7 @@
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Yes" class="btn btn-default" /> 
             @Html.HiddenFor(model => model.isTryAgain, new { Value = true })
+            @Html.HiddenFor(model => model.isTryAgainBlockVisable, new { Value = Model.isTryAgainBlockVisable })
         </div>
     }
     using (Html.BeginForm())
@@ -68,6 +76,7 @@
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="No" class="btn btn-default" /> 
             @Html.HiddenFor(model => model.isTryAgain, new { Value = false })
+            @Html.HiddenFor(model => model.isTryAgainBlockVisable, new { Value = Model.isTryAgainBlockVisable })
         </div>
     }
 }

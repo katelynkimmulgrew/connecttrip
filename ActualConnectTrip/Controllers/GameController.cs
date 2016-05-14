@@ -779,11 +779,37 @@ namespace ActualConnectTrip.Controllers
             }
             return RedirectToAction("stindex");
         }
-
+        public static string mathQuestion_external;
+        public static string mathAnswer_external;
         public static bool PracticeMathFlag = false;
         [HttpPost]
         public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
+            if (inputdata.isTryAgainBlockVisable)
+            {
+                if (inputdata.isTryAgain)
+                {
+                    var model = new PracticeMathViewModel()
+                    {
+                        mathQuestion = mathQuestion_external,
+                        isSelectLevelBlockVisable = false,
+                        isAnswerBlockVisable = true
+                    };
+                    return View(model);
+                }
+                else
+                {
+                    var model = new PracticeMathViewModel()
+                    {
+                        mathQuestion = mathQuestion_external,
+                        mathAnswer = mathAnswer_external,
+                        isNextQuesitonBlockVisable = true,
+                        isShowAnswer = true
+                    };
+                    return View(model);
+                }
+            }
+
             if (PracticeMathFlag == true)
             {
                 var level = inputdata.levelchosen;
@@ -791,9 +817,10 @@ namespace ActualConnectTrip.Controllers
                 var model = new PracticeMathViewModel()
                 {
                     mathQuestion = mobj.mathQuestion(level),
-                    isSelectLevelVisable = false,
-                    isAnswerAreaVisable = true
+                    isSelectLevelBlockVisable = false,
+                    isAnswerBlockVisable = true
                 };
+                mathQuestion_external = model.mathQuestion;
                 PracticeMathFlag = false;
                 return View(model);
             }
@@ -801,27 +828,27 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelVisable = false,
-                    isAnswerAreaVisable = false
+                    isSelectLevelBlockVisable = false,
+                    isAnswerBlockVisable = false
                 };
                 var answer = inputdata.mathAnswer;
                 var mobj = new BizLogic.mathProblems();
                 var realAnswer = mobj.mathAnswer(inputdata.mathQuestion);
-
+                mathAnswer_external = realAnswer;
                 if (!realAnswer.Equals(inputdata.userAnswer))
                 {
                     ViewBag.message = "Your Answer is Wrong";
+                    model.isTryAgainBlockVisable = true;
+                    return View(model);
                 }
                 else
                 {
                     ViewBag.message = "Your Answer is Right";
+                    model.isNextQuesitonBlockVisable = true;
+                    return View(model);
                 }
-                return View(model);
-            }
-            
-           
-            
-            
+                
+            }        
         }
 
         public ActionResult PracticeMath()
@@ -835,10 +862,11 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelVisable = true,
-                    isAnswerAreaVisable= false
+                    isSelectLevelBlockVisable = true,
+                    isAnswerBlockVisable = false,
+                    isShowAnswer = false
                 };
-                PracticeMathFlag = model.isSelectLevelVisable;
+                PracticeMathFlag = model.isSelectLevelBlockVisable;
                 return View(model);
             }
         }
