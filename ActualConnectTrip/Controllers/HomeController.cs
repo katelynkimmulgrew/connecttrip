@@ -14,6 +14,12 @@ namespace ActualConnectTrip.Controllers
             return View();
         }
 
+        public ActionResult PermissionDenied()
+        {
+            return View();
+
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

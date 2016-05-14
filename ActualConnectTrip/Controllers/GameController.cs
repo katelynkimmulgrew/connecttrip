@@ -24,6 +24,15 @@ namespace ActualConnectTrip.Controllers
         {
             return View();
         }
+
+        public ActionResult Rules()
+        {
+            return View();
+        }
+        public ActionResult Image()
+        {
+            return View();
+        }
         public ActionResult Board()
 
 
@@ -32,7 +41,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied","Home");
             }
             using (var db = new Entities2())
             {
@@ -134,7 +143,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             lock (lockObject)
             {
@@ -324,7 +333,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (var context = new Entities2())
             {
@@ -357,7 +366,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             var UserName = User.Identity.Name;
             StartpageViewModel startInput = new StartpageViewModel();
@@ -530,7 +539,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             if (startdata.request == true)
             {
@@ -634,7 +643,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (Entities2 enti = new Entities2())
             {
@@ -658,7 +667,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (Entities2 enti = new Entities2())
             {
@@ -720,7 +729,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
@@ -752,7 +761,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
@@ -819,7 +828,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (var context = new Entities2())
             {
@@ -834,12 +843,12 @@ namespace ActualConnectTrip.Controllers
         }
         
         
-        public PartialViewResult EachTurnMathQuestion(int level)
+       /* public PartialViewResult EachTurnMathQuestion(int level)
         {
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return PartialView("PermissionDenied");
+               return PartialView("PermissionDenied","Home");
             }
             using (var context = new Entities2())
             {
@@ -850,6 +859,6 @@ namespace ActualConnectTrip.Controllers
                 };
                 return PartialView("EachTurnMathQuestion");
             }
-        }
+        }*/
     }
 }
