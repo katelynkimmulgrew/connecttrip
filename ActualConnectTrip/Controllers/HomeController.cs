@@ -68,14 +68,14 @@ namespace ActualConnectTrip.Controllers
 
 
 
-        public ActionResult Userlist()
+        public ActionResult Userslist()
         {
             ViewBag.Message = "The User List";
             ViewBag.Nouser = "Not any user yet.";
 
             using (var db = new Entities2())
             {
-                List<Person> tempone = (db.Persons.Include("CatchPhrase").OrderBy(a => a.overallPercentage())).ToList();
+                List<Person> tempone = (db.Persons.OrderBy(a => a.LevelOneWins+a.LevelTwoWins+a.LevelThreeWins)).ToList();
                 return View(tempone);
             }
 
