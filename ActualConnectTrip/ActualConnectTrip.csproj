@@ -202,9 +202,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201605141850146_test.cs" />
-    <Compile Include="Migrations\201605141850146_test.Designer.cs">
-      <DependentUpon>201605141850146_test.cs</DependentUpon>
+    <Compile Include="Migrations\201605130053336_InitialCreate.cs" />
+    <Compile Include="Migrations\201605130053336_InitialCreate.Designer.cs">
+      <DependentUpon>201605130053336_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605142043236_new.cs" />
+    <Compile Include="Migrations\201605142043236_new.Designer.cs">
+      <DependentUpon>201605142043236_new.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201605141855597_test1.cs" />
     <Compile Include="Migrations\201605141855597_test1.Designer.cs">
@@ -216,7 +220,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PracticeMathViewModel.cs" />
-    <Compile Include="Models\ProfilePageModel.cs" />
     <Compile Include="Models\StartpageViewModel.cs" />
     <Compile Include="Models\StatsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -301,8 +304,9 @@
     <Content Include="Views\Game\Rules.cshtml" />
     <Content Include="Views\Game\Image.cshtml" />
     <Content Include="Views\Home\Rules.cshtml" />
-    <Content Include="Views\Home\Error.cshtml" />
-    <Content Include="Views\Home\MyProfile.cshtml" />
+    <Content Include="Views\Game\Welcome.cshtml" />
+    <Content Include="Views\Home\UsersList.cshtml" />
+    <Content Include="Views\Game\UsersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -327,8 +331,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605141850146_test.resx">
-      <DependentUpon>201605141850146_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605130053336_InitialCreate.resx">
+      <DependentUpon>201605130053336_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605142043236_new.resx">
+      <DependentUpon>201605142043236_new.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605141855597_test1.resx">
       <DependentUpon>201605141855597_test1.cs</DependentUpon>
