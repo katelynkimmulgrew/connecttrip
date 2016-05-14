@@ -21,6 +21,10 @@ namespace ActualConnectTrip.Controllers
             }
         }
 
+        public ActionResult Rules()
+        {
+            return View();
+        }
         
         public ActionResult About()
         {
