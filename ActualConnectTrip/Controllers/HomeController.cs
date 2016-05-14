@@ -52,12 +52,12 @@ namespace ActualConnectTrip.Controllers
                     return View("Error");
                 }
 
-                ProfilePageModel profile = new ProfilePageModel();
+                ProfilePageViewModel profile = new ProfilePageViewModel();
                 profile.userName = p.UserName;
                 profile.catchphraseView = p.CatchPhrase;
                 profile.levelOnePercentageView = p.levelOnePercentage();
                 profile.levelTwoPercentageView = p.levelTwoPercentage();
-                profile.levelTwoPercentageView = p.levelThreePercentage();
+                profile.levelThreePercentageView = p.levelThreePercentage();
                 profile.totalNumberOfWins = p.numWins();
                 profile.totalNumberOfLose = p.numLose();
                 profile.overAllPercentageView = p.overallPercentage();

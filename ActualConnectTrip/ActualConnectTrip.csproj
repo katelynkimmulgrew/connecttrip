@@ -216,6 +216,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PracticeMathViewModel.cs" />
+    <Compile Include="Models\ProfilePageViewModel.cs" />
     <Compile Include="Models\StartpageViewModel.cs" />
     <Compile Include="Models\StatsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -303,6 +304,7 @@
     <Content Include="Views\Game\Welcome.cshtml" />
     <Content Include="Views\Home\UsersList.cshtml" />
     <Content Include="Views\Game\UsersList.cshtml" />
+    <Content Include="Views\Home\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
