@@ -290,6 +290,7 @@
     <Content Include="Views\Game\_ViewStart.cshtml" />
     <Content Include="Views\Game\Rules.cshtml" />
     <Content Include="Views\Game\Image.cshtml" />
+    <Content Include="Views\Home\Rules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
