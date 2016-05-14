@@ -20,7 +20,8 @@
           <a href="/Home/MyProfile/@item.Id">  @H tml.DisplayFor(modelItem => item.UserName) </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => BizLogic.statsAndRecommendationLogic.overallPercentage(item))
+                    @{double overallWins = item.LevelOneWins + item.LevelThreeWins + item.LevelThreeWins;
+                        @Html.DisplayFor(modelItem =>overallWins )}
                 </td>
             </tr>
             <tr>

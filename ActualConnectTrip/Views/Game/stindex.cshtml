@@ -5,6 +5,10 @@
 
 <h2>stindex</h2>
 <p>@ViewBag.Message</p>
+@if(TempData["Message"]!=null)
+{
+    <p>@TempData["Message"]</p>
+}
 <h3>Request a game now?</h3>
 @using (Html.BeginForm())
 {

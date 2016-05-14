@@ -54,6 +54,7 @@ namespace ActualConnectTrip.Controllers
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                 if (currentPerson.CurrentGameId == null)
                 {
+                    TempData["Message"] = "You do not have a game yet.  Please make one!";
                     return RedirectToAction("stindex");
                 }
                 Game board = db.getGameById((int)currentPerson.CurrentGameId);
