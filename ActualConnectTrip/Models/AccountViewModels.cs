@@ -79,6 +79,10 @@ namespace ActualConnectTrip.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "CatchPhrase")]
+        public string CatchPhrase { get; set; }
     }
 
     public class ResetPasswordViewModel
