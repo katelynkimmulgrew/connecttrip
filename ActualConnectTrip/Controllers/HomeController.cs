@@ -65,5 +65,22 @@ namespace ActualConnectTrip.Controllers
                 return View(profile);
             }
         }
+
+
+
+        public ActionResult Userlist()
+        {
+            ViewBag.Message = "The User List";
+            ViewBag.Nouser = "Not any user yet.";
+
+            using (var db = new Entities2())
+            {
+                List<Person> tempone = (db.Persons.Include("CatchPhrase").OrderBy(a => a.overallPercentage())).ToList();
+                return View(tempone);
+            }
+
+        }
+
+
     }
 }
