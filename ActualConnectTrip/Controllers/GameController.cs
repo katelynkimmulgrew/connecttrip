@@ -40,8 +40,9 @@ namespace ActualConnectTrip.Controllers
 
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied","Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
+               
             }
             using (var db = new Entities2())
             {
@@ -142,8 +143,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             lock (lockObject)
             {
@@ -332,8 +333,9 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
+            
             }
             using (var context = new Entities2())
             {
@@ -365,8 +367,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             var UserName = User.Identity.Name;
             StartpageViewModel startInput = new StartpageViewModel();
@@ -538,8 +540,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             if (startdata.request == true)
             {
@@ -643,8 +645,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             using (Entities2 enti = new Entities2())
             {
@@ -667,8 +669,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             using (Entities2 enti = new Entities2())
             {
@@ -729,8 +731,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
@@ -761,8 +763,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
@@ -855,8 +857,8 @@ namespace ActualConnectTrip.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return RedirectToAction("PermissionDenied", "Home");
+                TempData["ErrorMessage"] = "You are not authenticated to see this page.";
+                return View("../Home/PermissionDenied");
             }
             using (var context = new Entities2())
             {

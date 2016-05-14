@@ -21,12 +21,7 @@ namespace ActualConnectTrip.Controllers
             }
         }
 
-        public ActionResult PermissionDenied()
-        {
-            return View();
-
-        }
-
+        
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -36,7 +31,7 @@ namespace ActualConnectTrip.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact Us!";
 
             return View();
         }
