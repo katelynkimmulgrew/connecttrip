@@ -24,6 +24,15 @@ namespace ActualConnectTrip.Controllers
         {
             return View();
         }
+
+        public ActionResult Rules()
+        {
+            return View();
+        }
+        public ActionResult Image()
+        {
+            return View();
+        }
         public ActionResult Board()
 
 
@@ -32,13 +41,17 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied","Home");
             }
             using (var db = new Entities2())
             {
 
                 var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
-                Game board = db.getGameById(currentPerson.CurrentGameId);
+                if (currentPerson.CurrentGameId == null)
+                {
+                    return RedirectToAction("stindex");
+                }
+                Game board = db.getGameById((int)currentPerson.CurrentGameId);
                 if (board == null)
                 {
                     return View("NoGame");
@@ -130,7 +143,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             lock (lockObject)
             {
@@ -139,7 +152,7 @@ namespace ActualConnectTrip.Controllers
                     
                     var currentPerson = (from p in db.Persons where p.UserName == User.Identity.Name select p).FirstOrDefault();
                     
-                    Game board = db.getGameById(currentPerson.CurrentGameId);
+                    Game board = db.getGameById((int)currentPerson.CurrentGameId);
                    
                     if(currentPerson.answeredMathQuestion==false && answer!=null)
                     {
@@ -237,6 +250,8 @@ namespace ActualConnectTrip.Controllers
                         board.gameCancelled = true;
                         person1.isPlaying = false;
                         person2.isPlaying = false;
+                        person1.answeredMathQuestion = false;
+                        person2.answeredMathQuestion = false;
                         TempData["IsCancelled"] = "This game was cancelled";
                         db.SaveChanges();
                         return View("GameOver");
@@ -284,6 +299,8 @@ namespace ActualConnectTrip.Controllers
                                 currentPerson.LevelThreeWins++;
                                 otherPerson.LevelThreeLose++;
                             }
+                            person1.answeredMathQuestion = false;
+                            person2.answeredMathQuestion = false;
                             db.SaveChanges();
                             return View("GameOver");
                         }
@@ -316,7 +333,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (var context = new Entities2())
             {
@@ -349,7 +366,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             var UserName = User.Identity.Name;
             StartpageViewModel startInput = new StartpageViewModel();
@@ -522,7 +539,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             if (startdata.request == true)
             {
@@ -608,6 +625,7 @@ namespace ActualConnectTrip.Controllers
                             newgame.Player1Id = person1.Id;
                             newgame.Player2Id = person2.Id;
                         newgame.gameCancelled = false;
+                        
                             enti.SaveChanges();
                             ViewBag.Message = newgame.Id.GetType().ToString() + newgame.Id.ToString();
                             return RedirectToAction("Board");
@@ -618,23 +636,30 @@ namespace ActualConnectTrip.Controllers
                 }
 
             }
+        
+
 
         public ActionResult Forum()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (Entities2 enti = new Entities2())
-            {           
+            {
+
+                
                 forumViewModel tempone = new forumViewModel();
+
                 tempone.model1 = enti.Questions.Include("answers2").ToList();
                 tempone.model2 = null;
                 tempone.model3 = enti.theAnswers.ToList();
                 return View(tempone);
             }
+
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -643,12 +668,14 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (Entities2 enti = new Entities2())
             {
-                if (ques.model2 != null)
+                if (ques.model2 != null && ques.model2.description != null && ques.model2.title!=null)
                 {
+
+
                     enti.Questions.Add(ques.model2);
                     enti.SaveChanges();
 
@@ -659,7 +686,7 @@ namespace ActualConnectTrip.Controllers
                     return View(tempone);
 
                 }
-                else if (ques.model4 != null)
+                else if (ques.model4!=null && ques.model4.content != null)
                 {
                     enti.Getquesforid(ques.model5).answers2.Add(ques.model4);
                     enti.SaveChanges();
@@ -671,6 +698,8 @@ namespace ActualConnectTrip.Controllers
                 }
                 else if (keyword != null)
                 {
+
+
                     //var infoUB = (from c in db.Questions
                     //              where c.title.ToString().Contains(keyword)
                     //              select c);
@@ -681,6 +710,7 @@ namespace ActualConnectTrip.Controllers
                     tempone.model1 = infoUB.ToList();
                     tempone.model2 = null;
                     return View(tempone);
+
                 }
 
                 else
@@ -693,12 +723,14 @@ namespace ActualConnectTrip.Controllers
             }
         }
 
+
+
         public ActionResult waitingPage()
         {
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
@@ -730,7 +762,7 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
@@ -749,23 +781,9 @@ namespace ActualConnectTrip.Controllers
         }
 
         public static bool PracticeMathFlag = false;
-        public string mathQuestion_external;
-        public string mathAnswer_external;
         [HttpPost]
         public ActionResult PracticeMath(PracticeMathViewModel inputdata)
         {
-            if (inputdata.isTryAgainBlockVisable)
-            {
-                if (inputdata.isTryAgain)
-                {
-                    var model = new PracticeMathViewModel()
-                    {
-                        mathQuestion = inputdata.mathQuestion,
-                        isSelectLevelBlockVisable = false,
-                        isAnswerBlockVisable = true
-                    };
-                }
-            }
             if (PracticeMathFlag == true)
             {
                 var level = inputdata.levelchosen;
@@ -773,10 +791,9 @@ namespace ActualConnectTrip.Controllers
                 var model = new PracticeMathViewModel()
                 {
                     mathQuestion = mobj.mathQuestion(level),
-                    isSelectLevelBlockVisable = false,
-                    isAnswerBlockVisable = true
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = true
                 };
-                //mathQuestion_external = model.mathQuestion;
                 PracticeMathFlag = false;
                 return View(model);
             }
@@ -784,29 +801,27 @@ namespace ActualConnectTrip.Controllers
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelBlockVisable = false,
-                    isAnswerBlockVisable = false
+                    isSelectLevelVisable = false,
+                    isAnswerAreaVisable = false
                 };
                 var answer = inputdata.mathAnswer;
                 var mobj = new BizLogic.mathProblems();
                 var realAnswer = mobj.mathAnswer(inputdata.mathQuestion);
-                //mathAnswer_external = realAnswer;
+
                 if (!realAnswer.Equals(inputdata.userAnswer))
                 {
                     ViewBag.message = "Your Answer is Wrong";
-                    model.isTryAgainBlockVisable = true;
-                    model.mathQuestion = inputdata.mathQuestion;
-                    model.mathAnswer = realAnswer;
-                    return View(model);
                 }
                 else
                 {
                     ViewBag.message = "Your Answer is Right";
-                    model.isNextQuesitonBlockVisable = true;
-                    return View(model);
                 }
-                
-            }      
+                return View(model);
+            }
+            
+           
+            
+            
         }
 
         public ActionResult PracticeMath()
@@ -814,29 +829,27 @@ namespace ActualConnectTrip.Controllers
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return View("PermissionDenied");
+                return RedirectToAction("PermissionDenied", "Home");
             }
             using (var context = new Entities2())
             {
                 var model = new PracticeMathViewModel()
                 {
-                    isSelectLevelBlockVisable = true,
-                    isAnswerBlockVisable = false,
-                    isNextQuesitonBlockVisable = false,
-                    isTryAgainBlockVisable = false,
-                    isTryAgain = false
+                    isSelectLevelVisable = true,
+                    isAnswerAreaVisable= false
                 };
-                PracticeMathFlag = model.isSelectLevelBlockVisable;
+                PracticeMathFlag = model.isSelectLevelVisable;
                 return View(model);
             }
         }
         
-        public PartialViewResult EachTurnMathQuestion(int level)
+        
+       /* public PartialViewResult EachTurnMathQuestion(int level)
         {
             if (!User.Identity.IsAuthenticated)
             {
                 ViewBag.ErrorMessage = "You are not authenticated to see this page.";
-                return PartialView("PermissionDenied");
+               return PartialView("PermissionDenied","Home");
             }
             using (var context = new Entities2())
             {
@@ -847,6 +860,6 @@ namespace ActualConnectTrip.Controllers
                 };
                 return PartialView("EachTurnMathQuestion");
             }
-        }
+        }*/
     }
 }

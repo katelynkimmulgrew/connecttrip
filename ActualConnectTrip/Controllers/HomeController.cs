@@ -11,7 +11,20 @@ namespace ActualConnectTrip.Controllers
     {
         public ActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("stindex", "Game");
+            }
+        }
+
+        public ActionResult PermissionDenied()
+        {
             return View();
+
         }
 
         public ActionResult About()

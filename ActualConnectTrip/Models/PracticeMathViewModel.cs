@@ -7,6 +7,9 @@ namespace ActualConnectTrip.Models
 {
     public class PracticeMathViewModel
     {
+        internal bool isSelectLevelVisable;
+        internal bool isAnswerAreaVisable;
+
         public string mathQuestion { get; set; }
 
         public string mathAnswer { get; set; }

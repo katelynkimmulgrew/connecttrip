@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201605131759438_startTime.Designer.cs">
       <DependentUpon>201605131759438_startTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605132100354_nullable2.cs" />
+    <Compile Include="Migrations\201605132100354_nullable2.Designer.cs">
+      <DependentUpon>201605132100354_nullable2.cs</DependentUpon>
+    </Compile>
     <Compile Include="theAnswer.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="Entities2.cs" />
@@ -90,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605131759438_startTime.resx">
       <DependentUpon>201605131759438_startTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605132100354_nullable2.resx">
+      <DependentUpon>201605132100354_nullable2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
