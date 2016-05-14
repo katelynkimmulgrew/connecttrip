@@ -19,7 +19,7 @@ namespace ActualConnectTrip.Controllers
             }
             else
             {
-                return RedirectToAction("stindex", "Game");
+                return RedirectToAction("Index", "Game");
             }
         }
 
