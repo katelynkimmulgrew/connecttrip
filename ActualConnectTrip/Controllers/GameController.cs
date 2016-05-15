@@ -550,8 +550,7 @@ namespace ActualConnectTrip.Controllers
             }
             if (startdata.request == true)
             {
-                lock (lockObject)
-                {
+                
                     startGamePlayer newstart = new startGamePlayer();
                     newstart.player1Id = startdata.myid;
                     newstart.level = startdata.gamelevel;
@@ -565,7 +564,7 @@ namespace ActualConnectTrip.Controllers
                     }
                     
                     return RedirectToAction("waitingPage");
-                }
+                
 
                 //return View();
             }
