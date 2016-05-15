@@ -69,6 +69,10 @@
     <Compile Include="Migrations\201605132124467_new2.Designer.cs">
       <DependentUpon>201605132124467_new2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605142049256_InitialMigrations.cs" />
+    <Compile Include="Migrations\201605142049256_InitialMigrations.Designer.cs">
+      <DependentUpon>201605142049256_InitialMigrations.cs</DependentUpon>
+    </Compile>
     <Compile Include="theAnswer.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="Entities2.cs" />
@@ -104,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605132124467_new2.resx">
       <DependentUpon>201605132124467_new2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605142049256_InitialMigrations.resx">
+      <DependentUpon>201605142049256_InitialMigrations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
