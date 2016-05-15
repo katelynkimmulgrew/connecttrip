@@ -550,22 +550,23 @@ namespace ActualConnectTrip.Controllers
             }
             if (startdata.request == true)
             {
-                
+                lock (lockObject)
+                {
                     startGamePlayer newstart = new startGamePlayer();
                     newstart.player1Id = startdata.myid;
                     newstart.level = startdata.gamelevel;
                     newstart.isStarted = false;
-                    
+
                     using (Entities2 enti = new Entities2())
                     {
                         enti.startGamePlayers.Add(newstart);
                         enti.SaveChanges();
 
                     }
-                    
-                    return RedirectToAction("waitingPage");
-                
 
+                    return RedirectToAction("waitingPage");
+
+                }
                 //return View();
             }
             else
