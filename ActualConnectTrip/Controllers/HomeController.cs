@@ -75,7 +75,7 @@ namespace ActualConnectTrip.Controllers
 
             using (var db = new Entities2())
             {
-                List<Person> tempone = (db.Persons.OrderBy(a => a.LevelOneWins+a.LevelTwoWins+a.LevelThreeWins)).ToList();
+                List<Person> tempone = (db.Persons.OrderBy(a => a.LevelOneWins+a.LevelTwoWins+a.LevelThreeWins)).OrderByDescending(x => x.LevelOneWins+x.LevelTwoWins+x.LevelThreeWins).ToList();
                 return View(tempone);
             }
 
