@@ -310,7 +310,6 @@
     <Content Include="Views\Home\Rules.cshtml" />
     <Content Include="Views\Game\Welcome.cshtml" />
     <Content Include="Views\Home\UsersList.cshtml" />
-    <Content Include="Views\Game\UsersList.cshtml" />
     <Content Include="Views\Home\MyProfile.cshtml" />
     <Content Include="Views\Shared\_mytemplate.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
