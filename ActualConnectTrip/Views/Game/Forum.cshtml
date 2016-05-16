@@ -11,12 +11,12 @@
 {
     @Html.AntiForgeryToken()
     <input type="text" name="keyword" />
-
+    <br/>
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        @*<div class="col-md-offset-2 col-md-10"><br/>*@
             <input type="submit" value="search" class="btn btn-default" />
         </div>
-    </div>
+    @*</div>*@
 }
 
 
@@ -31,11 +31,11 @@
         </th>
         <th></th>
     </tr>
-    </table>
+    <!--</table>-->
 
     @foreach (var item in Model.model1)
     {
-        <table>
+       <!-- <table>-->
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.title)
@@ -46,19 +46,20 @@
                 </td>
             </tr>
 
-        </table>
-        <table>
+      <!--  </table>
+        <table>-->
             
-    @foreach (var ansitem in item.answers2)
+    foreach (var ansitem in item.answers2)
     {
-        <tr>
-            @Html.DisplayFor(modelItem => ansitem.content)
+        <tr><td>
+    @Html.DisplayFor(modelItem => ansitem.content)
+</td>
         </tr>
     }
                   
           
-        </table>
-        <table>
+        @*</table>
+      <table>*@
 
 
             <tr>
@@ -74,9 +75,9 @@
                     <td><input type="submit" value="Answer" class="btn btn-default" /></td>
                 }
             </tr>
-        </table>
+       @*</table>*@
     }
-<!--</table>-->
+</table>
 
 @using (Html.BeginForm())
 {
