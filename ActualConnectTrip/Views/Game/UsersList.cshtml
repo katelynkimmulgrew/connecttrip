@@ -1,7 +1,40 @@
-﻿
+﻿@model List<DataLayer.Person>
 @{
-    ViewBag.Title = "UsersList";
+    ViewBag.Title = "Userlist";
 }
 
-<h2>UsersList</h2>
+<h2>Userlist</h2>
+
+
+
+@if (Model != null)
+{
+
+
+    <table class="table">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="/Home/MyProfile/@item.Id">  @Html.DisplayFor(modelItem => item.UserName) </a>
+                </td>
+                <td>
+                    @{double overallWins = item.LevelOneWins + item.LevelThreeWins + item.LevelThreeWins;
+                        @Html.DisplayFor(modelItem => overallWins)}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CatchPhrase)
+                </td>
+            </tr>
+
+                        }
+    </table>
+                        }
+                        else
+                        {
+                            <caption>@ViewBag.Nouser</caption>
+                        }
 

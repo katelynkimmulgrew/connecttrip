@@ -231,6 +231,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ConnectTrip.png" />
+    <Content Include="Content\ContactUs.jpg" />
+    <Content Include="Content\mytemplate1\css\fancybox.css" />
+    <Content Include="Content\mytemplate1\css\main.css" />
+    <Content Include="Content\mytemplate1\img\video.png" />
     <Content Include="Content\red.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -268,7 +272,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index_bckp.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -308,9 +312,13 @@
     <Content Include="Views\Home\UsersList.cshtml" />
     <Content Include="Views\Game\UsersList.cshtml" />
     <Content Include="Views\Home\MyProfile.cshtml" />
+    <Content Include="Views\Shared\_mytemplate.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\mytemplate1\fonts\" />
+    <Folder Include="Content\mytemplate1\js\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\Stats\" />
   </ItemGroup>

@@ -20,6 +20,10 @@ namespace ActualConnectTrip.Controllers
 
     // GET: Game
    
+            public ActionResult UsersList()
+        {
+            return View();
+        }
             public ActionResult Welcome()
         {
             return View();

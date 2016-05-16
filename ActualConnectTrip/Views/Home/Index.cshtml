@@ -1,34 +1,36 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_mytemplate.cshtml";
 }
 
-<div class="jumbotron">
-  <h1>  ConnectTrip</h1>
-   <!-- <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p> -->
-</div>
 
-<div class="row">
-    <div>
-        <img src="~/Content/ConnectTrip.png" height="250" width="250"  style="margin-left:auto; margin-right:auto; display:block" />
-    </div>
-   <!-- <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>-->
-</div>
+<section class="video">
+    <h3 class="animated wow fadeInDown">watch the video and learn to play the game</h3>
+    <a href="https://www.youtube.com/watch?v=WU1K4X_LOxY" id="play_btn" class="fancybox animated wow flipInX" data-wow-duration="2s"></a>
+</section><!--  End video  -->
+
+<section class="services wrapper">
+    <ul class="clearfix">
+        <li class="animated wow fadeInDown" data-wow-delay=".2s">
+            <div style="float:left">
+                <strong>Katelyn Mulgrew:</strong><br/>
+                 <a href="mailto:email@katelynmulgrew.com" style="color:black">email@katelynmulgrew.com</a><br />
+                <strong>Hao Wu:</strong><br /> <a href="mailto:hw1395@nyu.edu" style="color:black">hw1395@nyu.edu</a><br />
+            </div>
+           
+        </li>
+        <li class="animated wow fadeInDown" data-wow-delay=".2s">
+            <img class="icon" src="~/Content/ContactUs.jpg" alt="" />
+            <span class="separator"></span>
+        </li>
+        <li class="animated wow fadeInDown" data-wow-delay=".2s">
+            <div style="float:right">
+                <strong>Joanna Crystal Serrao:</strong><br /><a href="mailto:joanna.crystal@nyu.edu" style="color:black">joanna.crystal@nyu.edu</a><br/>
+                <strong>Qiyu Xiao:</strong> <br /><a href="mailto:qx344@nyu.edu" style="color:black">qx344@nyu.edu</a><br />
+            </div>
+
+        </li>
+  
+    </ul>
+</section><!--  End services  -->
