@@ -434,6 +434,16 @@ namespace ActualConnectTrip.Controllers
                         RCnames.Add(Names);
                     }
                     startInput.RCnames = RCnames;
+
+                    List<int> RCLevels = new List<int>();
+                    foreach (var plga in recommended)
+                    {
+                        var Levels = (from c in recommended
+                                     where c.player1Id.Equals(plga.player1Id)
+                                     select c.level).FirstOrDefault();
+                        RCLevels.Add(Levels);
+                    }
+                    startInput.RCLevels = RCLevels;
                 }
                
                     
