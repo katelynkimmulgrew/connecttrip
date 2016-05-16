@@ -759,7 +759,8 @@ namespace ActualConnectTrip.Controllers
                 TempData["ErrorMessage"] = "You are not authenticated to see this page.";
                 return View("../Home/PermissionDenied");
             }
-            lock(lockObject)
+            Response.AddHeader("Refresh", "5");
+            lock (lockObject)
             {
                 var UserName = User.Identity.Name;
                 using (Entities2 enti = new Entities2())
@@ -794,6 +795,7 @@ namespace ActualConnectTrip.Controllers
                 TempData["ErrorMessage"] = "You are not authenticated to see this page.";
                 return View("../Home/PermissionDenied");
             }
+           
             var UserName = User.Identity.Name;
             using (Entities2 enti = new Entities2())
             {
