@@ -188,6 +188,7 @@ namespace ActualConnectTrip.Controllers
                             return View(board);
                         }
                         currentPerson.Answered++;
+                        
                         if (isRight == false)
                         {
                             
@@ -778,6 +779,11 @@ namespace ActualConnectTrip.Controllers
                                where c.player1Id.Equals(infoUB.Id)
                                && c.isStarted.Equals(false)
                                select c).FirstOrDefault();
+                if(oldgame==null)
+                {
+                    //second player has cancelled game
+                    return RedirectToAction("stindex");
+                }
                 oldgame.isStarted = true;
                 enti.SaveChanges();
             }
