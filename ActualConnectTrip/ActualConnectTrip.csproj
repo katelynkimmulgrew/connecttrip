@@ -232,9 +232,50 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ConnectTrip.png" />
     <Content Include="Content\ContactUs.jpg" />
+    <Content Include="Content\mytemplate1\css\animate.css" />
+    <Content Include="Content\mytemplate1\css\fancybox-buttons.css" />
+    <Content Include="Content\mytemplate1\css\fancybox-thumbs.css" />
     <Content Include="Content\mytemplate1\css\fancybox.css" />
     <Content Include="Content\mytemplate1\css\main.css" />
+    <Content Include="Content\mytemplate1\css\reset.css" />
+    <Content Include="Content\mytemplate1\fonts\raleway-bold.svg" />
+    <Content Include="Content\mytemplate1\fonts\raleway-regular.svg" />
+    <Content Include="Content\mytemplate1\fonts\raleway-semibold.svg" />
+    <Content Include="Content\mytemplate1\img\billboard.jpg" />
+    <Content Include="Content\mytemplate1\img\billboard2.jpg" />
+    <Content Include="Content\mytemplate1\img\blog_post1.jpg" />
+    <Content Include="Content\mytemplate1\img\blog_post2.jpg" />
+    <Content Include="Content\mytemplate1\img\blog_post3.jpg" />
+    <Content Include="Content\mytemplate1\img\blog_post4.jpg" />
+    <Content Include="Content\mytemplate1\img\client1.jpg" />
+    <Content Include="Content\mytemplate1\img\client2.jpg" />
+    <Content Include="Content\mytemplate1\img\client3.jpg" />
+    <Content Include="Content\mytemplate1\img\fancybox\blank.gif" />
+    <Content Include="Content\mytemplate1\img\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\mytemplate1\img\fancybox\fancybox_loading.gif" />
+    <Content Include="Content\mytemplate1\img\fancybox\fancybox_overlay.png" />
+    <Content Include="Content\mytemplate1\img\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\mytemplate1\img\fancybox\fancybox_sprite.png" />
+    <Content Include="Content\mytemplate1\img\footer_logo.png" />
+    <Content Include="Content\mytemplate1\img\icon1.png" />
+    <Content Include="Content\mytemplate1\img\icon2.png" />
+    <Content Include="Content\mytemplate1\img\icon3.png" />
+    <Content Include="Content\mytemplate1\img\logo_dark.png" />
+    <Content Include="Content\mytemplate1\img\logo_light.png" />
+    <Content Include="Content\mytemplate1\img\play_btn.png" />
+    <Content Include="Content\mytemplate1\img\quotes.png" />
+    <Content Include="Content\mytemplate1\img\shadow.png" />
+    <Content Include="Content\mytemplate1\img\testimonial_triangle.png" />
+    <Content Include="Content\mytemplate1\img\video.jpg" />
     <Content Include="Content\mytemplate1\img\video.png" />
+    <Content Include="Content\mytemplate1\img\video_logo.png" />
+    <Content Include="Content\mytemplate1\js\fancybox-buttons.js" />
+    <Content Include="Content\mytemplate1\js\fancybox-media.js" />
+    <Content Include="Content\mytemplate1\js\fancybox-thumbs.js" />
+    <Content Include="Content\mytemplate1\js\fancybox.js" />
+    <Content Include="Content\mytemplate1\js\jquery.js" />
+    <Content Include="Content\mytemplate1\js\main.js" />
+    <Content Include="Content\mytemplate1\js\wow.js" />
     <Content Include="Content\red.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -247,6 +288,17 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\mytemplate1\fonts\raleway-bold.eot" />
+    <Content Include="Content\mytemplate1\fonts\raleway-bold.ttf" />
+    <Content Include="Content\mytemplate1\fonts\raleway-bold.woff" />
+    <Content Include="Content\mytemplate1\fonts\raleway-regular.eot" />
+    <Content Include="Content\mytemplate1\fonts\raleway-regular.ttf" />
+    <Content Include="Content\mytemplate1\fonts\raleway-regular.woff" />
+    <Content Include="Content\mytemplate1\fonts\raleway-semibold.eot" />
+    <Content Include="Content\mytemplate1\fonts\raleway-semibold.ttf" />
+    <Content Include="Content\mytemplate1\fonts\raleway-semibold.woff" />
+    <Content Include="Content\mytemplate1\img\fancybox\Thumbs.db" />
+    <Content Include="Content\mytemplate1\img\Thumbs.db" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -316,8 +368,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\mytemplate1\fonts\" />
-    <Folder Include="Content\mytemplate1\js\" />
     <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\Stats\" />
   </ItemGroup>
