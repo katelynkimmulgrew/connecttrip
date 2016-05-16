@@ -627,6 +627,10 @@ namespace ActualConnectTrip.Controllers
                                                where c.player1Id.Equals(newgame.Player1Id)
                                                && c.isStarted.Equals(false)
                                                select c).FirstOrDefault();
+                        if(removeStart == null)
+                        {
+                            return RedirectToAction("Board");
+                        }
                             removeStart.isStarted = true;
                             newgame.currentUser = true;
 
