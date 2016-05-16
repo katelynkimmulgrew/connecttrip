@@ -61,7 +61,8 @@ namespace BizLogic
 
         public static double numGames(this Person user)
         {
-            return user.Answered + user.DidNotAnswer;
+          //  return user.Answered + user.DidNotAnswer;
+            return user.LevelOneWins + user.LevelTwoWins + user.LevelThreeWins + user.LevelOneLose + user.LevelTwoLose + user.LevelThreeLose;
         }
 
         public static double numWins(this Person user)
