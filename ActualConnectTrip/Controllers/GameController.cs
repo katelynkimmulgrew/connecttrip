@@ -45,7 +45,7 @@ namespace ActualConnectTrip.Controllers
 
 
         {
-
+            
             if (!User.Identity.IsAuthenticated)
             {
                 TempData["ErrorMessage"] = "You are not authenticated to see this page.";
@@ -78,6 +78,10 @@ namespace ActualConnectTrip.Controllers
                     }
 
                     return View("GameOver");
+                }
+                if(currentPerson.assignedBool!=board.currentUser)
+                {
+                    Response.AddHeader("Refresh", "5");
                 }
                 if (currentPerson.answeredMathQuestion == false&&currentPerson.assignedBool==board.currentUser)
                 {
@@ -189,7 +193,7 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.currentMathProblemID = null;
 
                             db.SaveChanges();
-                            return View(board);
+                            return RedirectToAction("board");
                         }
                         currentPerson.Answered++;
                         
@@ -247,7 +251,7 @@ namespace ActualConnectTrip.Controllers
                         currentPerson.currentMathProblemID = null;
                         
                         db.SaveChanges();
-                        return View(board);
+                        return RedirectToAction("board");
                     }
                     
                     
@@ -276,7 +280,7 @@ namespace ActualConnectTrip.Controllers
                         if (currentRow == null)
                         {
                             TempData["Message"] = "Cannot execute Move";
-                            return View(board);
+                            return RedirectToAction("board");
                         }
                         if (board.determineWin(db, currentRow))
                         {
@@ -321,12 +325,12 @@ namespace ActualConnectTrip.Controllers
                             currentPerson.answeredMathQuestion = false;
                             db.SaveChanges();
                         }
-                        return View(board);
+                        return RedirectToAction("board");
                     }
                     else
                     {
                         ViewBag.Message = "Invalid Cannot Execute when it is not your turn";
-                        return View(board);
+                        return RedirectToAction("board");
                     }
                     
              }
